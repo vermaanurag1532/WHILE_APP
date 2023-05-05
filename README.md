@@ -13,7 +13,7 @@ WHILE is a social media platform
 
 ## Screenshots
 
-![Home](https://drive.google.com/file/d/1n_9peTQx39PRzSJby_4HLmlRNqHA2GXU/view?usp=drivesdk)
+![Home](file:///A:/New%20folder/Screenshot_20230506-020338.png)
 
 ![Messages](https://drive.google.com/file/d/1ngEUedJqGF8a69js6cj6AwOKyApaTSJm/view?usp=drivesdk)
 
