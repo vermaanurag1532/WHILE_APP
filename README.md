@@ -1,5 +1,5 @@
 
-![Logo](https://user-images.githubusercontent.com/104077846/236628452-e6febcab-ae65-4374-a6cf-190f03229e85.jpeg)
+![Logo](https://user-images.githubusercontent.com/104077846/236628843-51ae52c5-952f-4ab1-b0b5-bad715f45017.png)
 
 # WHILE
 
