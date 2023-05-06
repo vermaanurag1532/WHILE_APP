@@ -1,4 +1,5 @@
-![WhatsApp Image 2023-04-06 at 2 43 12 AM](https://user-images.githubusercontent.com/104077846/236628452-e6febcab-ae65-4374-a6cf-190f03229e85.jpeg)
+
+![Logo](https://user-images.githubusercontent.com/104077846/236628452-e6febcab-ae65-4374-a6cf-190f03229e85.jpeg)
 
 # WHILE
 
