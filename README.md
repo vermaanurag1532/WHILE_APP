@@ -11,7 +11,7 @@ While was founded to revolutionize the way of learning in youth by giving them a
 
 **Client:** Flutter
 
-**Server:** Node, Express , ML
+**Server:** Node, Express , ML , Firebase
 
 # Features
 
