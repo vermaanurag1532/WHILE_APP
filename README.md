@@ -39,7 +39,7 @@ While was founded to revolutionize the way of learning in youth by giving them a
    where "url you just copied" (without the quotation marks) is the url to this repository (your fork of this project). See the previous steps to obtain the url.
    For example:
       ```
-      git clone https://github.com/your_username/Vritant.git
+      git clone https://github.com/your_username/WHILE_APP.git
       ```
 4. Now create a branch using the 'git switch' command in repository directory:
       ```
