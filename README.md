@@ -11,7 +11,7 @@ While was founded to revolutionize the way of learning in youth by giving them a
 
 ## Tech Stack
 
-**Client:** Flutter
+**Client:** Flutter, Dart
 
 **Server:** Node, Express , ML , Firebase
 
@@ -66,5 +66,6 @@ While was founded to revolutionize the way of learning in youth by giving them a
 ## Feedback
 
 If you have any feedback, please reach out to us at vermaanurag1532@gmail.com
+Happy Coding.
 
 
