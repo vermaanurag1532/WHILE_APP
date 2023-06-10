@@ -5,8 +5,11 @@ import 'package:chatx/shared/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
 
 import 'helper/helper_function.dart';
+
 // import 'package:get/get.dart';
 // import 'package:flutter/foundation.dart';
 
@@ -15,6 +18,9 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Future.delayed(const Duration(seconds:1));
+    FlutterNativeSplash.remove();
+  
   if (kIsWeb){
     await Firebase.initializeApp(
 
@@ -70,7 +76,7 @@ class _MyAppState extends State<MyApp> {
       // title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       // initialRoute: AppPages.INITIAL,
-      home: _isSignedIn ? HomePage() : LoginPage(),
+      home: _isSignedIn ?  HomePage() : LoginPage()
     );
   }
 }

@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="16"
-6-->/home/mridul/.pub-cache/hosted/pub.dev/shared_preferences_android-2.1.4/android/src/main/AndroidManifest.xml
+6-->C:\Users\ASUS\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.1.4\android\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="16" />
-7-->/home/mridul/.pub-cache/hosted/pub.dev/shared_preferences_android-2.1.4/android/src/main/AndroidManifest.xml
+7-->C:\Users\ASUS\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.1.4\android\src\main\AndroidManifest.xml
 8
 9</manifest>

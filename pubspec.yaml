@@ -40,6 +40,22 @@ dependencies:
   shared_preferences: ^2.1.1
   firebase_auth: ^4.6.1
   cloud_firestore: ^4.7.1
+  flutter_native_splash: ^2.3.1
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+  color: "#FFFFFF"
+  image: "assets/while.png"
+  android_12:
+    image: "assets/while.png"
+  android_gravity: center
+
+ 
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -64,8 +80,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/images/
+  #assets:
+  #  - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -92,3 +108,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

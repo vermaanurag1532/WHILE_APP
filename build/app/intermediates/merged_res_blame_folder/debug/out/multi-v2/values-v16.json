@@ -4,7 +4,7 @@
             "outputFile": "com.example.chatx.app-mergeDebugResources-14:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/home/mridul/.gradle/caches/transforms-3/ae42e6c01585f28a5adeac7499fca147/transformed/core-1.6.0/res/values-v16/values-v16.xml",
+                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\transforms-3\\ae42e6c01585f28a5adeac7499fca147\\transformed\\core-1.6.0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

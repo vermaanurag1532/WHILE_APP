@@ -1,0 +1,52 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.chatx.app-mergeDebugResources-14:/values-night-v31/values-night-v31.xml",
+            "map": [
+                {
+                    "source": "E:\\DATA\\Desktop\\gssoc2\\WHILE_APP\\android\\app\\src\\main\\res\\values-night-v31\\styles.xml",
+                    "from": {
+                        "startLines": "3,-1",
+                        "startColumns": "4,-1",
+                        "startOffsets": "173,-1",
+                        "endLines": "10,-1",
+                        "endColumns": "12,-1",
+                        "endOffsets": "696,-1"
+                    },
+                    "to": {
+                        "startLines": "2,10",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,583",
+                        "endLines": "9,12",
+                        "endColumns": "12,12",
+                        "endOffsets": "578,747"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\ASUS\\.gradle\\daemon\\7.5\\com.example.chatx.app-mergeDebugResources-14:\\values-night-v31\\values-night-v31.xml",
+            "map": [
+                {
+                    "source": "E:\\DATA\\Desktop\\gssoc2\\WHILE_APP\\android\\app\\src\\main\\res\\values-night-v31\\styles.xml",
+                    "from": {
+                        "startLines": "3,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "173,881",
+                        "endLines": "8,17",
+                        "endColumns": "12,12",
+                        "endOffsets": "530,1045"
+                    },
+                    "to": {
+                        "startLines": "2,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,417",
+                        "endLines": "7,10",
+                        "endColumns": "12,12",
+                        "endOffsets": "412,581"
+                    }
+                }
+            ]
+        }
+    ]
+}

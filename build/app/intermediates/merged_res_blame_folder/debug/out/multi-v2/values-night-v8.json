@@ -4,22 +4,22 @@
             "outputFile": "com.example.chatx.app-mergeDebugResources-14:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/home/mridul/Flutter/Chat-App/chatx/android/app/src/main/res/values-night/styles.xml",
+                    "source": "E:\\DATA\\Desktop\\gssoc2\\WHILE_APP\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
-                        "startLines": "3,14",
+                        "startLines": "3,18",
                         "startColumns": "4,4",
-                        "startOffsets": "172,817",
-                        "endLines": "7,16",
+                        "startOffsets": "172,1094",
+                        "endLines": "11,20",
                         "endColumns": "12,12",
-                        "endOffsets": "475,981"
+                        "endOffsets": "747,1258"
                     },
                     "to": {
-                        "startLines": "2,6",
+                        "startLines": "2,10",
                         "startColumns": "4,4",
-                        "startOffsets": "55,236",
-                        "endLines": "5,8",
+                        "startOffsets": "55,507",
+                        "endLines": "9,12",
                         "endColumns": "12,12",
-                        "endOffsets": "231,400"
+                        "endOffsets": "502,671"
                     }
                 }
             ]
