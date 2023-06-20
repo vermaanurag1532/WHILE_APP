@@ -3,36 +3,38 @@ import 'package:flutter/material.dart';
 
 import '../utils/utils.dart';
 
-class FirebaseAuthMethods{
+class FirebaseAuthMethods {
   final FirebaseAuth _auth;
-  FirebaseAuthMethods (this._auth);
+  FirebaseAuthMethods(this._auth);
 
   User get user => _auth.currentUser!;
 
-    Stream<User?> get authState => FirebaseAuth.instance.authStateChanges();
-  
+  Stream<User?> get authState => FirebaseAuth.instance.authStateChanges();
 
-   Future signInWithEmailAndPassword(
+  Future signInWithEmailAndPassword(
       String email, String password, BuildContext context) async {
-   try{await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);}
-        on FirebaseAuthException catch(e){
-          Utils.snackBar(e.message!, context);
-        }}
-
-           Future loginInWithEmailAndPassword(
-      String email, String password, BuildContext context) async {
-   try{await _auth.signInWithEmailAndPassword(
-        email: email, password: password);}
-        on FirebaseAuthException catch(e){
-          Utils.snackBar(e.message!, context);
-        }}
-
-          Future signOut(BuildContext context) async {
-    try{await _auth.signOut();}
-    on FirebaseAuthException catch(e){
+    try {
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
       Utils.snackBar(e.message!, context);
     }
   }
-  
+
+  Future loginInWithEmailAndPassword(
+      String email, String password, BuildContext context) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      Utils.snackBar(e.message!, context);
+    }
+  }
+
+  Future signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+    } on FirebaseAuthException catch (e) {
+      Utils.snackBar(e.message!, context);
+    }
+  }
 }
