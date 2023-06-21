@@ -13,14 +13,16 @@ class FirebaseAuthMethods {
   Stream<User?> get authState => FirebaseAuth.instance.authStateChanges();
 
   Future signInWithEmailAndPassword(
-      String email, String password,String name, BuildContext context) async {
+      String email, String password, String name, BuildContext context) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password) .then((value) {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
         FirebaseFirestore.instance
             .collection('Users')
             .doc(_auth.currentUser?.uid)
-            .set({"email": email, "name": name});});
+            .set({"email": email, "name": name});
+      });
     } on FirebaseAuthException catch (e) {
       Utils.snackBar(e.message!, context);
     }
