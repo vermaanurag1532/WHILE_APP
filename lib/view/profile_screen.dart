@@ -1,6 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:while_app/resources/components/buildButton.dart';
+import 'package:while_app/resources/components/buildDivider.dart';
+import 'package:while_app/view_model/profile_controller.dart';
+import 'package:while_app/view_model/session_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
@@ -12,8 +20,11 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final double coverHeight = 160;
   final double profileHeight = 144;
+  final Reference storageReference = FirebaseStorage.instance
+      .ref()
+      .child('/profileImage${FirebaseSessionController().uid!}');
   String name = "";
-  FirebaseAuth auth = FirebaseAuth.instance;
+
   _fetch() async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if (firebaseUser != null) {
@@ -31,8 +42,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery.of(context).size.width;
-    double h = MediaQuery.of(context).size.height;
     final bottom = profileHeight / 2;
     final top = coverHeight - profileHeight / 2;
 
@@ -53,7 +62,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                         margin: EdgeInsets.only(bottom: bottom),
                         child: buildCoverImage()),
-                    Positioned(top: top, child: buildProfileImage())
+                    Positioned(
+                        top: top,
+                        child: Consumer<ProfileController>(
+                            builder: (context, profileProvider, child) {
+                        
+                          return GestureDetector(
+                            onTap: () {
+                              profileProvider.pickImage(context);
+                            },
+                            child: FutureBuilder<String>(
+                              future: storageReference.getDownloadURL(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  if (snapshot.hasData) {
+                                    return CircleAvatar(
+                                        radius: profileHeight / 2.5,
+                                        backgroundColor: Colors.grey.shade800,
+                                        backgroundImage: NetworkImage(
+                                          snapshot.data!));
+                                  } else {
+                                    return CircleAvatar(
+                                        radius: profileHeight / 2.5,
+                                        backgroundColor: Colors.grey.shade800,
+                                        backgroundImage: const NetworkImage(
+                                          'https://img.freepik.com/premium-photo/image-colorful-galaxy-sky-generative-ai_791316-9864.jpg?w=2000',
+                                        ));
+                                  }
+                                } else {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+                            ),
+                          );
+                        }))
                   ]),
               Column(
                 children: [
@@ -64,9 +109,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (snapshot.connectionState != ConnectionState.done) {
                         return const Text('Loading data...Please Wait');
                       } else {
-                        
                         return Text(
-                          '$name',
+                          name,
                           style: const TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         );
@@ -108,45 +152,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
           fit: BoxFit.cover,
         ),
       );
-  Widget buildProfileImage() => CircleAvatar(
-        radius: profileHeight / 2.5,
-        backgroundColor: Colors.grey.shade800,
-        backgroundImage: const NetworkImage(
-          'https://img.freepik.com/premium-photo/image-colorful-galaxy-sky-generative-ai_791316-9864.jpg?w=2000',
-        ),
-      );
-}
-
-Widget buildButton({required String text, required int value}) =>
-    MaterialButton(
-        onPressed: () {},
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              '$value',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(
-              height: 2,
-            ),
-            Text(
-              '$text',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-          ],
-        ));
-
-Widget buildDivider() {
-  return Container(
-    height: 24,
-    child: const VerticalDivider(
-      color: Colors.black,
-    ),
-  );
+  // Widget buildProfileImage(Provider<ProfileController> profileProvider) =>
 }
