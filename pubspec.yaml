@@ -44,6 +44,7 @@ dependencies:
   firebase_auth: ^4.6.2
   image_picker: ^0.8.9
   cupertino_icons: ^1.0.5
+  google_fonts: ^5.1.0
 
 
 
