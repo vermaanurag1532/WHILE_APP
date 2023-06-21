@@ -1,66 +1,4 @@
-// // import 'dart:html';
-
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
-// import 'package:while_app/repository/firebase_repository.dart';
-// import 'package:while_app/resources/components/round_button.dart';
-// import 'package:while_app/view/social/social_home_screen.dart';
-// // import 'package:while_app/view/message_screen.dart';
-
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({Key? key}) : super(key: key);
-
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   final User? user = FirebaseAuth.instance.currentUser;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text(
-//           'Home screen',
-//           textAlign: TextAlign.center,
-//         ),
-//         actions: [
-//           IconButton(
-//             onPressed: () {
-//               Navigator.of(context).push(
-//                   MaterialPageRoute(builder: (ctx) => const TestScreen()));
-//             },
-//             icon: const Icon(Icons.message),
-//           ),
-//         ],
-//       ),
-//       body: SizedBox.expand(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             InkWell(
-//                 onTap: () {
-//                   //To do
-//                 },
-//                 child: Text('Home screen: ${user?.email ?? 'User email'}')),
-//             const SizedBox(
-//               height: 10,
-//             ),
-//             RoundButton(
-//                 title: 'SignOut',
-//                 onPress: () async {
-//                   FirebaseAuthMethods(FirebaseAuth.instance).signOut(context);
-//                 })
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:while_app/repository/firebase_repository.dart';
@@ -99,25 +37,10 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery.of(context).size.width;
-    double h = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(children: [
         Scaffold(
           appBar: AppBar(
-            // title:
-            // Center(child:Column(
-            //   children: [
-            //     SizedBox(height: 8,),
-            //     Row(
-            //       children: [
-            //         SizedBox(width:w/4 ,),
-            //         Image.asset('assets/mate4-removebg-preview.png', height:80,fit: BoxFit.cover),
-            //       ],
-            //     ),
-            //   ],
-            // ),),
-            // const Center(child: Text('Heal+TheMate',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500),)),
             backgroundColor: AppColors.theme1Color,
             elevation: 0.0,
             actions: [
@@ -135,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   itemBuilder: (_) => _popupMenuList.map((menuItem) {
                         return PopupMenuItem(
-                          child: Text("$menuItem"),
+                          child: Text(menuItem),
                           onTap: () async {
                             FirebaseAuthMethods(FirebaseAuth.instance)
                                 .signOut(context);
@@ -187,12 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
             child: _widgetOptions.elementAt(CurrentIndex),
           ),
         ),
+<<<<<<< HEAD
         //   Positioned(
         //   top: 30,
         //   right: w/3.2,
         //   child: Image.asset('assets/mate4-removebg-preview.png',
         //       height: 80),
         // ),
+=======
+>>>>>>> bf92cecb0f5d5024e68032f7de134ac430f088e8
       ]),
     );
   }

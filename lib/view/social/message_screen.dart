@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/message_list_widget.dart';
 import 'package:while_app/data/model/message.dart';

@@ -46,7 +46,6 @@ dependencies:
   # camera: ^0.10.5+2
   path_provider: ^2.0.15
   # video_player: ^2.6.1
-  # google_fonts: ^5.0.0
   google_nav_bar: ^5.0.6
   image_picker: ^0.8.9
   firebase_database: ^10.2.3
