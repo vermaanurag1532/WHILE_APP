@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:while_app/view/social/community_screenn.dart';
 import 'package:while_app/view/social/message_screen.dart';
+import 'package:while_app/view/social/search.dart';
 import 'package:while_app/view/social/story_screen.dart';
 
 class SocialScreen extends StatefulWidget {
@@ -14,6 +15,9 @@ class SocialScreen extends StatefulWidget {
 class _SocialScreenState extends State<SocialScreen>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
+  ////
+
+////
   @override
   void initState() {
     super.initState();
@@ -27,7 +31,12 @@ class _SocialScreenState extends State<SocialScreen>
         backgroundColor: Colors.deepPurpleAccent,
         title: const Text('Social'),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (ctx) => const Search()));
+              },
+              icon: const Icon(Icons.search)),
           PopupMenuButton(
               elevation: 10,
               shape: const RoundedRectangleBorder(

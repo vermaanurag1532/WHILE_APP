@@ -92,19 +92,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     FeedScreen(),
-   const SocialScreen(),
-   ReelsScreen(),
-   const CreateScreen(),
-   ProfileScreen()
-
+    const SocialScreen(),
+    ReelsScreen(),
+    const CreateScreen(),
+    ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Stack(
-        children: [Scaffold(
+      body: Stack(children: [
+        Scaffold(
           appBar: AppBar(
             // title:
             // Center(child:Column(
@@ -122,6 +121,13 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: AppColors.theme1Color,
             elevation: 0.0,
             actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const SocialScreen()));
+                },
+                icon: const Icon(Icons.message),
+              ),
               PopupMenuButton(
                   icon: const Icon(
                     Icons.more_vert,
@@ -131,7 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         return PopupMenuItem(
                           child: Text("$menuItem"),
                           onTap: () async {
-                             FirebaseAuthMethods(FirebaseAuth.instance).signOut(context);
+                            FirebaseAuthMethods(FirebaseAuth.instance)
+                                .signOut(context);
                           },
                         );
                       }).toList())
@@ -141,7 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: AppColors.theme1Color,
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
-                color: AppColors.buttonColor, borderRadius: BorderRadius.circular(30)),
+                color: AppColors.buttonColor,
+                borderRadius: BorderRadius.circular(30)),
             margin: const EdgeInsets.fromLTRB(15, 0, 15, 15),
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -159,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       text: 'Social',
                       iconSize: 25,
                     ),
-                     GButton(
+                    GButton(
                       icon: Icons.abc,
                       text: 'Reels',
                       iconSize: 25,
@@ -179,14 +187,13 @@ class _HomeScreenState extends State<HomeScreen> {
             child: _widgetOptions.elementAt(CurrentIndex),
           ),
         ),
-      //   Positioned(
-      //   top: 30,
-      //   right: w/3.2,
-      //   child: Image.asset('assets/mate4-removebg-preview.png',
-      //       height: 80),
-      // ),
-      ]
-      ),
+        //   Positioned(
+        //   top: 30,
+        //   right: w/3.2,
+        //   child: Image.asset('assets/mate4-removebg-preview.png',
+        //       height: 80),
+        // ),
+      ]),
     );
   }
 }
