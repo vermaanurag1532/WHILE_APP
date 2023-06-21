@@ -6,7 +6,7 @@ import 'package:while_app/resources/components/password_container_widget.dart';
 import 'package:while_app/resources/components/round_button.dart';
 import 'package:while_app/resources/components/text_container_widget.dart';
 import 'package:while_app/utils/utils.dart';
-import '../repository/firebase_repository.dart';
+import '../../repository/firebase_repository.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -18,6 +18,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
@@ -70,6 +71,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: 15),
                   TextContainerWidget(
+                    controller: _nameController,
+                    prefixIcon: Icons.person,
+                    hintText: 'Name',
+                  ),
+                  const SizedBox(height: 10),
+                  TextContainerWidget(
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     prefixIcon: Icons.email,
@@ -103,6 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               .signInWithEmailAndPassword(
                                   _emailController.text.toString(),
                                   _passwordController.text.toString(),
+                                   _nameController.text.toString(),
                                   context);
                           Navigator.of(context).pop();
                           Utils.toastMessage('Response submitted');

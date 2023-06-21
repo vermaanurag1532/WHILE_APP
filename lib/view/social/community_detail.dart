@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:while_app/resources/components/community_detail_chat_widget.dart';
 import 'package:while_app/resources/components/community_detail_opportunities_widget.dart';
 import 'package:while_app/resources/components/community_detail_quiz_widget.dart';
@@ -96,11 +96,11 @@ class _CommunityDetailScreenState extends State<CommunityDetailScreen> {
                             child: Center(
                               child: Text(
                                 itemsName[index],
-                                style: GoogleFonts.laila(
-                                    fontWeight: FontWeight.w500,
-                                    color: current == index
-                                        ? Colors.black
-                                        : Colors.grey),
+                                // style: GoogleFonts.laila(
+                                //     fontWeight: FontWeight.w500,
+                                //     color: current == index
+                                //         ? Colors.black
+                                //         : Colors.grey),
                               ),
                             ),
                           ),
