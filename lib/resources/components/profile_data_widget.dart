@@ -81,7 +81,6 @@ class ProfileDataWidget extends StatelessWidget {
               left: w / 1.15,
               child: IconButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
                     showModalBottomSheet(
                         context: context,
                         builder: (context) {

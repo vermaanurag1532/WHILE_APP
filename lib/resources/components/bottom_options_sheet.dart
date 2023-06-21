@@ -19,6 +19,7 @@ class MoreOptions extends StatelessWidget {
               leading:const Icon(Icons.settings, color: Colors.black, size: 30,),
               title:const  Text("Settings"),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamed(context, RoutesName.settings);
               },
             ),
