@@ -39,7 +39,7 @@ class Settings extends StatelessWidget {
               height: 20,
             ),
             Padding(
-              padding:const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.start,
@@ -50,20 +50,22 @@ class Settings extends StatelessWidget {
                   const ListTile(
                       leading: Icon(Icons.notifications),
                       title: Text("Notifications")),
-                  const ListTile(leading: Icon(Icons.lock), title: Text("Privacy")),
+                  const ListTile(
+                      leading: Icon(Icons.lock), title: Text("Privacy")),
                   const ListTile(
                       leading: Icon(Icons.people), title: Text("Supervision")),
-                 const ListTile(
+                  const ListTile(
                       leading: Icon(Icons.security), title: Text("Security")),
                   const ListTile(
                       leading: Icon(Icons.play_arrow),
                       title: Text("Suggested Content")),
-                 const ListTile(
+                  const ListTile(
                       leading: Icon(Icons.announcement),
                       title: Text("Announcement")),
-                 const ListTile(
+                  const ListTile(
                       leading: Icon(Icons.account_box), title: Text("Account")),
-                 const  ListTile(leading: Icon(Icons.help), title: Text("Help")),
+                  const ListTile(
+                      leading: Icon(Icons.help), title: Text("Help")),
                   const ListTile(
                       leading: Icon(Icons.sunny_snowing), title: Text("Theme")),
                   const ListTile(
@@ -73,14 +75,22 @@ class Settings extends StatelessWidget {
                     ),
                     title: Text("WHILE"),
                   ),
-                  Padding(padding:const EdgeInsets.symmetric(horizontal: 10), child: Textbutton(ontap: (){}, text: "Account Center")),
-                    const Padding(
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Textbutton(ontap: () {}, text: "Account Center")),
+                  const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 18),
                       child: Text("Logins", style: TextStyle(fontSize: 20))),
-                      const SizedBox(height: 10,),
-                    Padding(padding:const EdgeInsets.symmetric(horizontal: 10), child: Textbutton(ontap: (){}, text: "Add or Switch Account")),
-                    Padding(padding:const EdgeInsets.symmetric(horizontal: 10),child: Textbutton(ontap: (){}, text: "Logout"))
-                
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Textbutton(
+                          ontap: () {}, text: "Add or Switch Account")),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Textbutton(ontap: () {}, text: "Logout"))
                 ],
               ),
             )
