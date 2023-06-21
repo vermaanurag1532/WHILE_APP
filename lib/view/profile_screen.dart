@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/bottom_options_sheet.dart';
 import 'package:while_app/resources/components/bottom_sheet.dart';
+import 'package:while_app/view/uploaded_screen.dart';
+
+import '../resources/components/profile_data_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -9,8 +13,22 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  var color=Colors.blue;
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
+  var color = Colors.blue;
+  late TabController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: 3, vsync: this, initialIndex: 0);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,95 +36,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var w = MediaQuery.of(context).size.width;
     var nh = MediaQuery.of(context).viewPadding.top;
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: h,
-          ),
-          Positioned(
-              top: nh,
-              child: InkWell(
-                onTap: (){
-                  showModalBottomSheet(context: context, builder: (context){
-                    return const Bottomsheet();
-                  });
+        body: DefaultTabController(
+            length: 3,
+            child: NestedScrollView(
+                headerSliverBuilder: (context, _) {
+                  return [
+                    SliverList(delegate: SliverChildListDelegate([ProfileDataWidget()]))
+                  ];
                 },
-                child: Container(height: h / 7, width: w, color: color),
-              )),
-          Positioned(
-              top: nh + h / 7 - w / 8,
-              left: w / 12,
-              child: InkWell(
-                onTap: () {
-                   showModalBottomSheet(context: context, builder: (context){
-                    return const Bottomsheet();
-                  });
-                },
-                child: CircleAvatar(
-                  radius: w / 8,
-                ),
-              )),
-          Positioned(
-              top: nh + h / 7 - w / 8 + 3 * nh,
-              left: w / 2.5,
-              child: const Text(
-                "Followers",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              )),
-          Positioned(
-              top: nh + h / 7 - w / 8 + 3 * nh,
-              left: w / 1.5,
-              child: const Text(
-                "Following",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              )),
-          Positioned(
-              top: nh + h / 7 - w / 8 + 3 * nh,
-              left: w / 1.15,
-              child: IconButton(
-                  onPressed: () {
-                     showModalBottomSheet(context: context, builder: (context){
-                    return const MoreOptions();
-                  });
-                  }, icon: const Icon(Icons.more_vert))),
-          Positioned(
-              top: nh + h / 7 - w / 8 + 3.8 * nh,
-              left: w / 2.5,
-              child: const Text(
-                "300",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              )),
-          Positioned(
-              top: nh + h / 7 - w / 8 + 3.8 * nh,
-              left: w / 1.5,
-              child: const Text(
-                "320",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              )),
-          Positioned(
-            top: nh + h / 7 - w / 8 + 5 * nh,
-            child: Container(
-              padding:const EdgeInsets.only(left: 20, right: 20),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Ankit Pandit",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                      'My name is Ankit Kumar Dwivedi, I am founder \n'
-                      'and CEO of WHILE NETWORKS Private LTD.',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500))
-                ],
-              ),
-            ),
-          ),
-          // Positioned(
-          //   child: Tabs())
-        ],
-      ),
-    );
+                body: const Column(
+                  children: [
+                    Material(
+                      // color: Colors.white,
+                      child: TabBar(tabs: [
+                        Tab(
+                          icon: Icon(CupertinoIcons.photo, color: Colors.black,),
+                        ),
+                        Tab(
+                          icon: Icon(CupertinoIcons.sidebar_right, color: Colors.black,),
+                        ),
+                        Tab(
+                          icon: Icon(CupertinoIcons.paintbrush, color: Colors.black,),
+                        ),
+                      ]),
+                    ),
+                    Expanded(
+                        child: TabBarView(
+                            children: [UploadedScreen(), Text("ok"), Text("ok")]))
+                  ],
+                ))));
   }
 }

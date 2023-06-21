@@ -18,7 +18,7 @@ class _BottomsheetState extends State<Bottomsheet> {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-        height: MediaQuery.of(context).size.height / 3,
+        height: MediaQuery.of(context).size.height / 2.5,
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
