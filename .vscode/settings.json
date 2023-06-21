@@ -1,7 +1,4 @@
 {
-<<<<<<< HEAD
+    "cmake.configureOnOpen": false,
     "cmake.sourceDirectory": "/Users/abhishekbansal/Desktop/flutter_git/WHILE_APP/linux"
-=======
-    "cmake.configureOnOpen": false
->>>>>>> 739b8efb23550121c991cd282a073c344058e3e2
 }

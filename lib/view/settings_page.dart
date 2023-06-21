@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/text_button.dart';
 import 'package:while_app/resources/components/text_container_widget.dart';
+
+import '../repository/firebase_repository.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -32,7 +35,6 @@ class Settings extends StatelessWidget {
                 keyboardType: TextInputType.emailAddress,
                 controller: _searchController,
                 prefixIcon: Icons.search,
-                hintText: 'Search',
               ),
             ),
             const SizedBox(
@@ -90,7 +92,11 @@ class Settings extends StatelessWidget {
                           ontap: () {}, text: "Add or Switch Account")),
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Textbutton(ontap: () {}, text: "Logout"))
+                      child: Textbutton(ontap: () {
+                         FirebaseAuthMethods(FirebaseAuth.instance)
+                                .signOut(context);
+                                Navigator.of(context).pop();
+                      }, text: "Logout"))
                 ],
               ),
             )

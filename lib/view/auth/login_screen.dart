@@ -7,7 +7,7 @@ import 'package:while_app/resources/components/round_button.dart';
 import 'package:while_app/resources/components/text_container_widget.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
 import 'package:while_app/utils/utils.dart';
-import '../repository/firebase_repository.dart';
+import '../../repository/firebase_repository.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

@@ -3,15 +3,15 @@ import 'package:while_app/view/social/community_screenn.dart';
 import 'package:while_app/view/social/message_screen.dart';
 import 'package:while_app/view/social/story_screen.dart';
 
-class TestScreen extends StatefulWidget {
-  const TestScreen({super.key});
+class SocialScreen extends StatefulWidget {
+  const SocialScreen({super.key});
   @override
-  State<TestScreen> createState() {
-    return _TestScreenState();
+  State<SocialScreen> createState() {
+    return _SocialScreenState();
   }
 }
 
-class _TestScreenState extends State<TestScreen>
+class _SocialScreenState extends State<SocialScreen>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
   @override
