@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final w = MediaQuery.of(context).size.width * 1;
     return Scaffold(
       body: Center(
-        child:  Container(
+        child:  SizedBox(
           height:h/5.8,
           width:w/1.5,
           child: Image.asset('assets/WhatsApp_Image_2023-06-02_at_12.43.29_AM-removebg-preview.png',fit: BoxFit.fill,))
