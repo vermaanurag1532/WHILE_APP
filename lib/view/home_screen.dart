@@ -110,15 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: _widgetOptions.elementAt(CurrentIndex),
           ),
         ),
-<<<<<<< HEAD
-        //   Positioned(
-        //   top: 30,
-        //   right: w/3.2,
-        //   child: Image.asset('assets/mate4-removebg-preview.png',
-        //       height: 80),
-        // ),
-=======
->>>>>>> bf92cecb0f5d5024e68032f7de134ac430f088e8
       ]),
     );
   }
