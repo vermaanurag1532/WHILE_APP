@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:while_app/resources/components/community_detail_chat_widget.dart';
 import 'package:while_app/resources/components/community_detail_opportunities_widget.dart';
 import 'package:while_app/resources/components/community_detail_quiz_widget.dart';
@@ -57,6 +57,7 @@ class _CommunityDetailScreenState extends State<CommunityDetailScreen> {
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
+<<<<<<< HEAD:lib/view/community_detail.dart
         child: Stack( children: [
           Column(
             children: [
@@ -105,6 +106,52 @@ class _CommunityDetailScreenState extends State<CommunityDetailScreen> {
                                           ? Colors.black
                                           : Colors.grey),
                                 ),
+=======
+        child: Column(
+          children: [
+            /// CUSTOM TABBAR
+            SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: items.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (ctx, index) {
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              current = index;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            margin: const EdgeInsets.only(top: 10, left: 12),
+                            width: itemsName[index].length.toDouble() * 4 + 60,
+                            height: 45,
+                            decoration: BoxDecoration(
+                              color: current == index
+                                  ? Colors.white70
+                                  : Colors.white54,
+                              borderRadius: current == index
+                                  ? BorderRadius.circular(15)
+                                  : BorderRadius.circular(10),
+                              border: current == index
+                                  ? Border.all(
+                                      color: Colors.deepPurpleAccent, width: 2)
+                                  : null,
+                            ),
+                            child: Center(
+                              child: Text(
+                                itemsName[index],
+                                // style: GoogleFonts.laila(
+                                //     fontWeight: FontWeight.w500,
+                                //     color: current == index
+                                //         ? Colors.black
+                                //         : Colors.grey),
+>>>>>>> 459302fea6905876525ff13ed44e464ea4200395:lib/view/social/community_detail.dart
                               ),
                             ),
                           ),

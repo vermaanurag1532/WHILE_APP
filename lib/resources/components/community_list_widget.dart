@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:while_app/data/model/community.dart';
 import 'package:while_app/data/model/message.dart';
-import 'package:while_app/view/community_detail.dart';
-import 'package:while_app/view/message_detail.dart';
+import 'package:while_app/view/social/community_detail.dart';
+import 'package:while_app/view/social/message_detail.dart';
 
 class CommunityList extends StatelessWidget {
   const CommunityList({super.key, required this.message});
