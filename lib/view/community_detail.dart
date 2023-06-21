@@ -57,76 +57,80 @@ class _CommunityDetailScreenState extends State<CommunityDetailScreen> {
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: Column(
-          children: [
-            /// CUSTOM TABBAR
-            SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: items.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (ctx, index) {
-                    return Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              current = index;
-                            });
-                          },
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            margin: const EdgeInsets.only(top: 10, left: 12),
-                            width: itemsName[index].length.toDouble() * 4 + 60,
-                            height: 45,
-                            decoration: BoxDecoration(
-                              color: current == index
-                                  ? Colors.white70
-                                  : Colors.white54,
-                              borderRadius: current == index
-                                  ? BorderRadius.circular(15)
-                                  : BorderRadius.circular(10),
-                              border: current == index
-                                  ? Border.all(
-                                      color: Colors.deepPurpleAccent, width: 2)
-                                  : null,
-                            ),
-                            child: Center(
-                              child: Text(
-                                itemsName[index],
-                                style: GoogleFonts.laila(
-                                    fontWeight: FontWeight.w500,
-                                    color: current == index
-                                        ? Colors.black
-                                        : Colors.grey),
+        child: Stack( children: [
+          Column(
+            children: [
+              /// CUSTOM TABBAR
+              SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: items.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (ctx, index) {
+                      return Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                current = index;
+                              });
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              margin: const EdgeInsets.only(top: 10, left: 12),
+                              width:
+                                  itemsName[index].length.toDouble() * 4 + 60,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                color: current == index
+                                    ? Colors.white70
+                                    : Colors.white54,
+                                borderRadius: current == index
+                                    ? BorderRadius.circular(15)
+                                    : BorderRadius.circular(10),
+                                border: current == index
+                                    ? Border.all(
+                                        color: Colors.deepPurpleAccent,
+                                        width: 2)
+                                    : null,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  itemsName[index],
+                                  style: GoogleFonts.laila(
+                                      fontWeight: FontWeight.w500,
+                                      color: current == index
+                                          ? Colors.black
+                                          : Colors.grey),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Visibility(
-                            visible: current == index,
-                            child: Container(
-                              width: 5,
-                              height: 5,
-                              decoration: const BoxDecoration(
-                                  color: Colors.deepPurpleAccent,
-                                  shape: BoxShape.circle),
-                            ))
-                      ],
-                    );
-                  }),
-            ),
+                          Visibility(
+                              visible: current == index,
+                              child: Container(
+                                width: 5,
+                                height: 5,
+                                decoration: const BoxDecoration(
+                                    color: Colors.deepPurpleAccent,
+                                    shape: BoxShape.circle),
+                              ))
+                        ],
+                      );
+                    }),
+              ),
 
-            /// MAIN BODY
-            SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height - 175,
-              child: items[current],
-            ),
-          ],
-        ),
+              /// MAIN BODY
+              SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height - 175,
+                child: items[current],
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }
