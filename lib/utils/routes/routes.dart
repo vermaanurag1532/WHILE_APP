@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
-import 'package:while_app/view/forgot_password_screen.dart';
+import 'package:while_app/view/auth/forgot_password_screen.dart';
 import 'package:while_app/view/home_screen.dart';
-import 'package:while_app/view/register_screen.dart';
+import 'package:while_app/view/auth/register_screen.dart';
 import 'package:while_app/view/splash_view.dart';
 import 'package:while_app/view_model/wrapper/wrapper.dart';
-import '../../view/login_screen.dart';
+import '../../view/auth/login_screen.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:while_app/data/model/message.dart';
-import 'package:while_app/view/message_detail.dart';
+import 'package:while_app/view/social/message_detail.dart';
 
 class MessageList extends StatelessWidget {
   const MessageList({super.key, required this.message});
