@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
 import 'package:while_app/view/auth/forgot_password_screen.dart';
 import 'package:while_app/view/home_screen.dart';
+import 'package:while_app/view/social/create_menu_screen.dart';
 import 'package:while_app/view/splash_view.dart';
 import 'package:while_app/view_model/wrapper/wrapper.dart';
 import '../../view/auth/login_screen.dart';
@@ -33,8 +34,9 @@ class Routes {
              case RoutesName.profile:
        return MaterialPageRoute(builder: (BuildContext context) =>const ProfileScreen(),);     
              case RoutesName.settings:
-       return MaterialPageRoute(builder: (context)=> const Settings());
-
+       return MaterialPageRoute(builder: (BuildContext context)=> const Settings());
+             case RoutesName.createMenu:
+       return MaterialPageRoute(builder: (BuildContext context)=>const CreateMenuScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

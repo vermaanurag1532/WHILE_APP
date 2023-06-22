@@ -40,26 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Stack(children: [
         Scaffold(
-          // appBar: AppBar(
-          //   backgroundColor: AppColors.theme1Color,
-          //   elevation: 0.0,
-          //   actions: [
-          //     PopupMenuButton(
-          //         icon: const Icon(
-          //           Icons.more_vert,
-          //           color: Colors.white,
-          //         ),
-          //         itemBuilder: (_) => _popupMenuList.map((menuItem) {
-          //               return PopupMenuItem(
-          //                 child: Text(menuItem),
-          //                 onTap: () async {
-          //                   FirebaseAuthMethods(FirebaseAuth.instance)
-          //                       .signOut(context);
-          //                 },
-          //               );
-          //             }).toList())
-          //   ],
-          // ),
           extendBody: true,
           backgroundColor: AppColors.theme1Color,
           bottomNavigationBar: Container(

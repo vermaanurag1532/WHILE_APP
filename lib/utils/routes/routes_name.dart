@@ -7,4 +7,5 @@ class RoutesName{
   static const String forgot='forgot_screen';
   static const String profile='profile_screen';
   static const String settings='settings';
+  static const String createMenu='create_menu';
 }

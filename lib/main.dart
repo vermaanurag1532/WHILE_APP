@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:while_app/repository/firebase_repository.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
-import 'package:while_app/view_model/image_provider.dart';
 import 'package:while_app/view_model/profile_controller.dart';
 import 'utils/routes/routes.dart';
 
@@ -21,9 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       Provider<FirebaseAuthMethods>(create: (_)=>FirebaseAuthMethods(FirebaseAuth.instance)),
-      ChangeNotifierProvider<ProfileController>(create: (_)=>ProfileController()),
       StreamProvider(create: (context)=>context.read<FirebaseAuthMethods>().authState, initialData: null),
-      ChangeNotifierProvider(create: (_)=> Imageprovider())
+      ChangeNotifierProvider(create: (_)=> ProfileController())
     ],child: MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,

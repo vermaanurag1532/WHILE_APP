@@ -18,11 +18,12 @@ class ProfileScreen extends StatelessWidget {
           children: [
             Material(
               child: TabBar(
+                padding: EdgeInsets.all(0),
                 indicatorColor: Colors.black,
                 tabs: [
-                Tab(icon: Icon(Icons.photo, color: Colors.black,),),
-                Tab(icon: Icon(Icons.twelve_mp_outlined, color: Colors.black,),),
-                Tab(icon: Icon(Icons.brush, color: Colors.black,),)
+                Tab(icon: Icon(Icons.photo_outlined, color: Colors.black,size: 30)),
+                Tab(icon: Icon(Icons.person, color: Colors.black,size: 30)),
+                Tab(icon: Icon(Icons.brush, color: Colors.black,size: 30))
               ]),
             ),
             Expanded(child: TabBarView(children: [

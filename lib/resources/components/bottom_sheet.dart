@@ -1,14 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:while_app/view_model/image_provider.dart';
+import 'package:while_app/view_model/profile_controller.dart';
 
 class Bottomsheet extends StatefulWidget {
-  final String check;
-  const Bottomsheet({super.key,required this.check});
-  
+  final String tx;
+  const Bottomsheet({super.key,required this.tx });
 
   @override
   State<Bottomsheet> createState() => _BottomsheetState();
@@ -16,17 +13,10 @@ class Bottomsheet extends StatefulWidget {
 
 class _BottomsheetState extends State<Bottomsheet> {
   final ImagePicker picker = ImagePicker();
-  var imageFile;
 
   @override
   Widget build(BuildContext context) {
-    final image = Provider.of<Imageprovider>(context, listen: false);
-
-    Future<void> takePhoto(ImageSource source) async {
-      var pickedFile = await picker.pickImage(source: source);
-      File file = File(pickedFile!.path);
-      widget.check=="p"? image.setProfile(file): image.setBg(file);
-    }
+    final profile = Provider.of<ProfileController>(context, listen: false);
 
     var w = MediaQuery.of(context).size.width;
     return Container(
@@ -38,9 +28,9 @@ class _BottomsheetState extends State<Bottomsheet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Profile photo",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
+                Text(
+                  widget.tx,
+                  style:const TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
                 ),
                 IconButton(
                     onPressed: () {},
@@ -65,7 +55,7 @@ class _BottomsheetState extends State<Bottomsheet> {
                     child: IconButton(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          takePhoto(ImageSource.camera);
+                          profile.pickCameraImage(context, widget.tx);
                         },
                         icon: const Icon(
                           Icons.photo_camera,
@@ -80,7 +70,7 @@ class _BottomsheetState extends State<Bottomsheet> {
                     child: IconButton(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          takePhoto(ImageSource.gallery);
+                          profile.pickGalleryImage(context, widget.tx);
                         },
                         icon: const Icon(
                           Icons.photo,

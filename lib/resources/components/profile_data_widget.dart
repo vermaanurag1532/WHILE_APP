@@ -1,15 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:while_app/resources/components/bottom_sheet.dart';
-import 'package:while_app/view_model/image_provider.dart';
+import 'package:while_app/view_model/profile_controller.dart';
+import '../../repository/firebase_repository.dart';
 import 'bottom_options_sheet.dart';
 
 class ProfileDataWidget extends StatelessWidget {
   const ProfileDataWidget({super.key});
 
+ 
+
   @override
   Widget build(BuildContext context) {
-    final image = Provider.of<Imageprovider>(context);
+    FirebaseAuthMethods authMethods = FirebaseAuthMethods(FirebaseAuth.instance);
+
+    final profile = Provider.of<ProfileController>(context);
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     var nh = MediaQuery.of(context).viewPadding.top;
@@ -27,19 +34,18 @@ class ProfileDataWidget extends StatelessWidget {
                   showModalBottomSheet(
                       context: context,
                       builder: (context) {
-                        return const Bottomsheet(
-                          check: "b",
-                        );
+                        return const Bottomsheet(tx: "Cover picture",);
                       });
                 },
                 child: Container(
                   height: h / 7,
                   width: w,
-                  color: Colors.blue,
-                  child: image.bgImage == null
+                  color: Colors.grey,
+                  child: profile.bgimage == null
                       ? null
                       : Image(
-                          fit: BoxFit.cover, image: FileImage(image.bgImage!)),
+                          fit: BoxFit.cover,
+                          image: FileImage(profile.bgimage!)),
                 ),
               )),
           Positioned(
@@ -50,15 +56,13 @@ class ProfileDataWidget extends StatelessWidget {
                   showModalBottomSheet(
                       context: context,
                       builder: (context) {
-                        return const Bottomsheet(
-                          check: "p",
-                        );
+                        return const Bottomsheet(tx: "Profile Picture",);
                       });
                 },
                 child: CircleAvatar(
-                  backgroundImage: image.profileImage == null
+                  backgroundImage: profile.profileimage == null
                       ? null
-                      : FileImage(image.profileImage!),
+                      : FileImage(profile.profileimage!),
                   radius: w / 8,
                 ),
               )),
@@ -103,17 +107,14 @@ class ProfileDataWidget extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w500),
               )),
           Positioned(
-            top: nh + h / 7 + w / 8 + 20,
+            top: nh + h / 7 + w / 8 + 30,
             child: Container(
               padding: const EdgeInsets.only(left: 20, right: 20),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Ankit Pandit",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                  ),
-                  Text(
+                  Text(authMethods.user.email!),
+                  const Text(
                       'My name is Ankit Kumar Dwivedi, I am founder \n'
                       'and CEO of WHILE NETWORKS Private LTD.',
                       style:
