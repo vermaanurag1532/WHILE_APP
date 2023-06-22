@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
+// import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:while_app/resources/components/container_button.dart';
 import 'package:while_app/resources/components/menu_container.dart';
 
@@ -21,9 +21,9 @@ class CreateMenuScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
             const Image(image: AssetImage("assets/while.jpg"), height: 60),
-            GradientText(
+            Text(
             "Studio",
-            colors: const [Colors.blue, Colors.green],
+            // colors: const [Colors.blue, Colors.green],
             style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 30)
           )
           ],),

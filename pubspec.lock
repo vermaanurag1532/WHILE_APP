@@ -145,6 +145,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.2"
+  firebase:
+    dependency: "direct main"
+    description:
+      name: firebase
+      sha256: cbff777369d19bd0535ccca0005518172953394246620ff8c1021072299d452d
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.3"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -568,14 +576,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  simple_gradient_text:
-    dependency: "direct main"
-    description:
-      name: simple_gradient_text
-      sha256: "075a2cbabac021d3713d0d199b2d1b0d40f6293e1e9d37b25e84936ae43c90fa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.4"
   sky_engine:
     dependency: transitive
     description: flutter
