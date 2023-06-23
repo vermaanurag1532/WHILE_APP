@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../utils/utils.dart';
 
 class FirebaseAuthMethods {
@@ -44,4 +43,13 @@ class FirebaseAuthMethods {
       Utils.snackBar(e.message!, context);
     }
   }
+
+  Future<DocumentSnapshot> getSnapshot() async {
+  DocumentSnapshot snapshot = await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(_auth.currentUser?.uid)
+      .get();
+  return snapshot;
+}
+
 }

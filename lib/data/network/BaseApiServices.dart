@@ -1,3 +1,4 @@
+// ignore: file_names
 abstract class BaseApiServices{
 
   Future<dynamic> getGetApiResponse(String url);

@@ -1,14 +1,13 @@
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:while_app/resources/colors.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:while_app/utils/utils.dart';
 import 'package:while_app/view_model/session_controller.dart';
 
 class ProfileController with ChangeNotifier {
+  // ignore: deprecated_member_use
   final databaseReference = FirebaseDatabase.instance.reference();
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('Users');
   firebase_storage.FirebaseStorage storage =
@@ -16,8 +15,10 @@ class ProfileController with ChangeNotifier {
 
   final picker = ImagePicker();
 
-  XFile? _image;
-  XFile? get image => _image;
+  File? _profileimage;
+  File? _bgimage;
+  File? get profileimage => _profileimage;
+  File? get bgimage => _bgimage;
 
   bool _loading = false;
   bool get loading => _loading;
@@ -27,77 +28,79 @@ class ProfileController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future pickGalleryImage(BuildContext context) async {
+  Future pickGalleryImage(BuildContext context, String check) async {
     final pickedFile =
         await picker.pickImage(source: ImageSource.gallery, imageQuality: 100);
 
     if (pickedFile != null) {
-      _image = XFile(pickedFile.path);
-      uploadImage(context);
-      notifyListeners();
+      if (check == "Profile Picture") {
+        _profileimage = File(pickedFile.path);
+        uploadProfileImage(context);
+        notifyListeners();
+      } else {
+        _bgimage = File(pickedFile.path);
+        uploadBgImage(context);
+        notifyListeners();
+      }
     }
   }
 
-  Future pickCameraImage(BuildContext context) async {
+  Future pickCameraImage(BuildContext context, String check) async {
     final pickedFile =
         await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
 
     if (pickedFile != null) {
-      _image = XFile(pickedFile.path);
-      uploadImage(context);
-      notifyListeners();
+      if (check == "Profile Picture") {
+        _profileimage = File(pickedFile.path);
+        uploadProfileImage(context);
+        notifyListeners();
+      } else {
+        _bgimage = File(pickedFile.path);
+        uploadBgImage(context);
+        notifyListeners();
+      }
     }
   }
 
-  void pickImage(context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Container(
-                height: 120,
-                child: Column(
-                  children: [
-                    ListTile(
-                      onTap: () {
-                        pickCameraImage(context);
-                        Navigator.pop(context);
-                      },
-                      leading: Icon(Icons.camera, color: AppColors.theme1Color),
-                      title: Text('Camera'),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        pickGalleryImage(context);
-                        Navigator.pop(context);
-                      },
-                      leading: Icon(Icons.image, color: AppColors.theme1Color),
-                      title: Text('Gallery'),
-                    ),
-                  ],
-                )),
-          );
-        });
-  }
-
-  void uploadImage(BuildContext context) async {
+  void uploadProfileImage(BuildContext context) async {
     setLoading(true);
     firebase_storage.Reference storageRef = firebase_storage
         .FirebaseStorage.instance
-        .ref('/profileImage' + FirebaseSessionController().uid!.toString());
+        .ref('/profileImage${FirebaseSessionController().uid!}');
     firebase_storage.UploadTask uploadTask =
-        storageRef.putFile(File(image!.path).absolute);
+        storageRef.putFile(File(profileimage!.path).absolute);
     await Future.value(uploadTask);
     final newUrl = await storageRef.getDownloadURL();
     ref
         .child(FirebaseSessionController().uid.toString())
-        .update({'profile': newUrl.toString()}).then((value) {
+        .update({'profileImage': newUrl.toString()}).then((value) {
       setLoading(true);
-      _image = null;
+      _profileimage = null;
       Utils.toastMessage('Profile Updated');
     }).onError((error, stackTrace) {
       setLoading(true);
       Utils.toastMessage(error.toString());
+    });
+  }
+
+  void uploadBgImage(BuildContext context) async {
+    setLoading(true);
+    firebase_storage.Reference storageRef = firebase_storage
+        .FirebaseStorage.instance
+        .ref('/bgImage${FirebaseSessionController().uid!}');
+    firebase_storage.UploadTask uploadTask =
+        storageRef.putFile(File(bgimage!.path).absolute);
+    await Future.value(uploadTask);
+    final newUrl = await storageRef.getDownloadURL();
+    ref
+        .child(FirebaseSessionController().uid.toString())
+        .update({'bgImage': newUrl.toString()}).then((value) {
+      setLoading(true);
+      _bgimage = null;
+      Utils.toastMessage("Cover Updated");
+    }).onError((e, stackTrace) {
+      setLoading(true);
+      Utils.toastMessage(e.toString());
     });
   }
 }

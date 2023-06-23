@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       Provider<FirebaseAuthMethods>(create: (_)=>FirebaseAuthMethods(FirebaseAuth.instance)),
-      ChangeNotifierProvider<ProfileController>(create: (_)=>ProfileController()),
-      StreamProvider(create: (context)=>context.read<FirebaseAuthMethods>().authState, initialData: null)
+      StreamProvider(create: (context)=>context.read<FirebaseAuthMethods>().authState, initialData: null),
+      ChangeNotifierProvider(create: (_)=> ProfileController())
     ],child: MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
