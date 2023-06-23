@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:while_app/data/model/message.dart';
+import 'package:while_app/resources/components/message_list_widget.dart';
 import 'package:while_app/view/social/community_screenn.dart';
-import 'package:while_app/view/social/message_screen.dart';
 import 'package:while_app/view/social/search.dart';
 import 'package:while_app/view/social/story_screen.dart';
 
 class SocialScreen extends StatefulWidget {
-  const SocialScreen({super.key});
+  SocialScreen({super.key, required this.message});
+  List<UserDetail> message = [];
   @override
   State<SocialScreen> createState() {
     return _SocialScreenState();
@@ -15,9 +17,7 @@ class SocialScreen extends StatefulWidget {
 class _SocialScreenState extends State<SocialScreen>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
-  ////
 
-////
   @override
   void initState() {
     super.initState();
@@ -79,7 +79,7 @@ class _SocialScreenState extends State<SocialScreen>
         controller: _controller,
         children: const [
           StoryScreen(),
-          MessageScreen(),
+          MessageList(),
           CommunityScreen(),
           Text('Calls'),
         ],

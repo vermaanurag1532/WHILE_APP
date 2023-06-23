@@ -21,7 +21,10 @@ class FirebaseAuthMethods {
         FirebaseFirestore.instance
             .collection('Users')
             .doc(_auth.currentUser?.uid)
-            .set({"email": email, "name": name});
+            .set({
+          "email": email,
+          "name": name,
+        });
       });
     } on FirebaseAuthException catch (e) {
       Utils.snackBar(e.message!, context);

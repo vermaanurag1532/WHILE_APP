@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:while_app/data/model/message.dart';
+import 'package:while_app/view/social/social_home_screen.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -10,6 +13,9 @@ class Search extends StatefulWidget {
 
 class _MyAppState extends State<Search> {
   String name = "";
+  List<UserDetail> message = [];
+
+  add() {}
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +47,24 @@ class _MyAppState extends State<Search> {
 
                       if (name.isEmpty) {
                         return ListTile(
+                          onTap: () {
+                            message = [UserDetail(username: data['name'])];
+                            final user = FirebaseAuth.instance.currentUser!;
+                            FirebaseFirestore.instance
+                                .collection('Users')
+                                .doc(user.uid)
+                                .collection('followers')
+                                .add({
+                              'friendName': data['name'],
+                              'uid': snapshots.data!.docs[index].id,
+                              'profile': data['profile'],
+                            });
+
+                            // Navigator.of(context).pop(message);
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) =>
+                                    SocialScreen(message: message)));
+                          },
                           title: Text(
                             data['name'],
                             maxLines: 1,
@@ -59,9 +83,9 @@ class _MyAppState extends State<Search> {
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           ),
-                          // leading: CircleAvatar(
-                          //   backgroundImage: NetworkImage(data['image']),
-                          // ),
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(data['profile']),
+                          ),
                         );
                       }
                       if (data['name']
@@ -69,6 +93,9 @@ class _MyAppState extends State<Search> {
                           .toLowerCase()
                           .startsWith(name.toLowerCase())) {
                         return ListTile(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
                           title: Text(
                             data['name'],
                             maxLines: 1,
@@ -87,9 +114,9 @@ class _MyAppState extends State<Search> {
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           ),
-                          // leading: CircleAvatar(
-                          //   backgroundImage: NetworkImage(data['image']),
-                          // ),
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(data['profile']),
+                          ),
                         );
                       }
                       return Container();

@@ -66,7 +66,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         top: top,
                         child: Consumer<ProfileController>(
                             builder: (context, profileProvider, child) {
-                        
                           return GestureDetector(
                             onTap: () {
                               profileProvider.pickImage(context);
@@ -80,8 +79,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     return CircleAvatar(
                                         radius: profileHeight / 2.5,
                                         backgroundColor: Colors.grey.shade800,
-                                        backgroundImage: NetworkImage(
-                                          snapshot.data!));
+                                        backgroundImage:
+                                            NetworkImage(snapshot.data!));
                                   } else {
                                     return CircleAvatar(
                                         radius: profileHeight / 2.5,

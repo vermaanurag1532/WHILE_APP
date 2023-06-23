@@ -1,8 +1,8 @@
 class UserDetail {
   const UserDetail({
-    required this.title,
-    required this.image,
+    required this.username,
+    // required this.image,
   });
-  final String title;
-  final String image;
+  final String username;
+  // final String image;
 }

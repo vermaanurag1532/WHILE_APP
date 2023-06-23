@@ -30,7 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     FeedScreen(),
-    const SocialScreen(),
+    SocialScreen(
+      message: [],
+    ),
     ReelsScreen(),
     const CreateScreen(),
     ProfileScreen()
@@ -47,7 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
               IconButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => const SocialScreen()));
+                      builder: (ctx) => SocialScreen(
+                            message: [],
+                          )));
                 },
                 icon: const Icon(Icons.message),
               ),

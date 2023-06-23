@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:while_app/resources/components/chat_messages.dart';
+import 'package:while_app/resources/components/new_messages.dart';
 // import 'package:while_app/data/model/message.dart';
 
 class MessageDetailScreen extends StatelessWidget {
   const MessageDetailScreen(
-      {super.key, required this.userName, required this.userImage});
+      {super.key,
+      required this.userName,
+      required this.userImage,
+      required this.uid});
   final String userName;
   final String userImage;
+  final String uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +31,17 @@ class MessageDetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: const Center(child: Text('message')),
+      body: Column(
+        children: [
+          Expanded(
+              child: ChatMessages(
+            uid: uid,
+          )),
+          NewMessage(
+            uid: uid,
+          ),
+        ],
+      ),
     );
   }
 }
