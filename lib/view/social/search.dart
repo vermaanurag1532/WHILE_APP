@@ -42,57 +42,60 @@ class _MyAppState extends State<Search> {
                     itemBuilder: (context, index) {
                       var data = snapshots.data!.docs[index].data()
                           as Map<String, dynamic>;
+                      void addFriend() {
+                        final user = FirebaseAuth.instance.currentUser!;
+                        bool fr = false;
+                        void isFriend() async {
+                          var n = await FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(user.uid)
+                              .collection('followers')
+                              .get();
+                          int k = n.docs.length.toInt();
+
+                          for (int i = 0; i < k; i++) {
+                            if (snapshots.data!.docs[index].id ==
+                                n.docs[i].get('uid')) {
+                              fr = true;
+                              break;
+                            }
+                          }
+
+                          if (fr == false) {
+                            FirebaseFirestore.instance
+                                .collection('Users')
+                                .doc(user.uid)
+                                .collection('followers')
+                                .add({
+                              'friendName': data['name'],
+                              'uid': snapshots.data!.docs[index].id,
+                              'profile': data['profile'],
+                              'isFriend': true,
+                            });
+                            var userData = await FirebaseFirestore.instance
+                                .collection('Users')
+                                .doc(user.uid)
+                                .get();
+                            FirebaseFirestore.instance
+                                .collection('Users')
+                                .doc(snapshots.data!.docs[index].id)
+                                .collection('followers')
+                                .add({
+                              'friendName': userData.data()!['name'],
+                              'uid': user.uid,
+                              'profile': userData.data()!['profile'],
+                              'isFriend': true,
+                            });
+                          }
+                        }
+
+                        isFriend();
+                      }
 
                       if (name.isEmpty) {
                         return ListTile(
                           onTap: () {
-                            final user = FirebaseAuth.instance.currentUser!;
-                            bool fr = false;
-                            void isFriend() async {
-                              var n = await FirebaseFirestore.instance
-                                  .collection('Users')
-                                  .doc(user.uid)
-                                  .collection('followers')
-                                  .get();
-                              int k = n.docs.length.toInt();
-
-                              for (int i = 0; i < k; i++) {
-                                if (snapshots.data!.docs[index].id ==
-                                    n.docs[i].get('uid')) {
-                                  fr = true;
-                                  break;
-                                }
-                              }
-
-                              if (fr == false) {
-                                FirebaseFirestore.instance
-                                    .collection('Users')
-                                    .doc(user.uid)
-                                    .collection('followers')
-                                    .add({
-                                  'friendName': data['name'],
-                                  'uid': snapshots.data!.docs[index].id,
-                                  'profile': data['profile'],
-                                  'isFriend': true,
-                                });
-                                var userData = await FirebaseFirestore.instance
-                                    .collection('Users')
-                                    .doc(user.uid)
-                                    .get();
-                                FirebaseFirestore.instance
-                                    .collection('Users')
-                                    .doc(snapshots.data!.docs[index].id)
-                                    .collection('followers')
-                                    .add({
-                                  'friendName': userData.data()!['name'],
-                                  'uid': user.uid,
-                                  'profile': userData.data()!['profile'],
-                                  'isFriend': true,
-                                });
-                              }
-                            }
-
-                            isFriend();
+                            addFriend();
 
                             // Navigator.of(context).pop(message);
                             Navigator.of(context).push(MaterialPageRoute(
@@ -127,6 +130,7 @@ class _MyAppState extends State<Search> {
                           .startsWith(name.toLowerCase())) {
                         return ListTile(
                           onTap: () {
+                            addFriend();
                             Navigator.of(context).pop();
                           },
                           title: Text(
