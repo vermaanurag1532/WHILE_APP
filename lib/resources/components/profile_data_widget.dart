@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -25,13 +26,12 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
             .doc(firebaseUser.uid)
             .get()
             .then((ds) {
-         if(ds.exists){
-          name=ds.data()!['name'];
-         }
-         else{
-          print(ds.data());
-          print("User not found");
-         }
+          if (ds.exists) {
+            name = ds.data()!['name'];
+          } else {
+            print(ds.data());
+            print("User not found");
+          }
         }).catchError((e) {
           print(e);
         });
@@ -179,7 +179,11 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
                     future: _fetch(),
                     builder: ((context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return Text(name, style:const TextStyle(fontSize: 25, fontWeight: FontWeight.w500),);
+                        return Text(
+                          name,
+                          style: const TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w500),
+                        );
                       }
                       return const Text("loading data please wait");
                     }),

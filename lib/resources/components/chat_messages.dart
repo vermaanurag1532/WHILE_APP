@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:while_app/resources/components/message_shape_widget.dart';
+import 'package:while_app/resources/components/message_bubble.dart';
 
 class ChatMessages extends StatelessWidget {
   const ChatMessages({super.key, required this.uid});
@@ -59,14 +59,13 @@ class ChatMessages extends StatelessWidget {
                 nextChatMessage != null ? nextChatMessage['userId'] : null;
             final nextUserIsSame = nextMessageUserId == currentMessageUserId;
             if (nextUserIsSame) {
+              print(chatMessage['text']);
               return MessageBubble.next(
                 message: chatMessage['text'],
                 isMe: authenticatedUser.uid == currentMessageUserId,
               );
             } else {
               return MessageBubble.first(
-                userImage: chatMessage['userImage'],
-                username: chatMessage['username'],
                 message: chatMessage['text'],
                 isMe: authenticatedUser.uid == currentMessageUserId,
               );

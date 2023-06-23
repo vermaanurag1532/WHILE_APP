@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class NewMessage extends StatefulWidget {
@@ -25,7 +24,7 @@ class _NewMessageState extends State<NewMessage> {
     if (enteredMessage.trim().isEmpty) {
       return;
     }
-    FocusScope.of(context).unfocus();
+    // FocusScope.of(context).unfocus();
     _messageController.clear();
     // send to firebase
 
@@ -69,8 +68,8 @@ class _NewMessageState extends State<NewMessage> {
           'text': enteredMessage,
           'createdAt': Timestamp.now(),
           'userId': user.uid,
-          'username': userData.data()!['friendName'],
-          'userImage': userData.data()!['profile'],
+          // 'username': userData.data()!['friendName'],
+          // 'userImage': userData.data()!['profile'],
         });
 
         break;
@@ -87,8 +86,8 @@ class _NewMessageState extends State<NewMessage> {
       'text': enteredMessage,
       'createdAt': Timestamp.now(),
       'userId': user.uid,
-      'username': userData.data()!['friendName'],
-      'userImage': userData.data()!['profile'],
+      // 'username': userData.data()!['friendName'],
+      // 'userImage': userData.data()!['profile'],
     });
 
     //close keyboard
@@ -96,7 +95,6 @@ class _NewMessageState extends State<NewMessage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Padding(
       padding: const EdgeInsets.only(
         left: 15,
