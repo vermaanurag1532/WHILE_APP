@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:while_app/data/model/message.dart';
 import 'package:while_app/view/social/social_home_screen.dart';
 
 class Search extends StatefulWidget {
@@ -13,7 +12,6 @@ class Search extends StatefulWidget {
 
 class _MyAppState extends State<Search> {
   String name = "";
-  List<UserDetail> message = [];
 
   add() {}
 
@@ -48,17 +46,53 @@ class _MyAppState extends State<Search> {
                       if (name.isEmpty) {
                         return ListTile(
                           onTap: () {
-                            message = [UserDetail(username: data['name'])];
                             final user = FirebaseAuth.instance.currentUser!;
-                            FirebaseFirestore.instance
-                                .collection('Users')
-                                .doc(user.uid)
-                                .collection('followers')
-                                .add({
-                              'friendName': data['name'],
-                              'uid': snapshots.data!.docs[index].id,
-                              'profile': data['profile'],
-                            });
+                            bool fr = false;
+                            void isFriend() async {
+                              var n = await FirebaseFirestore.instance
+                                  .collection('Users')
+                                  .doc(user.uid)
+                                  .collection('followers')
+                                  .get();
+                              int k = n.docs.length.toInt();
+
+                              for (int i = 0; i < k; i++) {
+                                if (snapshots.data!.docs[index].id ==
+                                    n.docs[i].get('uid')) {
+                                  fr = true;
+                                  break;
+                                }
+                              }
+
+                              if (fr == false) {
+                                FirebaseFirestore.instance
+                                    .collection('Users')
+                                    .doc(user.uid)
+                                    .collection('followers')
+                                    .add({
+                                  'friendName': data['name'],
+                                  'uid': snapshots.data!.docs[index].id,
+                                  'profile': data['profile'],
+                                  'isFriend': true,
+                                });
+                                var userData = await FirebaseFirestore.instance
+                                    .collection('Users')
+                                    .doc(user.uid)
+                                    .get();
+                                FirebaseFirestore.instance
+                                    .collection('Users')
+                                    .doc(snapshots.data!.docs[index].id)
+                                    .collection('followers')
+                                    .add({
+                                  'friendName': userData.data()!['name'],
+                                  'uid': user.uid,
+                                  'profile': userData.data()!['profile'],
+                                  'isFriend': true,
+                                });
+                              }
+                            }
+
+                            isFriend();
 
                             // Navigator.of(context).pop(message);
                             Navigator.of(context).push(MaterialPageRoute(

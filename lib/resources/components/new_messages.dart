@@ -50,6 +50,47 @@ class _NewMessageState extends State<NewMessage> {
       'userImage': userData.data()!['profile'],
     });
 
+    var n = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userData.data()!['uid'])
+        .collection('followers')
+        .get();
+    int k = n.docs.length.toInt();
+
+    for (int i = 0; i < k; i++) {
+      if (n.docs[i].get('uid') == user.uid) {
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(userData.data()!['uid'])
+            .collection('followers')
+            .doc(n.docs[i].id)
+            .collection('message')
+            .add({
+          'text': enteredMessage,
+          'createdAt': Timestamp.now(),
+          'userId': user.uid,
+          'username': userData.data()!['friendName'],
+          'userImage': userData.data()!['profile'],
+        });
+
+        break;
+      }
+    }
+
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userData.data()!['uid'])
+        .collection('followers')
+        .doc(widget.uid)
+        .collection('message')
+        .add({
+      'text': enteredMessage,
+      'createdAt': Timestamp.now(),
+      'userId': user.uid,
+      'username': userData.data()!['friendName'],
+      'userImage': userData.data()!['profile'],
+    });
+
     //close keyboard
   }
 

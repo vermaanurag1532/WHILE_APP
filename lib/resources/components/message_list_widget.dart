@@ -7,6 +7,7 @@ class MessageList extends StatelessWidget {
   const MessageList({
     super.key,
   });
+  final friendUid = '';
 
   @override
   Widget build(BuildContext context) {
