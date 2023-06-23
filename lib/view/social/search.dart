@@ -62,8 +62,7 @@ class _MyAppState extends State<Search> {
 
                             // Navigator.of(context).pop(message);
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) =>
-                                    SocialScreen(message: message)));
+                                builder: (ctx) => SocialScreen()));
                           },
                           title: Text(
                             data['name'],

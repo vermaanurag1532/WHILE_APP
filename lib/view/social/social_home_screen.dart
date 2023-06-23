@@ -6,8 +6,10 @@ import 'package:while_app/view/social/search.dart';
 import 'package:while_app/view/social/story_screen.dart';
 
 class SocialScreen extends StatefulWidget {
-  SocialScreen({super.key, required this.message});
-  List<UserDetail> message = [];
+  SocialScreen({
+    super.key,
+  });
+
   @override
   State<SocialScreen> createState() {
     return _SocialScreenState();

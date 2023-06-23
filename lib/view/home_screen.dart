@@ -30,9 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     FeedScreen(),
-    SocialScreen(
-      message: [],
-    ),
+    SocialScreen(),
     ReelsScreen(),
     const CreateScreen(),
     const ProfileScreen()
@@ -45,22 +43,29 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             backgroundColor: AppColors.theme1Color,
             elevation: 0.0,
-            // actions: [
-            //   PopupMenuButton(
-            //       icon: const Icon(
-            //         Icons.more_vert,
-            //         color: Colors.white,
-            //       ),
-            //       itemBuilder: (_) => _popupMenuList.map((menuItem) {
-            //             return PopupMenuItem(
-            //               child: Text(menuItem),
-            //               onTap: () async {
-            //                 FirebaseAuthMethods(FirebaseAuth.instance)
-            //                     .signOut(context);
-            //               },
-            //             );
-            //           }).toList())
-            // ],
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SocialScreen(),
+                    ));
+                  },
+                  icon: Icon(Icons.message)),
+              PopupMenuButton(
+                  icon: const Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                  ),
+                  itemBuilder: (_) => _popupMenuList.map((menuItem) {
+                        return PopupMenuItem(
+                          child: Text(menuItem),
+                          onTap: () async {
+                            FirebaseAuthMethods(FirebaseAuth.instance)
+                                .signOut(context);
+                          },
+                        );
+                      }).toList())
+            ],
           ),
           extendBody: true,
           backgroundColor: AppColors.theme1Color,
