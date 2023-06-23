@@ -32,6 +32,7 @@ class MessageList extends StatelessWidget {
                   return ListTile(
                     title: Text(data['friendName']),
                     onTap: () {
+                      print(snapshot.data!.docs[index].id);
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (ctx) => MessageDetailScreen(
                           userName: data['friendName'],

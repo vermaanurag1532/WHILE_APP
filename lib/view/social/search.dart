@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:while_app/view/social/message_detail.dart';
 import 'package:while_app/view/social/social_home_screen.dart';
 
 class Search extends StatefulWidget {
@@ -42,54 +43,58 @@ class _MyAppState extends State<Search> {
                     itemBuilder: (context, index) {
                       var data = snapshots.data!.docs[index].data()
                           as Map<String, dynamic>;
-                      void addFriend() {
-                        final user = FirebaseAuth.instance.currentUser!;
+
+                      final user = FirebaseAuth.instance.currentUser!;
+                      var uid = '';
+                      void addFriend() async {
                         bool fr = false;
-                        void isFriend() async {
-                          var n = await FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(user.uid)
-                              .collection('followers')
-                              .get();
-                          int k = n.docs.length.toInt();
 
-                          for (int i = 0; i < k; i++) {
-                            if (snapshots.data!.docs[index].id ==
-                                n.docs[i].get('uid')) {
-                              fr = true;
-                              break;
-                            }
-                          }
+                        var n = await FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(user.uid)
+                            .collection('followers')
+                            .get();
+                        int k = n.docs.length.toInt();
 
-                          if (fr == false) {
-                            FirebaseFirestore.instance
-                                .collection('Users')
-                                .doc(user.uid)
-                                .collection('followers')
-                                .add({
-                              'friendName': data['name'],
-                              'uid': snapshots.data!.docs[index].id,
-                              'profile': data['profile'],
-                              'isFriend': true,
-                            });
-                            var userData = await FirebaseFirestore.instance
-                                .collection('Users')
-                                .doc(user.uid)
-                                .get();
-                            FirebaseFirestore.instance
-                                .collection('Users')
-                                .doc(snapshots.data!.docs[index].id)
-                                .collection('followers')
-                                .add({
-                              'friendName': userData.data()!['name'],
-                              'uid': user.uid,
-                              'profile': userData.data()!['profile'],
-                              'isFriend': true,
-                            });
+                        for (int i = 0; i < k; i++) {
+                          if (snapshots.data!.docs[index].id ==
+                              n.docs[i].get('uid')) {
+                            fr = true;
+                            uid = n.docs[i].id;
+                            break;
                           }
                         }
 
-                        isFriend();
+                        if (fr == false) {
+                          FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(user.uid)
+                              .collection('followers')
+                              .add({
+                            'friendName': data['name'],
+                            'uid': snapshots.data!.docs[index].id,
+                            'profile': data['profile'],
+                          });
+
+                          var userData = await FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(user.uid)
+                              .get();
+                          FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(snapshots.data!.docs[index].id)
+                              .collection('followers')
+                              .add({
+                            'friendName': userData.data()!['name'],
+                            'uid': user.uid,
+                            'profile': userData.data()!['profile'],
+                          });
+                        }
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => MessageDetailScreen(
+                                userName: data['name'],
+                                userImage: data['profile'],
+                                uid: uid)));
                       }
 
                       if (name.isEmpty) {
@@ -98,8 +103,6 @@ class _MyAppState extends State<Search> {
                             addFriend();
 
                             // Navigator.of(context).pop(message);
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => SocialScreen()));
                           },
                           title: Text(
                             data['name'],
