@@ -42,17 +42,16 @@ dependencies:
   shared_preferences: 
   firebase_core: ^2.13.1
   firebase_auth: ^4.6.2
-  cloud_firestore: ^4.3.2
   # camera: ^0.10.5+2
   path_provider: ^2.0.15
-  # video_player: ^2.6.1
-  google_nav_bar: ^5.0.6
   image_picker: ^0.8.9
+  google_nav_bar: ^5.0.6
   firebase_database: ^10.2.3
   firebase_storage: ^11.2.3
-  firestore_search: ^0.2.0
+  firebase: ^9.0.3
+  cloud_firestore: ^4.8.1
+  # gradient_text:
   
-
 
 dev_dependencies:
   flutter_test:
