@@ -46,6 +46,19 @@ class _MyAppState extends State<Search> {
 
                       final user = FirebaseAuth.instance.currentUser!;
                       var uid = '';
+                      bool functionCallComplete = false;
+                      void navigate() {
+                        if (uid != '') {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => MessageDetailScreen(
+                                  userName: data['name'],
+                                  userImage: data['profile'],
+                                  uid: uid)));
+                        } else {}
+                        print('navigated');
+                        print(uid);
+                      }
+
                       void addFriend() async {
                         bool fr = false;
 
@@ -61,6 +74,8 @@ class _MyAppState extends State<Search> {
                               n.docs[i].get('uid')) {
                             fr = true;
                             uid = n.docs[i].id;
+                            navigate();
+                            print(uid);
                             break;
                           }
                         }
@@ -89,18 +104,30 @@ class _MyAppState extends State<Search> {
                             'uid': user.uid,
                             'profile': userData.data()!['profile'],
                           });
+                          for (int i = 0; i <= k; i++) {
+                            print(i);
+                            if (snapshots.data!.docs[index].id ==
+                                n.docs[i].get('uid')) {
+                              uid = n.docs[i].id;
+                              print('hurrraaay');
+                              navigate();
+                              break;
+                            }
+                          }
                         }
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) => MessageDetailScreen(
-                                userName: data['name'],
-                                userImage: data['profile'],
-                                uid: uid)));
+                        functionCallComplete = true;
+                        print(functionCallComplete);
                       }
 
                       if (name.isEmpty) {
                         return ListTile(
                           onTap: () {
                             addFriend();
+                            print('not wait');
+
+                            if (functionCallComplete) {
+                              print('navigator called');
+                            }
 
                             // Navigator.of(context).pop(message);
                           },
