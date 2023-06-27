@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -151,6 +153,15 @@ class _MyAppState extends State<Search> {
                           ),
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(data['profile']),
+                          ),
+                          trailing: OutlinedButton(
+                            onPressed: () {},
+                            child: Text('Follow'),
+                            style: OutlinedButton.styleFrom(
+                                elevation: 2,
+                                primary: Colors.white,
+                                backgroundColor:
+                                    Color.fromARGB(162, 15, 60, 165)),
                           ),
                         );
                       }

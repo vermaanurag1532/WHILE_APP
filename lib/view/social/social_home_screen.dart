@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:while_app/data/model/message.dart';
 import 'package:while_app/resources/components/message_list_widget.dart';
 import 'package:while_app/view/social/community_screenn.dart';
+import 'package:while_app/view/social/notification.dart';
 import 'package:while_app/view/social/search.dart';
 import 'package:while_app/view/social/story_screen.dart';
 
@@ -33,6 +33,12 @@ class _SocialScreenState extends State<SocialScreen>
         backgroundColor: Colors.deepPurpleAccent,
         title: const Text('Social'),
         actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => const NotificationScreen()));
+              },
+              icon: const Icon(Icons.notifications)),
           IconButton(
               onPressed: () {
                 Navigator.of(context)

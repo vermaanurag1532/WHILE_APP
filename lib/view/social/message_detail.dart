@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/chat_messages.dart';
 import 'package:while_app/resources/components/new_messages.dart';
+import 'package:while_app/view/social/friend_profile_screen.dart';
 // import 'package:while_app/data/model/message.dart';
 
 class MessageDetailScreen extends StatelessWidget {
@@ -23,11 +24,29 @@ class MessageDetailScreen extends StatelessWidget {
               maxRadius: 20,
               minRadius: 2,
               backgroundImage: NetworkImage(userImage, scale: 0.5),
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => FriendProfileScreen(
+                            profileImageURl: userImage,
+                            userName: userName,
+                          )));
+                },
+              ),
             ),
             const SizedBox(
               width: 20,
             ),
-            Text(userName),
+            InkWell(
+              child: Text(userName),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => FriendProfileScreen(
+                          profileImageURl: userImage,
+                          userName: userName,
+                        )));
+              },
+            )
           ],
         ),
       ),
