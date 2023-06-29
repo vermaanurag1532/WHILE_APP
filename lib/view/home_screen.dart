@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:while_app/repository/firebase_repository.dart';
 import 'package:while_app/resources/colors.dart';
 import 'package:while_app/view/create_screen.dart';
@@ -8,6 +7,7 @@ import 'package:while_app/view/feed_screen.dart';
 import 'package:while_app/view/profile_screen.dart';
 import 'package:while_app/view/reels_screen.dart';
 import 'package:while_app/view/social/social_home_screen.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,10 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     FeedScreen(),
-    const SocialScreen(),
+    SocialScreen(),
     ReelsScreen(),
     const CreateScreen(),
-    ProfileScreen()
+    const ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
@@ -44,6 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: AppColors.theme1Color,
             elevation: 0.0,
             actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SocialScreen(),
+                    ));
+                  },
+                  icon: Icon(Icons.message)),
               PopupMenuButton(
                   icon: const Icon(
                     Icons.more_vert,

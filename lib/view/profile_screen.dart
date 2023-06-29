@@ -1,42 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:while_app/resources/components/buildButton.dart';
-import 'package:while_app/resources/components/buildDivider.dart';
-import 'package:while_app/view_model/profile_controller.dart';
-import 'package:while_app/view_model/session_controller.dart';
+import 'package:while_app/resources/components/profile_data_widget.dart';
+import 'package:while_app/view/uploaded_screen.dart';
 
-class ProfileScreen extends StatefulWidget {
-  ProfileScreen({Key? key}) : super(key: key);
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  final double coverHeight = 160;
-  final double profileHeight = 144;
-  final Reference storageReference = FirebaseStorage.instance
-      .ref()
-      .child('/profileImage${FirebaseSessionController().uid!}');
-  String name = "";
-
-  _fetch() async {
-    final firebaseUser = FirebaseAuth.instance.currentUser;
-    if (firebaseUser != null) {
-      await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(firebaseUser.uid)
-          .get()
-          .then((ds) {
-        name = ds.data()!['name'];
-      }).catchError((e) {
-        print(e);
-      });
-    }
-  }
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         top: top,
                         child: Consumer<ProfileController>(
                             builder: (context, profileProvider, child) {
+                        
                           return GestureDetector(
                             onTap: () {
                               profileProvider.pickImage(context);
@@ -77,8 +50,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     return CircleAvatar(
                                         radius: profileHeight / 2.5,
                                         backgroundColor: Colors.grey.shade800,
-                                        backgroundImage:
-                                            NetworkImage(snapshot.data!));
+                                        backgroundImage: NetworkImage(
+                                          snapshot.data!));
                                   } else {
                                     return CircleAvatar(
                                         radius: profileHeight / 2.5,
@@ -149,4 +122,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
           fit: BoxFit.cover,
         ),
       );
+  // Widget buildProfileImage(Provider<ProfileController> profileProvider) =>
 }

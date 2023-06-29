@@ -1,68 +1,53 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:while_app/data/model/message.dart';
 import 'package:while_app/view/social/message_detail.dart';
 
 class MessageList extends StatelessWidget {
-  const MessageList({super.key, required this.message});
-  final List<UserDetail> message;
+  const MessageList({
+    super.key,
+  });
+  final friendUid = '';
+
   @override
   Widget build(BuildContext context) {
-    if (message.isEmpty) {
-      return Center(
-        child: Text(
-          'No Message is added yet',
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
-        ),
-      );
-    }
-    return Scaffold(
-      body: Stack(
-        alignment: AlignmentDirectional.bottomEnd,
-        children: [
-          ListView.builder(
-            itemCount: message.length,
-            itemBuilder: (ctx, index) => ListTile(
-              leading: CircleAvatar(
-                radius: 56,
-                backgroundImage: NetworkImage(message[index].image),
-              ),
-              title: Text(
-                message[index].title,
-              ),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => MessageDetailScreen(
-                    userName: message[index].title,
-                    userImage: message[index].image,
-                  ),
-                ));
-              },
-              contentPadding: const EdgeInsets.only(top: 15, left: 2),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(right: 20, bottom: 40),
-            child: FloatingActionButton.extended(
-              onPressed: () {},
-              label: const Icon(
-                Icons.add_comment,
-                size: 30,
-              ),
-              elevation: 10,
-              splashColor: Colors.purple,
-              extendedPadding: const EdgeInsets.only(
-                top: 20,
-                bottom: 20,
-                left: 20,
-                right: 20,
-              ),
-              backgroundColor: Colors.deepPurpleAccent,
-            ),
-          )
-        ],
-      ),
+    final user = FirebaseAuth.instance.currentUser!;
+
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.uid)
+          .collection('followers')
+          .snapshots(),
+      builder: (context, snapshot) {
+        return (snapshot.connectionState == ConnectionState.waiting)
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  var data = snapshot.data!.docs[index].data();
+
+                  return ListTile(
+                    title: Text(data['friendName']),
+                    onTap: () {
+                      print(snapshot.data!.docs[index].id);
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => MessageDetailScreen(
+                          userName: data['friendName'],
+                          userImage: data['profile'],
+                          uid: snapshot.data!.docs[index].id,
+                        ),
+                      ));
+                    },
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(data['profile']),
+                    ),
+                  );
+                },
+              );
+      },
     );
   }
 }

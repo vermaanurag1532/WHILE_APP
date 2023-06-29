@@ -17,9 +17,7 @@ class _ReelsScreenState extends State<ReelsScreen> {
             color: Colors.white,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-        child: const Center(
-            child: Text("Reels Screen")
-        ),
+        child: const Center(child: Text("Reels Screen")),
       ),
     );
   }

@@ -1,4 +1,4 @@
 {
     "cmake.configureOnOpen": false,
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "cmake.sourceDirectory": "/Users/abhishekbansal/Desktop/flutter_git/WHILE_APP/linux"
 }
