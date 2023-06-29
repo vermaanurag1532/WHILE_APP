@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -66,7 +64,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         top: top,
                         child: Consumer<ProfileController>(
                             builder: (context, profileProvider, child) {
-                        
                           return GestureDetector(
                             onTap: () {
                               profileProvider.pickImage(context);
@@ -80,8 +77,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     return CircleAvatar(
                                         radius: profileHeight / 2.5,
                                         backgroundColor: Colors.grey.shade800,
-                                        backgroundImage: NetworkImage(
-                                          snapshot.data!));
+                                        backgroundImage:
+                                            NetworkImage(snapshot.data!));
                                   } else {
                                     return CircleAvatar(
                                         radius: profileHeight / 2.5,
@@ -152,5 +149,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
           fit: BoxFit.cover,
         ),
       );
-  // Widget buildProfileImage(Provider<ProfileController> profileProvider) =>
 }

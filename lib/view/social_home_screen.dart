@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:while_app/view/community_screenn.dart';
-import 'package:while_app/view/message_screen.dart';
 import 'package:while_app/view/social/story_screen.dart';
+
+import 'social/community_screenn.dart';
+import 'social/message_screen.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
