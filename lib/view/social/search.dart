@@ -3,8 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import 'package:while_app/view/social/message_detail.dart';
 import 'package:while_app/view/social/social_home_screen.dart';
+import 'package:while_app/view_model/current_user_provider.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -46,14 +48,16 @@ class _MyAppState extends State<Search> {
                       var data = snapshots.data!.docs[index].data()
                           as Map<String, dynamic>;
 
-                      final user = FirebaseAuth.instance.currentUser!;
+                      // final user = FirebaseAuth.instance.currentUser!;
+                      var userProvider =
+                          Provider.of<CurrentUserProvider>(context);
                       var uid = '';
-
+                      var alreadyFriend = '';
                       check() async {
                         String isFollowing = 'Follow';
                         var n = await FirebaseFirestore.instance
                             .collection('Users')
-                            .doc(user.uid)
+                            .doc(userProvider.user.uid)
                             .collection('following')
                             .get();
                         int k = n.docs.length.toInt();
@@ -74,16 +78,26 @@ class _MyAppState extends State<Search> {
                           if (snapshots.data!.docs[index].id ==
                               n.docs[i].get('uid')) {
                             isFollowing = 'Message';
-                            // print('following');
-                            // print(n.docs[i].get('uid'));
-
                             break;
                           }
                         }
                         return isFollowing;
                       }
 
-                      void navigate() {
+                      void navigate() async {
+                        var n = await FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(userProvider.user.uid)
+                            .collection('followers')
+                            .get();
+                        int k = n.docs.length.toInt();
+                        for (int i = 0; i < k; i++) {
+                          if (snapshots.data!.docs[index].id ==
+                              n.docs[i].get('uid')) {
+                            uid = n.docs[i].id;
+                            break;
+                          }
+                        }
                         if (uid != '') {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (ctx) => MessageDetailScreen(
@@ -98,13 +112,13 @@ class _MyAppState extends State<Search> {
 
                         var n = await FirebaseFirestore.instance
                             .collection('Users')
-                            .doc(user.uid)
+                            .doc(userProvider.user.uid)
                             .collection('following')
                             .get();
                         int k = n.docs.length.toInt();
                         // await FirebaseFirestore.instance
                         //     .collection('Users')
-                        //     .doc(user.uid)
+                        //     .doc(userProvider.user.uid)
                         //     .collection('following')
                         //     .where('uid',
                         //         isEqualTo: snapshots.data!.docs[index].id)
@@ -122,51 +136,52 @@ class _MyAppState extends State<Search> {
                           }
                         }
 
-                        if (fr == false) {
-                          FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(user.uid)
-                              .collection('following')
-                              .add({
-                            'friendName': data['name'],
-                            'uid': snapshots.data!.docs[index].id,
-                            'profile': data['profile'],
-                          });
+                        // if (fr == false) {
+                        FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(userProvider.user.uid)
+                            .collection('following')
+                            .add({
+                          'friendName': data['name'],
+                          'uid': snapshots.data!.docs[index].id,
+                          'profile': data['profile'],
+                          'isFollowing': true,
+                        });
 
-                          var userData = await FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(user.uid)
-                              .get();
-                          FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(snapshots.data!.docs[index].id)
-                              .collection('followers')
-                              .add({
-                            'friendName': userData.data()!['name'],
-                            'uid': user.uid,
-                            'profile': userData.data()!['profile'],
-                          });
-                          FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(snapshots.data!.docs[index].id)
-                              .collection('notification')
-                              .add({
-                            'friendName': userData.data()!['name'],
-                            'uid': user.uid,
-                            'profile': userData.data()!['profile'],
-                            'text':
-                                '${userData.data()!['name']} starts following you'
-                          });
-                          for (int i = 0; i <= k; i++) {
-                            if (snapshots.data!.docs[index].id ==
-                                n.docs[i].get('uid')) {
-                              uid = n.docs[i].id;
+                        var userData = await FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(userProvider.user.uid)
+                            .get();
+                        FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(snapshots.data!.docs[index].id)
+                            .collection('followers')
+                            .add({
+                          'friendName': userData.data()!['name'],
+                          'uid': userProvider.user.uid,
+                          'profile': userData.data()!['profile'],
+                        });
+                        FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(snapshots.data!.docs[index].id)
+                            .collection('notification')
+                            .add({
+                          'friendName': userData.data()!['name'],
+                          'uid': userProvider.user.uid,
+                          'profile': userData.data()!['profile'],
+                          'text':
+                              '${userData.data()!['name']} starts following you'
+                        });
+                        // for (int i = 0; i <= k; i++) {
+                        //   if (snapshots.data!.docs[index].id ==
+                        //       n.docs[i].get('uid')) {
+                        //     uid = n.docs[i].id;
 
-                              navigate();
-                              break;
-                            }
-                          }
-                        }
+                        //     navigate();
+                        //     break;
+                        //   }
+                        // }
+                        // }
                       }
 
                       if (name.isEmpty) {
@@ -198,24 +213,46 @@ class _MyAppState extends State<Search> {
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(data['profile']),
                           ),
-                          trailing: OutlinedButton(
-                            onPressed: () {
-                              addFriend();
+                          // trailing: OutlinedButton(
+                          //   onPressed: () {
+                          //     addFriend();
+                          //   },
+                          //   style: OutlinedButton.styleFrom(
+                          //       elevation: 2,
+                          //       primary: Colors.white,
+                          //       backgroundColor:
+                          //           Color.fromARGB(162, 15, 60, 165)),
+                          //   child: FutureBuilder(
+                          //       future: check(),
+                          //       builder: (context, snapshot) {
+                          //         if (snapshot.hasData) {
+                          //           alreadyFriend = snapshot.data!;
+                          //           return Text(snapshot.data!);
+                          //         }
+                          //         return const Text('No data');
+                          //       }),
+                          // ),
+                          trailing: FutureBuilder(
+                            future: check(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                alreadyFriend = snapshot.data!;
+                                return OutlinedButton(
+                                    onPressed: () {
+                                      if (snapshot.data! == 'Message') {
+                                        // uid = userProvider.user.uid;
+                                        print(snapshot.data!);
+                                        navigate();
+                                      } else {
+                                        addFriend();
+                                      }
+                                    },
+                                    child: Text(snapshot.data!));
+                              }
+                              return const Text('');
                             },
-                            style: OutlinedButton.styleFrom(
-                                elevation: 2,
-                                primary: Colors.white,
-                                backgroundColor:
-                                    Color.fromARGB(162, 15, 60, 165)),
-                            child: FutureBuilder(
-                                future: check(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return Text(snapshot.data!);
-                                  }
-                                  return Text('Nodata');
-                                }),
                           ),
+                          // trailing: OutlinedButton(onPressed: (){},child: Text(),),
                         );
                       }
                       if (data['name']
@@ -248,9 +285,30 @@ class _MyAppState extends State<Search> {
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(data['profile']),
                           ),
+                          trailing: FutureBuilder(
+                            future: check(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                alreadyFriend = snapshot.data!;
+                                return OutlinedButton(
+                                    onPressed: () {
+                                      if (snapshot.data! == 'Message') {
+                                        // uid = userProvider.user.uid;
+                                        print(snapshot.data!);
+                                        navigate();
+                                      } else {
+                                        addFriend();
+                                      }
+                                    },
+                                    child: Text(snapshot.data!));
+                              }
+                              return const Text('');
+                            },
+                          ),
                         );
+                      } else {
+                        return Container();
                       }
-                      return const Text('No match found');
                     });
           },
         ));
