@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,41 @@ class _MyAppState extends State<Search> {
 
                       final user = FirebaseAuth.instance.currentUser!;
                       var uid = '';
-                      bool functionCallComplete = false;
+
+                      check() async {
+                        String isFollowing = 'Follow';
+                        var n = await FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(user.uid)
+                            .collection('following')
+                            .get();
+                        int k = n.docs.length.toInt();
+
+                        // await FirebaseFirestore.instance
+                        //     .collection('Users')
+                        //     .doc(user.uid)
+                        //     .collection('following')
+                        //     .where('uid',
+                        //         isEqualTo: snapshots.data!.docs[index].id)
+                        //     .get()
+                        //     .then((value) {
+                        //   isFollowing = 'Message';
+                        //   print(isFollowing);
+                        // });
+
+                        for (int i = 0; i < k; i++) {
+                          if (snapshots.data!.docs[index].id ==
+                              n.docs[i].get('uid')) {
+                            isFollowing = 'Message';
+                            // print('following');
+                            // print(n.docs[i].get('uid'));
+
+                            break;
+                          }
+                        }
+                        return isFollowing;
+                      }
+
                       void navigate() {
                         if (uid != '') {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -57,8 +91,6 @@ class _MyAppState extends State<Search> {
                                   userImage: data['profile'],
                                   uid: uid)));
                         } else {}
-                        print('navigated');
-                        print(uid);
                       }
 
                       void addFriend() async {
@@ -67,9 +99,17 @@ class _MyAppState extends State<Search> {
                         var n = await FirebaseFirestore.instance
                             .collection('Users')
                             .doc(user.uid)
-                            .collection('followers')
+                            .collection('following')
                             .get();
                         int k = n.docs.length.toInt();
+                        // await FirebaseFirestore.instance
+                        //     .collection('Users')
+                        //     .doc(user.uid)
+                        //     .collection('following')
+                        //     .where('uid',
+                        //         isEqualTo: snapshots.data!.docs[index].id)
+                        //     .get()
+                        //     .then((value) => navigate());
 
                         for (int i = 0; i < k; i++) {
                           if (snapshots.data!.docs[index].id ==
@@ -77,7 +117,7 @@ class _MyAppState extends State<Search> {
                             fr = true;
                             uid = n.docs[i].id;
                             navigate();
-                            print(uid);
+
                             break;
                           }
                         }
@@ -86,7 +126,7 @@ class _MyAppState extends State<Search> {
                           FirebaseFirestore.instance
                               .collection('Users')
                               .doc(user.uid)
-                              .collection('followers')
+                              .collection('following')
                               .add({
                             'friendName': data['name'],
                             'uid': snapshots.data!.docs[index].id,
@@ -106,30 +146,34 @@ class _MyAppState extends State<Search> {
                             'uid': user.uid,
                             'profile': userData.data()!['profile'],
                           });
+                          FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(snapshots.data!.docs[index].id)
+                              .collection('notification')
+                              .add({
+                            'friendName': userData.data()!['name'],
+                            'uid': user.uid,
+                            'profile': userData.data()!['profile'],
+                            'text':
+                                '${userData.data()!['name']} starts following you'
+                          });
                           for (int i = 0; i <= k; i++) {
-                            print(i);
                             if (snapshots.data!.docs[index].id ==
                                 n.docs[i].get('uid')) {
                               uid = n.docs[i].id;
-                              print('hurrraaay');
+
                               navigate();
                               break;
                             }
                           }
                         }
-                        functionCallComplete = true;
-                        print(functionCallComplete);
                       }
 
                       if (name.isEmpty) {
                         return ListTile(
                           onTap: () {
                             addFriend();
-                            print('not wait');
-
-                            if (functionCallComplete) {
-                              print('navigator called');
-                            }
+                            // print('not wait');
 
                             // Navigator.of(context).pop(message);
                           },
@@ -155,13 +199,22 @@ class _MyAppState extends State<Search> {
                             backgroundImage: NetworkImage(data['profile']),
                           ),
                           trailing: OutlinedButton(
-                            onPressed: () {},
-                            child: Text('Follow'),
+                            onPressed: () {
+                              addFriend();
+                            },
                             style: OutlinedButton.styleFrom(
                                 elevation: 2,
                                 primary: Colors.white,
                                 backgroundColor:
                                     Color.fromARGB(162, 15, 60, 165)),
+                            child: FutureBuilder(
+                                future: check(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Text(snapshot.data!);
+                                  }
+                                  return Text('Nodata');
+                                }),
                           ),
                         );
                       }
@@ -197,7 +250,7 @@ class _MyAppState extends State<Search> {
                           ),
                         );
                       }
-                      return Container();
+                      return const Text('No match found');
                     });
           },
         ));
