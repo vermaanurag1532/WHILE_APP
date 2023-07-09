@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     FeedScreen(),
-    SocialScreen(),
     ReelsScreen(),
     const CreateScreen(),
     const ProfileScreen()
@@ -85,11 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(5),
                   tabs: const [
                     GButton(icon: Icons.home, text: 'Home'),
-                    GButton(
-                      icon: Icons.message,
-                      text: 'Social',
-                      iconSize: 25,
-                    ),
                     GButton(
                       icon: Icons.abc,
                       text: 'Reels',
