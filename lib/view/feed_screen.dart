@@ -14,10 +14,10 @@ class _FeedScreenState extends State<FeedScreen> {
       padding: const EdgeInsets.only(top: 28.0),
       child: Container(
         height: MediaQuery.of(context).size.height,
-        // decoration: const BoxDecoration(
-        //     color: Colors.white,
-        //     borderRadius: BorderRadius.only(
-        //         topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
         child: const Center(
             child: Text("Feed Screen")
         ),

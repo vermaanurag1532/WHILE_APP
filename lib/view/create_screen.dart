@@ -1,41 +1,66 @@
 import 'package:flutter/material.dart';
-// import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:provider/provider.dart';
+import 'package:while_app/resources/colors.dart';
 import 'package:while_app/resources/components/create_container.dart';
-import 'package:while_app/utils/routes/routes_name.dart';
+import 'package:while_app/view_model/reel_controller.dart';
 
-class CreateScreen extends StatelessWidget {
+
+class CreateScreen extends StatefulWidget {
   const CreateScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    // ImagePickerPlus _picker = ImagePickerPlus(context);
+  State<CreateScreen> createState() => _CreateScreenState();
+}
 
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(onPressed: (){
-            Navigator.of(context).pushNamed(RoutesName.createMenu);
-          }, icon:const Icon(Icons.menu, color: Colors.blue,))
-        ],
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: const Image(image: AssetImage("assets/while.jpg")),
-          title: Text(
-            "Studio",
-            // colors: const [Colors.blue, Colors.green],
-            style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 30),
-          ),),
-      body: Column(
-        children: [
-          const Text("Hey there, "),
-          const Text("Channel Analytics"),
-          CreateContainer(
-              text: "Videos",
-              function: () async {
-              }),
-          CreateContainer(text: "Loops", function: () {}),
-          CreateContainer(text: "Blog/Post", function: () {})
-        ],
+class _CreateScreenState extends State<CreateScreen> {
+   
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<ReelController>(context, listen: false);
+    return Padding(
+      padding: const EdgeInsets.only(top: 28.0),
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 30,
+            ),
+            const Row(
+              children: [
+                SizedBox(
+                  width: 20,
+                ),
+                Text("Create Screen",
+                    style: TextStyle(
+                        color: AppColors.buttonColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Sen",
+                        fontSize: 25)),
+              ],
+            ),
+            const SizedBox(height: 8),
+            const SizedBox(
+              height: 30,
+            ),
+            CreateContainer(
+                text: "Videos",
+                function: () {
+                  provider.selectVideo(context);
+  
+                }),
+            CreateContainer(
+                text: "Reels",
+                function: () {
+                  provider.selectVideo(context);
+                }),
+          ],
+        ),
       ),
     );
   }

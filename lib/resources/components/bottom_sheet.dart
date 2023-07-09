@@ -17,11 +17,9 @@ class _BottomsheetState extends State<Bottomsheet> {
   @override
   Widget build(BuildContext context) {
     final profile = Provider.of<ProfileController>(context, listen: false);
-
-    var w = MediaQuery.of(context).size.width;
     return Container(
         padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
-        height: MediaQuery.of(context).size.height / 3,
+        height: MediaQuery.of(context).size.height / 5,
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
@@ -42,7 +40,7 @@ class _BottomsheetState extends State<Bottomsheet> {
               ],
             ),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

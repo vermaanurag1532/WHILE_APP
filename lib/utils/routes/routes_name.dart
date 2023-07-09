@@ -8,4 +8,5 @@ class RoutesName{
   static const String profile='profile_screen';
   static const String settings='settings';
   static const String createMenu='create_menu';
+  static const String addReel='add_reel';
 }

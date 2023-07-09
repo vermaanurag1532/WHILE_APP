@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:while_app/resources/components/message_list_widget.dart';
+import 'package:while_app/view/social/community_screenn.dart';
+import 'package:while_app/view/social/notification.dart';
+import 'package:while_app/view/social/search.dart';
 import 'package:while_app/view/social/story_screen.dart';
 
-import 'social/community_screenn.dart';
-import 'social/message_screen.dart';
+class SocialScreen extends StatefulWidget {
+  SocialScreen({
+    super.key,
+  });
 
-class TestScreen extends StatefulWidget {
-  const TestScreen({super.key});
   @override
-  State<TestScreen> createState() {
-    return _TestScreenState();
+  State<SocialScreen> createState() {
+    return _SocialScreenState();
   }
 }
 
-class _TestScreenState extends State<TestScreen>
+class _SocialScreenState extends State<SocialScreen>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -28,7 +33,18 @@ class _TestScreenState extends State<TestScreen>
         backgroundColor: Colors.deepPurpleAccent,
         title: const Text('Social'),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => const NotificationScreen()));
+              },
+              icon: const Icon(Icons.notifications)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (ctx) => const Search()));
+              },
+              icon: const Icon(Icons.search)),
           PopupMenuButton(
               elevation: 10,
               shape: const RoundedRectangleBorder(
@@ -71,7 +87,7 @@ class _TestScreenState extends State<TestScreen>
         controller: _controller,
         children: const [
           StoryScreen(),
-          MessageScreen(),
+          MessageList(),
           CommunityScreen(),
           Text('Calls'),
         ],
