@@ -44,6 +44,10 @@ class MessageList extends StatelessWidget {
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(data['profile']),
                     ),
+                    trailing: const Text(
+                      '1',
+                      style: TextStyle(color: Colors.green),
+                    ),
                   );
                 },
               );
