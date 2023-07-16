@@ -12,7 +12,6 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: no_leading_underscores_for_local_identifiers
     TextEditingController _searchController = TextEditingController();
-    var w = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           title: const Text(

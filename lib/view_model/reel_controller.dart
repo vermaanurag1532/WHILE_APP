@@ -9,6 +9,7 @@ class ReelController with ChangeNotifier {
 
   File get selectedVideo => _selectedVideo;
 
+
   Future<void> selectVideo(BuildContext context) async {
     final source = await showDialog<ImageSource>(
       context: context,
@@ -40,27 +41,10 @@ class ReelController with ChangeNotifier {
       final pickedFile = await picker.pickVideo(source: source);
       if (pickedFile != null) {
         // _selectedVideo = File(pickedFile.path);
-        Navigator.pushNamed(context, RoutesName.addReel, arguments:pickedFile.path);
+        Navigator.pushNamed(context, RoutesName.addReel,
+            arguments: pickedFile.path);
         notifyListeners();
       }
     }
   }
-
-//   final databaseReference = FirebaseDatabase.instance.reference();
-//   DatabaseReference ref = FirebaseDatabase.instance.ref().child('Reels');
-//   firebase_storage.FirebaseStorage storage =
-//   firebase_storage.FirebaseStorage.instance;
-
-
-// XFile? _video;
-// XFile? get video=>_video;
-// final picker=ImagePicker();
-
-// Future pickGalleryVideo(BuildContext context)async{
-//   _video=await picker.pickVideo(source: ImageSource.gallery);
-//   print("andar2");
-
-//   notifyListeners();
-// }
-
 }
