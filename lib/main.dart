@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<FirebaseAuthMethods>(
             create: (_) => FirebaseAuthMethods(FirebaseAuth.instance)),
+            Provider<ReelController>(
+            create: (_) => ReelController()),
         StreamProvider(
             create: (context) => context.read<FirebaseAuthMethods>().authState,
             initialData: null),
