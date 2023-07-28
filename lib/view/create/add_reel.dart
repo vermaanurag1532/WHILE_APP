@@ -80,7 +80,7 @@ class _AddReelState extends State<AddReel> {
     final w = MediaQuery.of(context).size.width * 1;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Reel"),
+        title: const Text("Add Reel"),
       ),
       body: SingleChildScrollView(
         child: Container(

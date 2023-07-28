@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/friend_profile_data_widget%20.dart';
 import 'package:while_app/view/uploaded_screen.dart';
 
+// ignore: must_be_immutable
 class FriendProfileScreen extends StatelessWidget {
   FriendProfileScreen(
       {super.key, required this.profileImageURl, required this.userName});

@@ -54,6 +54,7 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   video_player: ^2.6.1
   fijkplayer: ^0.10.0
+  flutter_riverpod: ^2.3.6
   
   # gradient_text:
   

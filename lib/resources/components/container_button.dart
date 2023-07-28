@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class ContainerButton extends StatelessWidget {
   final String text;
-  final function;
+  final dynamic function;
   const ContainerButton({super.key,required this.function,required this.text});
 
   @override
   Widget build(BuildContext context) {
-    var h=MediaQuery.of(context).size.height;
+    // var h=MediaQuery.of(context).size.height;
     var w=MediaQuery.of(context).size.width;
     return InkWell(
       onTap: function,

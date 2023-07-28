@@ -3,8 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:while_app/view/social/message_detail.dart';
-import 'package:while_app/view/social/social_home_screen.dart';
+
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -52,10 +51,10 @@ class _MyAppState extends State<NotificationScreen> {
                             },
                             style: OutlinedButton.styleFrom(
                                 elevation: 2,
-                                primary: Colors.white,
+                                // primary: Colors.white,
                                 backgroundColor:
-                                    Color.fromARGB(162, 15, 60, 165)),
-                            child: Text('Follow Back'),
+                                    const Color.fromARGB(162, 15, 60, 165)),
+                            child: const Text('Follow Back'),
                             // child: FutureBuilder(
                             //     future: check(),
                             //     builder: (context, snapshot) {
