@@ -1,11 +1,7 @@
-// import 'dart:ffi';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:while_app/view/social/message_detail.dart';
-import 'package:while_app/view/social/social_home_screen.dart';
 import 'package:while_app/view_model/current_user_provider.dart';
 
 class Search extends StatefulWidget {
@@ -241,7 +237,7 @@ class _MyAppState extends State<Search> {
                                     onPressed: () {
                                       if (snapshot.data! == 'Message') {
                                         // uid = userProvider.user.uid;
-                                        print(snapshot.data!);
+                                        // print(snapshot.data!);
                                         navigate();
                                       } else {
                                         addFriend();
@@ -294,7 +290,7 @@ class _MyAppState extends State<Search> {
                                     onPressed: () {
                                       if (snapshot.data! == 'Message') {
                                         // uid = userProvider.user.uid;
-                                        print(snapshot.data!);
+                                        // print(snapshot.data!);
                                         navigate();
                                       } else {
                                         addFriend();

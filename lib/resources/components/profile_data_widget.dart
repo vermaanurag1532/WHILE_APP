@@ -28,11 +28,11 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
           if (ds.exists) {
             name = ds.data()!['name'];
           } else {
-            print(ds.data());
-            print("User not found");
+            // print(ds.data());
+            // print("User not found");
           }
         }).catchError((e) {
-          print(e);
+          // print(e);
         });
       }
     }

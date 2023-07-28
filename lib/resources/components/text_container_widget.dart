@@ -18,7 +18,7 @@ class TextContainerWidget extends StatelessWidget {
                   height: 50,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                      color:color==null? Color.fromRGBO(116 , 116 , 128, 1).withOpacity(.2):color,
+                      color:color ?? const Color.fromRGBO(116 , 116 , 128, 1).withOpacity(.2),
                       borderRadius: BorderRadius.circular(10)),
                   child: TextFormField(
                       keyboardType: keyboardType, 

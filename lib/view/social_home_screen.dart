@@ -6,7 +6,7 @@ import 'package:while_app/view/social/search.dart';
 import 'package:while_app/view/social/story_screen.dart';
 
 class SocialScreen extends StatefulWidget {
-  SocialScreen({
+  const SocialScreen({
     super.key,
   });
 
