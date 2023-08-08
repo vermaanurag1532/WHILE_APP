@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'bottom_options_sheet.dart';
 
+// ignore: must_be_immutable
 class FriendProfileDataWidget extends StatefulWidget {
   FriendProfileDataWidget(
       {super.key, required this.profileImageURl, required this.userName});

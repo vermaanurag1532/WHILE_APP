@@ -85,7 +85,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       // ignore: use_build_context_synchronously
       Utils.snackBar('Password reset email sent', context);
     } on FirebaseAuthException catch (e) {
-      print(e);
+      // print(e);
       Utils.flushBarErrorMessage(e.message!, context);
     }
     // ignore: use_build_context_synchronously

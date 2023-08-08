@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 Widget buildDivider() {
-  return Container(
+  return const SizedBox(
     height: 24,
-    child: const VerticalDivider(
+    child: VerticalDivider(
       color: Colors.black,
     ),
   );

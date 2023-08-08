@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:while_app/repository/firebase_repository.dart';
 import 'package:while_app/resources/colors.dart';
+import 'package:while_app/theme/pallete.dart';
 import 'package:while_app/view/create_screen.dart';
 import 'package:while_app/view/feed_screen.dart';
 import 'package:while_app/view/profile_screen.dart';
@@ -10,14 +12,15 @@ import 'package:while_app/resources/components/message/home_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:while_app/view/social/social_home_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  // ignore: non_constant_identifier_names
   int CurrentIndex = 0;
   final List<String> _popupMenuList = [
     "Sign Out",
@@ -30,21 +33,26 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   static final List<Widget> _widgetOptions = <Widget>[
-    FeedScreen(),
-    // SocialScreen(),
-    ReelsScreen(),
+    const FeedScreen(),
+    const ReelsScreen(),
     const CreateScreen(),
     const ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
+    final currentTheme = ref.watch(themeNotifierProvider);
     return Scaffold(
       body: Stack(children: [
         Scaffold(
           appBar: AppBar(
-            backgroundColor: AppColors.theme1Color,
+            backgroundColor: currentTheme.scaffoldBackgroundColor,
             elevation: 0.0,
             actions: [
+              Switch.adaptive(
+                value: ref.watch(themeNotifierProvider.notifier).mode ==
+                    ThemeMode.dark,
+                onChanged: (value) => themeToggler(ref),
+              ),
               IconButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -55,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
               PopupMenuButton(
                   icon: const Icon(
                     Icons.more_vert,
-                    color: Colors.white,
+                    // color: Colors.white,
                   ),
                   itemBuilder: (_) => _popupMenuList.map((menuItem) {
                         return PopupMenuItem(
@@ -79,28 +87,30 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(10),
               child: GNav(
                   onTabChange: onTapChange,
-                  backgroundColor: AppColors.buttonColor,
-                  color: Colors.white,
                   activeColor: AppColors.buttonColor,
-                  tabBackgroundColor: Colors.white,
+                  tabBackgroundColor: currentTheme.primaryColor,
                   padding: const EdgeInsets.all(5),
-                  tabs: const [
-                    GButton(icon: Icons.home, text: 'Home'),
-                    GButton(
-                      icon: Icons.message,
-                      text: 'Social',
-                      iconSize: 25,
+                  tabs: [
+                    const GButton(
+                      // iconColor: currentTheme.primaryColor,
+                      icon: Icons.home,
+                      text: 'Home',
                     ),
+
+                    // textColor: currentTheme ==),
                     GButton(
-                      icon: Icons.abc,
+                      iconColor: currentTheme.primaryColor,
+                      icon: Icons.movie_creation_outlined,
                       text: 'Reels',
                       iconSize: 25,
                     ),
                     GButton(
+                      iconColor: currentTheme.primaryColor,
                       icon: Icons.add,
                       text: 'Create',
                     ),
                     GButton(
+                      iconColor: currentTheme.primaryColor,
                       icon: Icons.account_circle,
                       text: 'User Profile',
                     ),

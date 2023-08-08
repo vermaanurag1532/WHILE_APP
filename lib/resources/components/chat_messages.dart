@@ -59,7 +59,7 @@ class ChatMessages extends StatelessWidget {
                 nextChatMessage != null ? nextChatMessage['userId'] : null;
             final nextUserIsSame = nextMessageUserId == currentMessageUserId;
             if (nextUserIsSame) {
-              print(chatMessage['text']);
+              // print(chatMessage['text']);
               return MessageBubble.next(
                 message: chatMessage['text'],
                 isMe: authenticatedUser.uid == currentMessageUserId,

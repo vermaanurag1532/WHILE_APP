@@ -17,14 +17,14 @@ class CreateMenuScreen extends StatelessWidget {
           Navigator.of(context).pop();
         },icon:const Icon(Icons.arrow_back, color: Colors.black)),
         title:
-           Row(
+           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            const Image(image: AssetImage("assets/while.jpg"), height: 60),
+            Image(image: AssetImage("assets/while.jpg"), height: 60),
             Text(
             "Studio",
             // colors: const [Colors.blue, Colors.green],
-            style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 30)
+            style: TextStyle(fontWeight: FontWeight.w300, fontSize: 30)
           )
           ],),
           actions: [

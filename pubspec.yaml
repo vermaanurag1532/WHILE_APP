@@ -55,6 +55,10 @@ dependencies:
   firebase_messaging: ^14.6.4
   emoji_picker_flutter: ^1.6.1
   gallery_saver: ^2.3.2
+  video_player: ^2.6.1
+  fijkplayer: ^0.10.0
+  flutter_riverpod: ^2.3.6
+  
   # gradient_text:
   
 
