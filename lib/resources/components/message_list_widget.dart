@@ -37,6 +37,7 @@ class MessageList extends StatelessWidget {
                         builder: (ctx) => MessageDetailScreen(
                           userName: data['friendName'],
                           userImage: data['profile'],
+                          friendUid: snapshot.data!.docs[index].id,
                           uid: snapshot.data!.docs[index].id,
                         ),
                       ));

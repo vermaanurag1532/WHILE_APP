@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:while_app/data/model/community.dart';
 import 'package:while_app/view/social/community_detail.dart';
@@ -7,6 +8,87 @@ class CommunityList extends StatelessWidget {
   final List<CommunityDetail> message;
   @override
   Widget build(BuildContext context) {
+    void _addChatUserDialog() {
+      String email = '';
+
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          contentPadding:
+              const EdgeInsets.only(left: 24, right: 24, top: 20, bottom: 10),
+
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+
+          //title
+          title: const Row(
+            children: [
+              Icon(
+                Icons.person_add,
+                color: Colors.blue,
+                size: 28,
+              ),
+              Text('Add Community')
+            ],
+          ),
+
+          //content
+          content: Column(
+            children: [
+              TextFormField(
+                maxLines: null,
+                onChanged: (value) => email = value,
+                decoration: InputDecoration(
+                    hintText: 'Community Name',
+                    prefixIcon: const Icon(Icons.email, color: Colors.blue),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+              TextFormField(
+                maxLines: null,
+                onChanged: (value) => email = value,
+                decoration: InputDecoration(
+                    hintText: '',
+                    prefixIcon: const Icon(Icons.email, color: Colors.blue),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+            ],
+          ),
+
+          //actions
+          actions: [
+            //cancel button
+            MaterialButton(
+                onPressed: () {
+                  //hide alert dialog
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel',
+                    style: TextStyle(color: Colors.blue, fontSize: 16))),
+
+            //add button
+            MaterialButton(
+                onPressed: () async {
+                  //hide alert dialog
+                  // Navigator.pop(context);
+                  // if (email.isNotEmpty) {
+                  //   await APIs.addChatUser(email).then((value) {
+                  //     if (!value) {
+                  //       Dialogs.showSnackbar(context, 'User does not Exists!');
+                  //     }
+                  //   });
+                  // }
+                },
+                child: const Text(
+                  'Add',
+                  style: TextStyle(color: Colors.blue, fontSize: 16),
+                ))
+          ],
+        ),
+      );
+    }
+
     if (message.isEmpty) {
       return Center(
         child: Text(
@@ -36,6 +118,7 @@ class CommunityList extends StatelessWidget {
                         builder: (ctx) => CommunityDetailScreen(
                           userName: message[index].title,
                           userImage: message[index].image,
+                          id: '',
                         ),
                       ));
                     },
@@ -44,7 +127,9 @@ class CommunityList extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(right: 20, bottom: 40),
             child: FloatingActionButton.extended(
-              onPressed: () {},
+              onPressed: () {
+                _addChatUserDialog();
+              },
               label: const Icon(
                 Icons.group_add,
                 size: 30,

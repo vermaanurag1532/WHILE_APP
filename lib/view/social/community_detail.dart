@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:while_app/resources/components/communities/communities_chat.dart';
 import 'package:while_app/resources/components/community_detail_chat_widget.dart';
 import 'package:while_app/resources/components/community_detail_opportunities_widget.dart';
 import 'package:while_app/resources/components/community_detail_quiz_widget.dart';
@@ -6,22 +7,21 @@ import 'package:while_app/resources/components/community_detail_resources_widget
 
 class CommunityDetailScreen extends StatefulWidget {
   const CommunityDetailScreen(
-      {Key? key, required this.userImage, required this.userName})
+      {Key? key,
+      required this.userImage,
+      required this.userName,
+      required this.id})
       : super(key: key);
   final String userName;
   final String userImage;
+  final String id;
   @override
   State<CommunityDetailScreen> createState() => _CommunityDetailScreenState();
 }
 
 class _CommunityDetailScreenState extends State<CommunityDetailScreen> {
   /// List of Tab Bar Item
-  List items = const [
-    CommunityDetailChat(),
-    CommunityDetailResources(),
-    CommunityDetailOpportunities(),
-    CommunityDetailQuiz(),
-  ];
+
   List<String> itemsName = const [
     'Chat',
     'Resources',
@@ -32,6 +32,14 @@ class _CommunityDetailScreenState extends State<CommunityDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List items = [
+      CommunitiesChatScreen(
+        id: widget.id,
+      ),
+      const CommunityDetailResources(),
+      const CommunityDetailOpportunities(),
+      const CommunityDetailQuiz(),
+    ];
     return Scaffold(
       backgroundColor: Colors.deepPurple[100],
 

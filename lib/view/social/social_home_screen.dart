@@ -1,12 +1,14 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:while_app/resources/components/message_list_widget.dart';
+import 'package:while_app/resources/components/message/home_screen.dart';
 import 'package:while_app/view/social/community_screenn.dart';
 import 'package:while_app/view/social/notification.dart';
-import 'package:while_app/view/social/search.dart';
 import 'package:while_app/view/social/story_screen.dart';
 
 class SocialScreen extends StatefulWidget {
-  SocialScreen({
+  const SocialScreen({
     super.key,
   });
 
@@ -19,6 +21,8 @@ class SocialScreen extends StatefulWidget {
 class _SocialScreenState extends State<SocialScreen>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
+  bool isSearching = false;
+  var value = '';
 
   @override
   void initState() {
@@ -28,70 +32,219 @@ class _SocialScreenState extends State<SocialScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
-        title: const Text('Social'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const NotificationScreen()));
-              },
-              icon: const Icon(Icons.notifications)),
-          IconButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (ctx) => const Search()));
-              },
-              icon: const Icon(Icons.search)),
-          PopupMenuButton(
-              elevation: 10,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
+    void addCommunityDialog() {
+      String name = '';
+      String type = '';
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          contentPadding:
+              const EdgeInsets.only(left: 24, right: 24, top: 20, bottom: 10),
+
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+
+          //title
+          title: const Row(
+            children: [
+              Icon(
+                Icons.person_add,
+                color: Colors.blue,
+                size: 28,
               ),
-              itemBuilder: (BuildContext context) {
-                return const [
-                  PopupMenuItem(
-                    value: "newgroup",
-                    child: Text('New Group'),
-                  ),
-                  PopupMenuItem(child: Text('New Group')),
-                  PopupMenuItem(child: Text('New Group')),
-                  PopupMenuItem(child: Text('New Group')),
-                ];
-              })
-        ],
-        bottom: TabBar(
-          controller: _controller,
-          indicatorColor: Colors.white,
-          tabs: const [
-            Tab(
-              text: 'Status',
-            ),
-            Tab(
-              text: 'Chats',
-            ),
-            Tab(
-              text: 'Community',
-            ),
-            Tab(
-              text: 'Calls',
-            ),
+              SizedBox(width: 15),
+              Text('Create Community')
+            ],
+          ),
+
+          //content
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                maxLines: null,
+                onChanged: (value) => name = value,
+                decoration: InputDecoration(
+                    hintText: 'Community Name',
+                    prefixIcon: const Icon(Icons.email, color: Colors.blue),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                maxLines: null,
+                onChanged: (value) => type = value,
+                decoration: InputDecoration(
+                    hintText: 'Primary/Secondary',
+                    prefixIcon: const Icon(Icons.email, color: Colors.blue),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+            ],
+          ),
+
+          //actions
+          actions: [
+            //cancel button
+            MaterialButton(
+                onPressed: () {
+                  //hide alert dialog
+                  Navigator.pop(context);
+                },
+                child: const Text('Discard',
+                    style: TextStyle(color: Colors.blue, fontSize: 16))),
+
+            //add button
+            MaterialButton(
+                onPressed: () async {
+                  if (type != '' && name != '') {
+                    await FirebaseFirestore.instance
+                        .collection('communities')
+                        .add({
+                      'name': name,
+                      'type': type,
+                    }).then((value) {
+                      log(value.id);
+                      FirebaseFirestore.instance
+                          .collection('communities')
+                          .doc(value.id)
+                          .update({
+                        'id': value.id,
+                      });
+                    });
+
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text(
+                  'Create',
+                  style: TextStyle(color: Colors.blue, fontSize: 16),
+                ))
           ],
         ),
-      ),
-      body: TabBarView(
-        controller: _controller,
-        children: const [
-          StoryScreen(),
-          MessageList(),
-          CommunityScreen(),
-          Text('Calls'),
-        ],
-      ),
-    );
+      );
+    }
+
+    return GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: WillPopScope(
+          //if search is on & back button is pressed then close search
+          //or else simple close current screen on back button click
+          onWillPop: () {
+            if (isSearching) {
+              setState(() {
+                isSearching = !isSearching;
+              });
+              return Future.value(false);
+            } else {
+              return Future.value(true);
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.deepPurpleAccent,
+              title: isSearching
+                  ? TextField(
+                      decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Name, Email, ...',
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(142, 255, 255, 255),
+                          )),
+                      autofocus: true,
+                      style: const TextStyle(fontSize: 17, letterSpacing: 0.5),
+                      //when search text changes then updated search list
+                      onChanged: (val) {
+                        //search logic
+                        setState(() {
+                          value = val;
+                        });
+                      },
+                    )
+                  : const Text('Social'),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      addCommunityDialog();
+                    },
+                    icon: const Icon(Icons.group_add)),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => const NotificationScreen()));
+                    },
+                    icon: const Icon(Icons.notifications)),
+                IconButton(
+                    onPressed: () {
+                      // Navigator.of(context)
+                      //     .push(MaterialPageRoute(builder: (ctx) => const Search()));
+                      setState(() {
+                        isSearching = !isSearching;
+                      });
+                    },
+                    icon: const Icon(Icons.search)),
+                PopupMenuButton(
+                    elevation: 10,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        const PopupMenuItem(
+                          value: "newgroup",
+                          child: Text('New Group'),
+                        ),
+                        PopupMenuItem(
+                          child: const Text('New community'),
+                          onTap: () {
+                            log('pop up button pressed');
+                            addCommunityDialog();
+                          },
+                        ),
+                        const PopupMenuItem(child: Text('New Group')),
+                        const PopupMenuItem(child: Text('New Group')),
+                      ];
+                    })
+              ],
+              bottom: TabBar(
+                controller: _controller,
+                indicatorColor: Colors.white,
+                tabs: const [
+                  Tab(
+                    text: 'Status',
+                  ),
+                  Tab(
+                    text: 'Chats',
+                  ),
+                  Tab(
+                    text: 'Community',
+                  ),
+                  Tab(
+                    text: 'Calls',
+                  ),
+                ],
+              ),
+            ),
+            body: TabBarView(
+              controller: _controller,
+              children: [
+                const StoryScreen(),
+                HomeScreenFinal(
+                  isSearching: isSearching,
+                  value: value,
+                ),
+                CommunityScreen(
+                  isSearching: true,
+                  value: '',
+                ),
+                const Text('Calls'),
+              ],
+            ),
+          ),
+        ));
   }
 }

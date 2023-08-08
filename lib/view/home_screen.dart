@@ -6,8 +6,9 @@ import 'package:while_app/view/create_screen.dart';
 import 'package:while_app/view/feed_screen.dart';
 import 'package:while_app/view/profile_screen.dart';
 import 'package:while_app/view/reels_screen.dart';
-import 'package:while_app/view/social/social_home_screen.dart';
+import 'package:while_app/resources/components/message/home_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:while_app/view/social/social_home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     FeedScreen(),
-    SocialScreen(),
+    // SocialScreen(),
     ReelsScreen(),
     const CreateScreen(),
     const ProfileScreen()
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (context) => SocialScreen(),
                     ));
                   },
-                  icon: Icon(Icons.message)),
+                  icon: const Icon(Icons.message)),
               PopupMenuButton(
                   icon: const Icon(
                     Icons.more_vert,

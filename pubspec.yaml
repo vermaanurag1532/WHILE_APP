@@ -52,6 +52,9 @@ dependencies:
   cloud_firestore: ^4.8.1
   cached_network_image: ^3.2.3
   flutter_cache_manager: ^3.3.0
+  firebase_messaging: ^14.6.4
+  emoji_picker_flutter: ^1.6.1
+  gallery_saver: ^2.3.2
   # gradient_text:
   
 

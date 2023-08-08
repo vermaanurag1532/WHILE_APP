@@ -5,13 +5,16 @@ import 'package:while_app/view/social/friend_profile_screen.dart';
 // import 'package:while_app/data/model/message.dart';
 
 class MessageDetailScreen extends StatelessWidget {
-  const MessageDetailScreen(
-      {super.key,
-      required this.userName,
-      required this.userImage,
-      required this.uid});
+  const MessageDetailScreen({
+    super.key,
+    required this.userName,
+    required this.userImage,
+    required this.friendUid,
+    required this.uid,
+  });
   final String userName;
   final String userImage;
+  final String friendUid;
   final String uid;
   @override
   Widget build(BuildContext context) {
@@ -28,8 +31,7 @@ class MessageDetailScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => FriendProfileScreen(
-                            profileImageURl: userImage,
-                            userName: userName,
+                            uid: uid,
                           )));
                 },
               ),
@@ -42,8 +44,7 @@ class MessageDetailScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => FriendProfileScreen(
-                          profileImageURl: userImage,
-                          userName: userName,
+                          uid: uid,
                         )));
               },
             )
