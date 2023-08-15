@@ -9,7 +9,7 @@ class RoundButton extends StatelessWidget {
   const RoundButton(
       {Key? key,
       required this.title,
-      this.loading=false,
+      required this.loading,
       required this.onPress})
       : super(key: key);
   @override

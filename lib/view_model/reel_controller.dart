@@ -9,7 +9,6 @@ class ReelController with ChangeNotifier {
 
   File get selectedVideo => _selectedVideo;
 
-
   Future<void> selectVideo(BuildContext context) async {
     final source = await showDialog<ImageSource>(
       context: context,
@@ -40,7 +39,7 @@ class ReelController with ChangeNotifier {
     if (source != null) {
       final pickedFile = await picker.pickVideo(source: source);
       if (pickedFile != null) {
-        // _selectedVideo = File(pickedFile.path);
+        _selectedVideo = File(pickedFile.path);
         Navigator.pushNamed(context, RoutesName.addReel,
             arguments: pickedFile.path);
         notifyListeners();

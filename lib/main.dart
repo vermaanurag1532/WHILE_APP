@@ -31,6 +31,7 @@ class MyApp extends river.ConsumerWidget {
 
   @override
   Widget build(BuildContext context, river.WidgetRef ref) {
+
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
@@ -46,6 +47,7 @@ class MyApp extends river.ConsumerWidget {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky,
     //     overlays: [SystemUiOverlay.bottom]);
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     return MultiProvider(
       providers: [
         Provider<FirebaseAuthMethods>(
