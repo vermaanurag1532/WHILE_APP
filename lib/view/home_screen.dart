@@ -32,6 +32,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
+  void themeToggler(WidgetRef ref) {
+    ref.read(themeNotifierProvider.notifier).toggleTheme();
+  }
+
   static final List<Widget> _widgetOptions = <Widget>[
     const FeedScreen(),
     const ReelsScreen(),
