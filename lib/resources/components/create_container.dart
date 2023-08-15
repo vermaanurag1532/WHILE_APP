@@ -33,7 +33,8 @@ class CreateContainer extends ConsumerWidget {
             onTap: function,
             leading: Text(
               text,
-              style: TextStyle(fontSize: 15, color: currentTheme.primaryColor),
+              style:
+                  TextStyle(fontSize: 15, color: currentTheme.primaryColorDark),
             ),
             trailing: Container(
               decoration: BoxDecoration(

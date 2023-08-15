@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 final themeNotifierProvider =
     StateNotifierProvider<ThemeNotifier, ThemeData>((ref) => ThemeNotifier());
 
@@ -31,6 +30,7 @@ class Pallete {
       backgroundColor: drawerColor,
     ),
     primaryColor: blackColor,
+    primaryColorDark: blackColor,
   );
 
   static var lightModeAppTheme = ThemeData.light().copyWith(
@@ -47,6 +47,7 @@ class Pallete {
         backgroundColor: whiteColor,
       ),
       primaryColor: whiteColor,
+      primaryColorDark: blackColor,
       iconTheme: const IconThemeData(
         color: whiteColor,
       ));

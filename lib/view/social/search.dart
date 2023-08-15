@@ -48,6 +48,7 @@ class _MyAppState extends State<Search> {
                       var userProvider =
                           Provider.of<CurrentUserProvider>(context);
                       var uid = '';
+                      // ignore: unused_local_variable
                       var alreadyFriend = '';
                       check() async {
                         String isFollowing = 'Follow';
@@ -104,6 +105,7 @@ class _MyAppState extends State<Search> {
                       }
 
                       void addFriend() async {
+                        // ignore: unused_local_variable
                         bool fr = false;
 
                         var n = await FirebaseFirestore.instance

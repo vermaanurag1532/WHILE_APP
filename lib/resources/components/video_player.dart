@@ -22,6 +22,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     _controller = VideoPlayerController.file(File(widget.videoPath));
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.play();
+    _controller.setVolume(1);
     _controller.setLooping(true);
   }
 
@@ -40,23 +41,19 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         if (snapshot.connectionState == ConnectionState.done) {
           return Center(
             child: AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: 
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                     
+                aspectRatio: _controller.value.aspectRatio,
+                child: Stack(alignment: Alignment.center, children: [
                   Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    VideoPlayer(_controller),
-                    VideoProgressIndicator(
-                      _controller,
-                      allowScrubbing: true,
-                    ),
-                  ],
-                ),
-                   IconButton(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      VideoPlayer(_controller),
+                      VideoProgressIndicator(
+                        _controller,
+                        allowScrubbing: true,
+                      ),
+                    ],
+                  ),
+                  IconButton(
                     onPressed: () {
                       if (_controller.value.isPlaying) {
                         setState(() {
@@ -68,11 +65,15 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                         });
                       }
                     },
-                    icon: Icon(_controller.value.isPlaying
-                        ? Icons.pause
-                        : Icons.play_arrow,color: Colors.white,size: 30,),
+                    icon: Icon(
+                      _controller.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                   ),
-            ])),
+                ])),
           );
         } else {
           return const Center(child: CircularProgressIndicator());

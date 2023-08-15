@@ -93,6 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: h * .085,
                   ),
                   RoundButton(
+                      loading: false,
                       title: 'SignUp',
                       onPress: () {
                         if (_emailController.text.isEmpty) {

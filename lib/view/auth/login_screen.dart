@@ -109,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 10,
                 ),
                 RoundButton(
+                  loading: false,
                     title: 'Login',
                     onPress: () async {
                       if (_emailController.text.isEmpty) {

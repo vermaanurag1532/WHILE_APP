@@ -15,14 +15,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Provider.debugCheckInvalidValueType = null;
-  runApp(const river.ProviderScope(child:MyApp()));
+  runApp(const river.ProviderScope(child: MyApp()));
 }
 
 class MyApp extends river.ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context,river.WidgetRef ref) {
+  Widget build(BuildContext context, river.WidgetRef ref) {
     return MultiProvider(
       providers: [
         Provider<FirebaseAuthMethods>(

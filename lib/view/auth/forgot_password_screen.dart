@@ -47,6 +47,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 height: 20,
               ),
               RoundButton(
+                loading: false,
                 title: "Send Password Reset Email",
                 onPress: resetPassword,
               ),
