@@ -1,13 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/friend_profile_data_widget%20.dart';
 import 'package:while_app/view/uploaded_screen.dart';
 
 // ignore: must_be_immutable
 class FriendProfileScreen extends StatelessWidget {
-  FriendProfileScreen(
-      {super.key, required this.profileImageURl, required this.userName});
-  String userName = '';
-  String profileImageURl = '';
+  FriendProfileScreen({
+    super.key,
+    required this.uid,
+  });
+  String uid = '';
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,17 @@ class FriendProfileScreen extends StatelessWidget {
               return [
                 SliverList(
                     delegate: SliverChildListDelegate([
-                  FriendProfileDataWidget(
-                    profileImageURl: profileImageURl,
-                    userName: userName,
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(uid)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      return FriendProfileDataWidget(
+                        profileImageURl: snapshot.data!['profile'],
+                        userName: snapshot.data!['name'],
+                      );
+                    },
                   )
                 ]))
               ];

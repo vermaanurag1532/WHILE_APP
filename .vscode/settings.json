@@ -1,4 +1,13 @@
 {
     "cmake.configureOnOpen": false,
-    "cmake.sourceDirectory": "/Users/abhishekbansal/Desktop/flutter_git/WHILE_APP/linux"
+    "cmake.sourceDirectory": "/Users/abhishekbansal/Desktop/flutter_git/WHILE_APP/linux",
+    "cSpell.words": [
+        "ARGB",
+        "autofocus",
+        "datas",
+        "newgroup",
+        "screenn",
+        "unfocus",
+        "vsync"
+    ]
 }

@@ -88,7 +88,7 @@ class _SocialScreenState extends State<SocialScreen>
         children: const [
           StoryScreen(),
           MessageList(),
-          CommunityScreen(),
+          // CommunityScreen(),
           Text('Calls'),
         ],
       ),
