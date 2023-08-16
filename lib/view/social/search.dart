@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:while_app/resources/components/search_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:while_app/view/social/message_detail.dart';
 import 'package:while_app/view_model/current_user_provider.dart';
@@ -39,7 +38,6 @@ class _MyAppState extends State<Search> {
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-
                 : ListView.builder(
                     itemCount: snapshots.data!.docs.length,
                     itemBuilder: (context, index) {
@@ -102,6 +100,7 @@ class _MyAppState extends State<Search> {
                               builder: (ctx) => MessageDetailScreen(
                                   userName: data['name'],
                                   userImage: data['profile'],
+                                  friendUid: '',
                                   uid: uid)));
                         } else {}
                       }
@@ -311,11 +310,10 @@ class _MyAppState extends State<Search> {
                       }
                     });
 
-                : SearchWidget(
-                    snapshots: snapshots,
-                    name: name,
-                  );
-
+            // : SearchWidget(
+            //     snapshots: snapshots,
+            //     name: name,
+            //   );
           },
         ));
   }
