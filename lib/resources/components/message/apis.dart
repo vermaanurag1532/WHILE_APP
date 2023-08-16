@@ -409,7 +409,7 @@ class APIs {
         .update({'msg': updatedMsg});
   }
 
-  //communities
+  //communities chat messages
   static Stream<QuerySnapshot<Map<String, dynamic>>> communityChatMessages(
       String id) {
     return FirebaseFirestore.instance
@@ -421,5 +421,17 @@ class APIs {
           descending: true,
         )
         .snapshots();
+  }
+
+  //communities add chat messages
+  static communityAddMessage(String id, String enteredMessage) async {
+    final userData = await firestore.collection('users').doc(user.uid).get();
+    firestore.collection('communities').doc(id).collection('chat').add({
+      'text': enteredMessage,
+      'createdAt': Timestamp.now(),
+      'userId': user.uid,
+      'username': userData.data()!['name'],
+      'userImage': userData.data()!['image'],
+    });
   }
 }
