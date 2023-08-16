@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/communities/shape.dart';
 import 'package:while_app/resources/components/message/apis.dart';
@@ -9,7 +8,6 @@ class ChatMessages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //stream builder to automatically show new message
-    final authenticatedUser = FirebaseAuth.instance.currentUser!;
 
     return StreamBuilder(
       stream: APIs.communityChatMessages(id),
@@ -50,14 +48,14 @@ class ChatMessages extends StatelessWidget {
             if (nextUserIsSame) {
               return MessageBubble.next(
                 message: chatMessage['text'],
-                isMe: authenticatedUser.uid == currentMessageUserId,
+                isMe: APIs.user.uid == currentMessageUserId,
               );
             } else {
               return MessageBubble.first(
                 userImage: chatMessage['userImage'],
                 username: chatMessage['username'],
                 message: chatMessage['text'],
-                isMe: authenticatedUser.uid == currentMessageUserId,
+                isMe: APIs.user.uid == currentMessageUserId,
               );
             }
           },

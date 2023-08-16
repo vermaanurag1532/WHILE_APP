@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import 'package:while_app/view/social/message_detail.dart';
 import 'package:while_app/view_model/current_user_provider.dart';
 
 class Search extends StatefulWidget {
@@ -13,8 +12,6 @@ class Search extends StatefulWidget {
 
 class _MyAppState extends State<Search> {
   String name = "";
-
-  add() {}
 
   @override
   Widget build(BuildContext context) {
@@ -96,12 +93,12 @@ class _MyAppState extends State<Search> {
                           }
                         }
                         if (uid != '') {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => MessageDetailScreen(
-                                  userName: data['name'],
-                                  userImage: data['profile'],
-                                  friendUid: '',
-                                  uid: uid)));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (ctx) => MessageDetailScreen(
+                          //         userName: data['name'],
+                          //         userImage: data['profile'],
+                          //         friendUid: '',
+                          //         uid: uid)));
                         } else {}
                       }
 

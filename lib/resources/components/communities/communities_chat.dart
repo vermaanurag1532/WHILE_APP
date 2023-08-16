@@ -5,8 +5,8 @@ import 'communities_chat_messages.dart';
 import 'communities_new_messages.dart';
 
 class CommunitiesChatScreen extends StatefulWidget {
-  CommunitiesChatScreen({super.key, required this.id});
-  String id = '';
+  const CommunitiesChatScreen({super.key, required this.id});
+  final String id;
 
   @override
   State<CommunitiesChatScreen> createState() => _CommunitiesChatScreenState();
@@ -29,7 +29,7 @@ class _CommunitiesChatScreenState extends State<CommunitiesChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(209, 196, 233, 1),
+      backgroundColor: const Color.fromRGBO(209, 196, 233, 1),
       body: Column(
         children: [
           Expanded(

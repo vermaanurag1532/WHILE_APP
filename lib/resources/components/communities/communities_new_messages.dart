@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:while_app/resources/components/message/apis.dart';
 
 class NewMessage extends StatefulWidget {
-  NewMessage({super.key, required this.id});
-  String id = '';
+  const NewMessage({super.key, required this.id});
+  final String id;
   @override
   State<NewMessage> createState() {
     return _NewMessageState();
@@ -27,30 +26,11 @@ class _NewMessageState extends State<NewMessage> {
     FocusScope.of(context).unfocus();
     _messageController.clear();
     // send to firebase
-
-    final user = FirebaseAuth.instance.currentUser!;
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .get();
-    FirebaseFirestore.instance
-        .collection('communities')
-        .doc(widget.id)
-        .collection('chat')
-        .add({
-      'text': enteredMessage,
-      'createdAt': Timestamp.now(),
-      'userId': user.uid,
-      'username': userData.data()!['name'],
-      'userImage': userData.data()!['image'],
-    });
-
-    //close keyboard
+    APIs.communityAddMessage(widget.id, enteredMessage);
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Padding(
       padding: const EdgeInsets.only(
         left: 15,

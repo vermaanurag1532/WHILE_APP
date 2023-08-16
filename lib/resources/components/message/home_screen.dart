@@ -10,8 +10,9 @@ late Size mq;
 
 //home screen -- where all available contacts are shown
 class HomeScreenFinal extends StatefulWidget {
-  HomeScreenFinal({super.key, required this.isSearching, required this.value});
-  bool isSearching;
+  const HomeScreenFinal(
+      {super.key, required this.isSearching, required this.value});
+  final bool isSearching;
   final String value;
 
   @override
