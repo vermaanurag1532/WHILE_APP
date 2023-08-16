@@ -29,7 +29,7 @@ class _CommunitiesChatScreenState extends State<CommunitiesChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(209, 196, 233, 1),
+      backgroundColor: const Color.fromRGBO(209, 196, 233, 1),
       body: Column(
         children: [
           Expanded(
