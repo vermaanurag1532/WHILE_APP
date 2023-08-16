@@ -237,6 +237,5 @@ class _SearchWidgetState extends State<SearchWidget> {
             return Container();
           }
         });
-    ;
   }
 }
