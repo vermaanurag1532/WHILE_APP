@@ -5,8 +5,8 @@ import 'communities_chat_messages.dart';
 import 'communities_new_messages.dart';
 
 class CommunitiesChatScreen extends StatefulWidget {
-  CommunitiesChatScreen({super.key, required this.id});
-  String id = '';
+  const CommunitiesChatScreen({super.key, required this.id});
+  final String id;
 
   @override
   State<CommunitiesChatScreen> createState() => _CommunitiesChatScreenState();

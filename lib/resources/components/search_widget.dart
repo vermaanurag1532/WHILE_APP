@@ -6,13 +6,14 @@ import 'package:while_app/view/social/message_detail.dart';
 import 'package:while_app/view_model/current_user_provider.dart';
 
 class SearchWidget extends StatefulWidget {
-  SearchWidget({
+  const SearchWidget({
     super.key,
     required this.snapshots,
     required this.name,
   });
-  var snapshots;
-  String name = '';
+  // ignore: prefer_typing_uninitialized_variables
+  final snapshots;
+  final String name;
   @override
   State<StatefulWidget> createState() {
     return _SearchWidgetState();
@@ -31,6 +32,7 @@ class _SearchWidgetState extends State<SearchWidget> {
           // final user = FirebaseAuth.instance.currentUser!;
           var userProvider = Provider.of<CurrentUserProvider>(context);
           var uid = '';
+          // ignore: unused_local_variable
           var alreadyFriend = '';
           check() async {
             String isFollowing = 'Follow';
