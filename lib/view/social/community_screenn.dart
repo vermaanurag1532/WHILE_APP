@@ -11,8 +11,9 @@ late Size mq;
 
 //home screen -- where all available contacts are shown
 class CommunityScreen extends StatefulWidget {
-  CommunityScreen({super.key, required this.isSearching, required this.value});
-  bool isSearching;
+  const CommunityScreen(
+      {super.key, required this.isSearching, required this.value});
+  final bool isSearching;
   final String value;
 
   @override
@@ -71,7 +72,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
     mq = MediaQuery.of(context).size;
     return Scaffold(
         //floating button to add new user
-        backgroundColor: Colors.deepPurple[100],
+        backgroundColor: Colors.white,
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: FloatingActionButton(
@@ -116,8 +117,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
                             return Card(
                                 margin: EdgeInsets.symmetric(
                                     horizontal: mq.width * .04, vertical: 4),
-                                color: Colors.blue.shade100,
-                                elevation: 0.5,
+                                color: Colors.white,
+                                elevation: 2.5,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15)),
                                 child: ListTile(
@@ -163,7 +164,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           children: [
             Icon(
               Icons.person_add,
-              color: Colors.blue,
+              color: Colors.deepPurpleAccent,
               size: 28,
             ),
             Text('Add Community')
@@ -176,7 +177,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
           onChanged: (value) => name = value,
           decoration: InputDecoration(
               hintText: 'Community Name',
-              prefixIcon: const Icon(Icons.email, color: Colors.blue),
+              prefixIcon:
+                  const Icon(Icons.email, color: Colors.deepPurpleAccent),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
         ),
@@ -190,7 +192,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 Navigator.pop(context);
               },
               child: const Text('Cancel',
-                  style: TextStyle(color: Colors.blue, fontSize: 16))),
+                  style:
+                      TextStyle(color: Colors.deepPurpleAccent, fontSize: 16))),
 
           //add button
           MaterialButton(
@@ -208,7 +211,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
               },
               child: const Text(
                 'Add',
-                style: TextStyle(color: Colors.blue, fontSize: 16),
+                style: TextStyle(color: Colors.deepPurpleAccent, fontSize: 16),
               ))
         ],
       ),
