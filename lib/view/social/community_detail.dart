@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/communities/communities_chat.dart';
-import 'package:while_app/resources/components/community_detail_chat_widget.dart';
 import 'package:while_app/resources/components/community_detail_opportunities_widget.dart';
 import 'package:while_app/resources/components/community_detail_quiz_widget.dart';
 import 'package:while_app/resources/components/community_detail_resources_widget%20.dart';

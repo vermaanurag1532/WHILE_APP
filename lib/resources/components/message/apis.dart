@@ -358,6 +358,16 @@ class APIs {
         .snapshots();
   }
 
+  //get only last message of a specific communtiy
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessageCommunity(
+      ChatUser user) {
+    return firestore
+        .collection('chats/${getConversationID(user.id)}/messages/')
+        .orderBy('sent', descending: true)
+        .limit(1)
+        .snapshots();
+  }
+
   //send chat image
   static Future<void> sendChatImage(ChatUser chatUser, File file) async {
     //getting image file extension
@@ -397,5 +407,19 @@ class APIs {
         .collection('chats/${getConversationID(message.toId)}/messages/')
         .doc(message.sent)
         .update({'msg': updatedMsg});
+  }
+
+  //communities
+  static Stream<QuerySnapshot<Map<String, dynamic>>> communityChatMessages(
+      String id) {
+    return FirebaseFirestore.instance
+        .collection('communities')
+        .doc(id)
+        .collection('chat')
+        .orderBy(
+          'createdAt',
+          descending: true,
+        )
+        .snapshots();
   }
 }

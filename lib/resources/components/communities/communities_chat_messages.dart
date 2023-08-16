@@ -1,27 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/communities/shape.dart';
+import 'package:while_app/resources/components/message/apis.dart';
 
 class ChatMessages extends StatelessWidget {
-  ChatMessages({super.key, required this.id});
-  String id = '';
+  const ChatMessages({super.key, required this.id});
+  final String id;
   @override
   Widget build(BuildContext context) {
     //stream builder to automatically show new message
     final authenticatedUser = FirebaseAuth.instance.currentUser!;
 
     return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('communities')
-          .doc(id)
-          .collection('chat')
-          .orderBy(
-            'createdAt',
-            descending: true,
-          )
-          .snapshots(),
+      stream: APIs.communityChatMessages(id),
       builder: (ctx, chatSnapshots) {
         if (chatSnapshots.connectionState == ConnectionState.waiting) {
           return const Center(

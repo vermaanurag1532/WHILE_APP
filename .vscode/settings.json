@@ -9,5 +9,6 @@
         "screenn",
         "unfocus",
         "vsync"
-    ]
+    ],
+    "workbench.tree.renderIndentGuides": "none"
 }

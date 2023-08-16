@@ -32,8 +32,8 @@ class _ChatUserCardState extends State<ChatUserCard> {
     mq = MediaQuery.of(context).size;
     return Card(
       margin: EdgeInsets.symmetric(horizontal: mq.width * .04, vertical: 4),
-      // color: Colors.blue.shade100,
-      elevation: 0.5,
+      color: Colors.white,
+      elevation: 2.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell(
           onTap: () {
