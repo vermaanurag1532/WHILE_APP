@@ -443,4 +443,9 @@ class APIs {
         .doc(id)
         .update({'lastMessage': data.docs[0].get('text')});
   }
+
+  //getting information of community
+  static getCommunityDetail(String id) {
+    return FirebaseFirestore.instance.collection('communities').doc(id).get();
+  }
 }
