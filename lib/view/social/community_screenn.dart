@@ -85,10 +85,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
         //body
         body: StreamBuilder(
             stream: APIs.getCommunityId(),
-
             //get id of only known users
             builder: (context, snapshot) {
-              log('Function called ///////////////');
               return (snapshot.connectionState == ConnectionState.waiting)
                   ? const Center(
                       child: CircularProgressIndicator(),
@@ -137,8 +135,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
                                     name,
                                     textAlign: TextAlign.center,
                                   ),
-                                  subtitle:
-                                      Text(name, textAlign: TextAlign.center),
+                                  subtitle: const Text('',
+                                      textAlign: TextAlign.center),
                                 ));
                           },
                         );

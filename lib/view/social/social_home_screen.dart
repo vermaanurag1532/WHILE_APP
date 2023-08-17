@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:while_app/resources/components/message/apis.dart';
 import 'package:while_app/resources/components/message/home_screen.dart';
 import 'package:while_app/view/social/community_screenn.dart';
 import 'package:while_app/view/social/notification.dart';
@@ -105,6 +106,8 @@ class _SocialScreenState extends State<SocialScreen>
                         .add({
                       'name': name,
                       'type': type,
+                      'admin': APIs.me.name,
+                      'lastMessage': ''
                     }).then((value) {
                       log(value.id);
                       FirebaseFirestore.instance

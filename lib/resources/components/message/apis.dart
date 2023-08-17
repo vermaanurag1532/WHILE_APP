@@ -201,15 +201,6 @@ class APIs {
         .snapshots();
   }
 
-  // for getting id's of joined community from firestore database
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getCommunityId() {
-    return firestore
-        .collection('users')
-        .doc(user.uid)
-        .collection('my_communities')
-        .snapshots();
-  }
-
   // for getting all users from firestore database
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers(
       List<String> userIds) {
@@ -358,16 +349,6 @@ class APIs {
         .snapshots();
   }
 
-  //get only last message of a specific communtiy
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessageCommunity(
-      ChatUser user) {
-    return firestore
-        .collection('chats/${getConversationID(user.id)}/messages/')
-        .orderBy('sent', descending: true)
-        .limit(1)
-        .snapshots();
-  }
-
   //send chat image
   static Future<void> sendChatImage(ChatUser chatUser, File file) async {
     //getting image file extension
@@ -433,5 +414,33 @@ class APIs {
       'username': userData.data()!['name'],
       'userImage': userData.data()!['image'],
     });
+  }
+
+  // for getting id's of joined community from firestore database
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getCommunityId() {
+    return firestore
+        .collection('users')
+        .doc(user.uid)
+        .collection('my_communities')
+        .snapshots();
+  }
+
+  // get only last message of a specific communtiy
+  static getLastMessageCommunity(String id) async {
+    var data = await FirebaseFirestore.instance
+        .collection('communities')
+        .doc(id)
+        .collection('chat')
+        .orderBy(
+          'createdAt',
+          descending: true,
+        )
+        .limit(1)
+        .get();
+
+    await FirebaseFirestore.instance
+        .collection('communities')
+        .doc(id)
+        .update({'lastMessage': data.docs[0].get('text')});
   }
 }
