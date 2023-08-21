@@ -108,50 +108,10 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         //message time
-
-        //message content
-        Flexible(
-          child: Container(
-            padding: EdgeInsets.all(widget.message.types == Types.image
-                ? mq.width * .03
-                : mq.width * .04),
-            margin: EdgeInsets.symmetric(
-                horizontal: mq.width * .04, vertical: mq.height * .01),
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 218, 255, 176),
-                border: Border.all(color: Colors.lightGreen),
-                //making borders curved
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                    bottomLeft: Radius.circular(30))),
-            child: widget.message.types == Types.text
-                ?
-                //show text
-                Text(
-                    widget.message.msg,
-                    style: const TextStyle(fontSize: 15, color: Colors.black87),
-                  )
-                :
-                //show image
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.message.msg,
-                      placeholder: (context, url) => const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.image, size: 70),
-                    ),
-                  ),
-          ),
-        ),
         Row(
           children: [
             //for adding some space
-            SizedBox(width: mq.width * .04),
+            // SizedBox(width: mq.width * .04),
 
             //double tick blue icon for message read
             if (widget.message.read.isNotEmpty)
@@ -162,12 +122,62 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
             const SizedBox(width: 2),
 
             //sent time
-            Text(
-              MyDateUtil.getFormattedTime(
-                  context: context, time: widget.message.sent),
-              style: const TextStyle(fontSize: 13, color: Colors.black54),
-            ),
+            // Text(
+            //   MyDateUtil.getFormattedTime(
+            //       context: context, time: widget.message.sent),
+            //   style: const TextStyle(fontSize: 13, color: Colors.black54),
+            // ),
           ],
+        ),
+
+        //message content
+        Flexible(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(widget.message.types == Types.image
+                    ? mq.width * .03
+                    : mq.width * .04),
+                margin: EdgeInsets.symmetric(
+                    horizontal: mq.width * .04, vertical: mq.height * .01),
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 218, 255, 176),
+                    border: Border.all(color: Colors.lightGreen),
+                    //making borders curved
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                        bottomLeft: Radius.circular(30))),
+                child: widget.message.types == Types.text
+                    ?
+                    //show text
+                    Text(
+                        widget.message.msg,
+                        style: const TextStyle(
+                            fontSize: 15, color: Colors.black87),
+                      )
+                    :
+                    //show image
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.message.msg,
+                          placeholder: (context, url) => const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.image, size: 70),
+                        ),
+                      ),
+              ),
+              Text(
+                MyDateUtil.getFormattedTime(
+                    context: context, time: widget.message.sent),
+                style: const TextStyle(fontSize: 13, color: Colors.black54),
+              )
+            ],
+          ),
         ),
       ],
     );
