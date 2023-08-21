@@ -7,11 +7,11 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:while_app/resources/components/message/widgets/message_card.dart';
+import 'package:while_app/resources/components/message/models/community_message.dart';
+import 'package:while_app/resources/components/message/widgets/community_message_card.dart';
 
 import 'apis.dart';
 import 'models/community_user.dart';
-import 'models/message.dart';
 
 late Size mq;
 
@@ -26,7 +26,7 @@ class CChatScreen extends StatefulWidget {
 
 class _CChatScreenState extends State<CChatScreen> {
   //for storing all messages
-  List<Message> _list = [];
+  List<CommunityMessage> _list = [];
 
   //for handling message text changes
   final _textController = TextEditingController();
@@ -81,7 +81,8 @@ class _CChatScreenState extends State<CChatScreen> {
                       case ConnectionState.done:
                         final data = snapshot.data?.docs;
                         _list = data
-                                ?.map((e) => Message.fromJson(e.data()))
+                                ?.map(
+                                    (e) => CommunityMessage.fromJson(e.data()))
                                 .toList() ??
                             [];
 
@@ -92,7 +93,8 @@ class _CChatScreenState extends State<CChatScreen> {
                               padding: EdgeInsets.only(top: mq.height * .01),
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
-                                return MessageCard(message: _list[index]);
+                                return CommunityMessageCard(
+                                    message: _list[index]);
                               });
                         } else {
                           return const Center(
@@ -317,7 +319,7 @@ class _CChatScreenState extends State<CChatScreen> {
                 //simply send message
                 log(_textController.text);
                 APIs.sendCommunityMessage(
-                    widget.user, _textController.text, Type.text);
+                    widget.user, _textController.text, Types.text);
                 // }
                 _textController.text = '';
               }

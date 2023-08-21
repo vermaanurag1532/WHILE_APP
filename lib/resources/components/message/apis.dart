@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart';
 import 'package:while_app/resources/components/message/models/chat_user.dart';
 
+import 'models/community_message.dart';
 import 'models/community_user.dart';
 import 'models/message.dart';
 
@@ -497,18 +498,21 @@ class APIs {
 
   // for sending message
   static Future<void> sendCommunityMessage(
-      CommunityUser chatUser, String msg, Type type) async {
+      CommunityUser chatUser, String msg, Types type) async {
     //message sending time (also used as id)
     final time = DateTime.now().millisecondsSinceEpoch.toString();
 
     //message to send
-    final Message message = Message(
-        toId: chatUser.id,
-        msg: msg,
-        read: '',
-        type: type,
-        fromId: user.uid,
-        sent: time);
+    final CommunityMessage message = CommunityMessage(
+      toId: chatUser.id,
+      msg: msg,
+      read: '',
+      types: type,
+      fromId: user.uid,
+      sent: time,
+      senderName: me.name,
+    );
+    log(me.name);
 
     final ref =
         firestore.collection('communities').doc(chatUser.id).collection('chat');
