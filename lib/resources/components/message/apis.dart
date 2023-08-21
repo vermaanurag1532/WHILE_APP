@@ -9,6 +9,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart';
 import 'package:while_app/resources/components/message/models/chat_user.dart';
 
+import 'models/community_message.dart';
+import 'models/community_user.dart';
 import 'models/message.dart';
 
 class APIs {
@@ -201,15 +203,6 @@ class APIs {
         .snapshots();
   }
 
-  // for getting id's of joined community from firestore database
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getCommunityId() {
-    return firestore
-        .collection('users')
-        .doc(user.uid)
-        .collection('my_communities')
-        .snapshots();
-  }
-
   // for getting all users from firestore database
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers(
       List<String> userIds) {
@@ -358,16 +351,6 @@ class APIs {
         .snapshots();
   }
 
-  //get only last message of a specific communtiy
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessageCommunity(
-      ChatUser user) {
-    return firestore
-        .collection('chats/${getConversationID(user.id)}/messages/')
-        .orderBy('sent', descending: true)
-        .limit(1)
-        .snapshots();
-  }
-
   //send chat image
   static Future<void> sendChatImage(ChatUser chatUser, File file) async {
     //getting image file extension
@@ -432,6 +415,113 @@ class APIs {
       'userId': user.uid,
       'username': userData.data()!['name'],
       'userImage': userData.data()!['image'],
+    });
+  }
+
+  // for getting id's of joined community from firestore database
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getCommunityId() {
+    return firestore
+        .collection('users')
+        .doc(user.uid)
+        .collection('my_communities')
+        .snapshots();
+  }
+
+  // get only last message of a specific communtiy
+  static getLastMessageCommunity(String id) async {
+    var data = await FirebaseFirestore.instance
+        .collection('communities')
+        .doc(id)
+        .collection('chat')
+        .orderBy(
+          'createdAt',
+          descending: true,
+        )
+        .limit(1)
+        .get();
+
+    await FirebaseFirestore.instance
+        .collection('communities')
+        .doc(id)
+        .update({'lastMessage': data.docs[0].get('text')});
+  }
+
+  //getting information of community
+  static getCommunityDetail(String id) {
+    return FirebaseFirestore.instance.collection('communities').doc(id).get();
+  }
+
+  // for getting all user communities from firestore database
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUserCommunities(
+      List<String> communityIds) {
+    log('\nCommunityIds: $communityIds');
+
+    return firestore
+        .collection('communities')
+        .where('id',
+            whereIn: communityIds.isEmpty
+                ? ['']
+                : communityIds) //because empty list throws an error
+        // .where('id', isNotEqualTo: user.uid)
+        .snapshots();
+  }
+
+  //get only last message of a specific community chat
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastCommunityMessage(
+      CommunityUser user) {
+    return firestore
+        .collection('communities/${getConversationID(user.id)}/chat/')
+        .orderBy('sent', descending: true)
+        .limit(1)
+        .snapshots();
+  }
+
+  // for getting all messages of a specific conversation of community from firestore database
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCommunityMessages(
+      CommunityUser user) {
+    return firestore
+        .collection('communities')
+        .doc(user.id)
+        .collection('chat')
+        .orderBy('sent', descending: true)
+        .snapshots();
+  }
+
+  //comunity info
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getCommunityInfo(
+      CommunityUser community) {
+    return firestore
+        .collection('communities')
+        .where('id', isEqualTo: community.id)
+        .snapshots();
+  }
+
+  // for sending message
+  static Future<void> sendCommunityMessage(
+      CommunityUser chatUser, String msg, Types type) async {
+    //message sending time (also used as id)
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
+
+    //message to send
+    final CommunityMessage message = CommunityMessage(
+      toId: chatUser.id,
+      msg: msg,
+      read: '',
+      types: type,
+      fromId: user.uid,
+      sent: time,
+      senderName: me.name,
+    );
+    log(me.name);
+
+    final ref =
+        firestore.collection('communities').doc(chatUser.id).collection('chat');
+    await ref.doc(time).set(message.toJson()).then((value) {
+      try {
+        log(message.toJson().toString());
+      } catch (error) {
+        log(error.toString());
+      }
     });
   }
 }

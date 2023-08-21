@@ -1,7 +1,5 @@
 import 'dart:developer';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:while_app/view/social/community_detail.dart';
 import '../../resources/components/message/apis.dart';
 import '../../resources/components/message/helper/dialogs.dart';
@@ -28,29 +26,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
   // for storing search status
   final List<ChatUser> _list = [];
   final List<ChatUser> _searchList = [];
-  @override
-  void initState() {
-    super.initState();
-    APIs.getSelfInfo();
-
-    //for updating user active status according to lifecycle events
-    //resume -- active or online
-    //pause  -- inactive or offline
-    SystemChannels.lifecycle.setMessageHandler((message) {
-      log('Message: $message');
-
-      if (APIs.auth.currentUser != null) {
-        if (message.toString().contains('resume')) {
-          APIs.updateActiveStatus(true);
-        }
-        if (message.toString().contains('pause')) {
-          APIs.updateActiveStatus(false);
-        }
-      }
-
-      return Future.value(message);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +60,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
         //body
         body: StreamBuilder(
             stream: APIs.getCommunityId(),
-
             //get id of only known users
             builder: (context, snapshot) {
-              log('Function called ///////////////');
               return (snapshot.connectionState == ConnectionState.waiting)
                   ? const Center(
                       child: CircularProgressIndicator(),
@@ -98,19 +71,14 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       itemBuilder: (context, index) {
                         var data = snapshot.data!.docs[index].data();
                         var name = '';
+                        var lastMsg = '';
 
                         communityData() async {
-                          var datas = await FirebaseFirestore.instance
-                              .collection('communities')
-                              .doc(data['id'])
-                              .get();
-
+                          var datas = await APIs.getCommunityDetail(data['id']);
                           name = datas['name'];
-
-                          log(name);
+                          lastMsg = datas['lastMessage'];
                         }
 
-                        log(data.toString());
                         return FutureBuilder(
                           future: communityData(),
                           builder: (context, snapshots) {
@@ -137,8 +105,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
                                     name,
                                     textAlign: TextAlign.center,
                                   ),
-                                  subtitle:
-                                      Text(name, textAlign: TextAlign.center),
+                                  subtitle: Text(lastMsg,
+                                      textAlign: TextAlign.center),
                                 ));
                           },
                         );

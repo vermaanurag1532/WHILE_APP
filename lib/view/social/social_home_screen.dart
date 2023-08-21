@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:while_app/resources/components/message/apis.dart';
 import 'package:while_app/resources/components/message/home_screen.dart';
 import 'package:while_app/view/social/community_screenn.dart';
 import 'package:while_app/view/social/notification.dart';
-import 'package:while_app/view/social/story_screen.dart';
+
+import '../../resources/components/communities/test.dart';
 
 class SocialScreen extends StatefulWidget {
   const SocialScreen({
@@ -105,6 +107,8 @@ class _SocialScreenState extends State<SocialScreen>
                         .add({
                       'name': name,
                       'type': type,
+                      'admin': APIs.me.name,
+                      'lastMessage': ''
                     }).then((value) {
                       log(value.id);
                       FirebaseFirestore.instance
@@ -232,16 +236,19 @@ class _SocialScreenState extends State<SocialScreen>
             body: TabBarView(
               controller: _controller,
               children: [
-                const StoryScreen(),
+                const CommunityScreenFinal(
+                  isSearching: true,
+                  value: '',
+                ),
                 HomeScreenFinal(
                   isSearching: isSearching,
                   value: value,
                 ),
-                CommunityScreen(
+                const CommunityScreen(
                   isSearching: true,
                   value: '',
                 ),
-                const Text('Calls'),
+                const Text('Callsss'),
               ],
             ),
           ),

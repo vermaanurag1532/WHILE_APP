@@ -27,6 +27,7 @@ class _NewMessageState extends State<NewMessage> {
     _messageController.clear();
     // send to firebase
     APIs.communityAddMessage(widget.id, enteredMessage);
+    APIs.getLastMessageCommunity(widget.id);
   }
 
   @override
