@@ -1,15 +1,12 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:while_app/resources/components/message/models/community_message.dart';
 import 'package:while_app/resources/components/message/widgets/community_message_card.dart';
-
 import 'apis.dart';
 import 'models/community_user.dart';
 

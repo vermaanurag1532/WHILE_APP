@@ -6,7 +6,6 @@ import 'package:while_app/resources/components/message/apis.dart';
 import 'package:while_app/resources/components/message/home_screen.dart';
 import 'package:while_app/view/social/community_screenn.dart';
 import 'package:while_app/view/social/notification.dart';
-import 'package:while_app/view/social/story_screen.dart';
 
 import '../../resources/components/communities/test.dart';
 
