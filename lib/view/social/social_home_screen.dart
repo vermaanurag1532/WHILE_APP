@@ -8,6 +8,8 @@ import 'package:while_app/view/social/community_screenn.dart';
 import 'package:while_app/view/social/notification.dart';
 import 'package:while_app/view/social/story_screen.dart';
 
+import '../../resources/components/communities/test.dart';
+
 class SocialScreen extends StatefulWidget {
   const SocialScreen({
     super.key,
@@ -235,16 +237,19 @@ class _SocialScreenState extends State<SocialScreen>
             body: TabBarView(
               controller: _controller,
               children: [
-                const StoryScreen(),
+                const CommunityScreenFinal(
+                  isSearching: true,
+                  value: '',
+                ),
                 HomeScreenFinal(
                   isSearching: isSearching,
                   value: value,
                 ),
-                CommunityScreen(
+                const CommunityScreen(
                   isSearching: true,
                   value: '',
                 ),
-                const Text('Calls'),
+                const Text('Callsss'),
               ],
             ),
           ),
