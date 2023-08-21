@@ -108,27 +108,6 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         //message time
-        Row(
-          children: [
-            //for adding some space
-            SizedBox(width: mq.width * .04),
-
-            //double tick blue icon for message read
-            if (widget.message.read.isNotEmpty)
-              const Icon(Icons.done_all_rounded, color: Colors.blue, size: 20),
-            // Text('Seen'),
-
-            //for adding some space
-            const SizedBox(width: 2),
-
-            //sent time
-            Text(
-              MyDateUtil.getFormattedTime(
-                  context: context, time: widget.message.sent),
-              style: const TextStyle(fontSize: 13, color: Colors.black54),
-            ),
-          ],
-        ),
 
         //message content
         Flexible(
@@ -168,6 +147,27 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
                     ),
                   ),
           ),
+        ),
+        Row(
+          children: [
+            //for adding some space
+            SizedBox(width: mq.width * .04),
+
+            //double tick blue icon for message read
+            if (widget.message.read.isNotEmpty)
+              const Icon(Icons.done_all_rounded, color: Colors.blue, size: 20),
+            // Text('Seen'),
+
+            //for adding some space
+            const SizedBox(width: 2),
+
+            //sent time
+            Text(
+              MyDateUtil.getFormattedTime(
+                  context: context, time: widget.message.sent),
+              style: const TextStyle(fontSize: 13, color: Colors.black54),
+            ),
+          ],
         ),
       ],
     );
