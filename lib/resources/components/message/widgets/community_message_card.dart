@@ -43,15 +43,6 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
 
     return Column(
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            margin: const EdgeInsets.only(left: 20),
-            child: Text(
-                '${widget.message.senderName} : ${MyDateUtil.getFormattedTime(context: context, time: widget.message.sent)}',
-                style: const TextStyle(fontSize: 13, color: Colors.black54)),
-          ),
-        ),
         //message content
         Row(
           children: [
@@ -73,10 +64,12 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
                 child: widget.message.types == Types.text
                     ?
                     //show text
+
                     Text(
                         widget.message.msg,
                         style: const TextStyle(
                             fontSize: 15, color: Colors.black87),
+                        textAlign: TextAlign.start,
                       )
                     :
                     //show image
@@ -95,6 +88,15 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
               ),
             ),
           ],
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Container(
+            margin: const EdgeInsets.only(left: 20),
+            child: Text(
+                '${widget.message.senderName} : ${MyDateUtil.getFormattedTime(context: context, time: widget.message.sent)}',
+                style: const TextStyle(fontSize: 13, color: Colors.black54)),
+          ),
         ),
       ],
     );
