@@ -250,13 +250,16 @@ class _CChatScreenState extends State<CChatScreen> {
                       child: TextField(
                     controller: _textController,
                     keyboardType: TextInputType.multiline,
+                    style: const TextStyle(color: Colors.white),
                     maxLines: null,
                     onTap: () {
                       if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
                     },
                     decoration: const InputDecoration(
+                        counterStyle: TextStyle(color: Colors.white),
+                        fillColor: Colors.white,
                         hintText: 'Type Something...',
-                        hintStyle: TextStyle(color: Colors.blueAccent),
+                        hintStyle: TextStyle(color: Colors.white),
                         border: InputBorder.none),
                   )),
 
