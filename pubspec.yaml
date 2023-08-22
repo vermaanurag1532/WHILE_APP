@@ -62,6 +62,7 @@ dependencies:
   fijkplayer: ^0.10.0
   flutter_riverpod: ^2.3.6
   video_compress_plus:
+  percent_indicator: ^4.0.1
   get:
   
   # gradient_text:
