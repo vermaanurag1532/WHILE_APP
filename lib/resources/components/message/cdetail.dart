@@ -49,7 +49,7 @@ class _CCommunityDetailScreenState extends State<CCommunityDetailScreen> {
       /// APPBAR
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent,
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // CircleAvatar(
@@ -57,10 +57,10 @@ class _CCommunityDetailScreenState extends State<CCommunityDetailScreen> {
             //   minRadius: 2,
             //   backgroundImage: NetworkImage(widget.userImage, scale: 0.5),
             // ),
-            SizedBox(
+            const SizedBox(
               width: 15,
             ),
-            // Text(widget.userName),
+            Text(widget.user.name),
           ],
         ),
       ),
