@@ -163,10 +163,14 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
                         borderRadius: BorderRadius.circular(15),
                         child: CachedNetworkImage(
                           width: mq.width * 0.7,
+                          fit: BoxFit.contain,
                           imageUrl: widget.message.msg,
                           placeholder: (context, url) => const Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: CircularProgressIndicator(strokeWidth: 2),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 0,
+                              color: Colors.lightGreen,
+                            ),
                           ),
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.image, size: 70),

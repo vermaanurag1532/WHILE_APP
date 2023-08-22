@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import '../apis.dart';
 import '../cdetail.dart';
 import '../helper/my_date_util.dart';
+import '../models/community_message.dart';
 import '../models/community_user.dart';
-import '../models/message.dart';
 
 late Size mq;
 
@@ -23,7 +23,7 @@ class ChatCommunityCard extends StatefulWidget {
 
 class _ChatCommunityCardState extends State<ChatCommunityCard> {
   //last message info (if null --> no message)
-  Message? _message;
+  CommunityMessage? _message;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +46,14 @@ class _ChatCommunityCardState extends State<ChatCommunityCard> {
             stream: APIs.getLastCommunityMessage(widget.user),
             builder: (context, snapshot) {
               final data = snapshot.data?.docs;
-              final list =
-                  data?.map((e) => Message.fromJson(e.data())).toList() ?? [];
-              if (list.isNotEmpty) _message = list[0];
+              final list = data
+                      ?.map((e) => CommunityMessage.fromJson(e.data()))
+                      .toList() ??
+                  [];
+              if (list.isNotEmpty) {
+                _message = list[0];
+                log('message ${_message!.msg}');
+              }
 
               return ListTile(
                 //user profile picture
@@ -76,7 +81,7 @@ class _ChatCommunityCardState extends State<ChatCommunityCard> {
                 //last message
                 subtitle: Text(
                     _message != null
-                        ? _message!.type == Type.image
+                        ? _message!.types == Types.image
                             ? 'image'
                             : _message!.msg
                         : widget.user.about,
