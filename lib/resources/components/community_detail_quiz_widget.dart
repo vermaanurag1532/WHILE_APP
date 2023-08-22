@@ -5,7 +5,7 @@ class CommunityDetailQuiz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color.fromRGBO(209, 196, 233, 1),
+      backgroundColor: Colors.white,
       body: Center(
         child: Text('Ouiz'),
       ),
