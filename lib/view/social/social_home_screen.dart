@@ -4,10 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/message/apis.dart';
 import 'package:while_app/resources/components/message/home_screen.dart';
-import 'package:while_app/view/social/community_screenn.dart';
 import 'package:while_app/view/social/notification.dart';
 
-import '../../resources/components/communities/test.dart';
+import '../../resources/components/communities/community_screen.dart';
 
 class SocialScreen extends StatefulWidget {
   const SocialScreen({
@@ -244,10 +243,7 @@ class _SocialScreenState extends State<SocialScreen>
                   isSearching: isSearching,
                   value: value,
                 ),
-                const CommunityScreen(
-                  isSearching: true,
-                  value: '',
-                ),
+                const Text('coo'),
                 const Text('Callsss'),
               ],
             ),
