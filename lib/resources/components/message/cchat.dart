@@ -271,12 +271,13 @@ class _CChatScreenState extends State<CChatScreen> {
                             await picker.pickMultiImage(imageQuality: 70);
 
                         // uploading & sending image one by one
-                        // for (var i in images) {
-                        //   log('Image Path: ${i.path}');
-                        //   setState(() => _isUploading = true);
-                        //   await APIs.sendChatImage(widget.user, File(i.path));
-                        //   setState(() => _isUploading = false);
-                        // }
+                        for (var i in images) {
+                          log('Image Path: ${i.path}');
+                          setState(() => _isUploading = true);
+                          await APIs.communitySendChatImage(
+                              widget.user, File(i.path));
+                          setState(() => _isUploading = false);
+                        }
                       },
                       icon: const Icon(Icons.image,
                           color: Colors.blueAccent, size: 26)),
@@ -290,12 +291,12 @@ class _CChatScreenState extends State<CChatScreen> {
                         final XFile? image = await picker.pickImage(
                             source: ImageSource.camera, imageQuality: 70);
                         if (image != null) {
-                          // log('Image Path: ${image.path}');
-                          // setState(() => _isUploading = true);
+                          log('Image Path: ${image.path}');
+                          setState(() => _isUploading = true);
 
-                          // await APIs.sendChatImage(
-                          //     widget.user, File(image.path));
-                          // setState(() => _isUploading = false);
+                          await APIs.communitySendChatImage(
+                              widget.user, File(image.path));
+                          setState(() => _isUploading = false);
                         }
                       },
                       icon: const Icon(Icons.camera_alt_rounded,
