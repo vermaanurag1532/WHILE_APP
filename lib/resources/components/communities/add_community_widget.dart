@@ -1,7 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:uuid/uuid.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -16,6 +16,7 @@ class AddCommunityScreen {
     String type = '';
     String domain = '';
     String about = '';
+    XFile? image;
 
     showDialog(
       context: context,
@@ -99,10 +100,10 @@ class AddCommunityScreen {
                   final ImagePicker picker = ImagePicker();
 
                   // Pick an image
-                  final XFile? image = await picker.pickImage(
+                  image = await picker.pickImage(
                       source: ImageSource.camera, imageQuality: 70);
                   if (image != null) {
-                    log('Image Path: ${image.path}');
+                    log('Image Path: ${image!.path}');
 
                     // await APIs.communitySendChatImage(
                     //     widget.user, File(image.path));
@@ -129,23 +130,6 @@ class AddCommunityScreen {
           MaterialButton(
               onPressed: () async {
                 if (type != '' && name != '') {
-                  // await FirebaseFirestore.instance
-                  //     .collection('communities')
-                  //     .add({
-                  //   'name': name,
-                  //   'type': type,
-                  //   'admin': APIs.me.name,
-                  //   'lastMessage': ''
-                  // }).then((value) {
-                  //   log(value.id);
-                  //   FirebaseFirestore.instance
-                  //       .collection('communities')
-                  //       .doc(value.id)
-                  //       .update({
-                  //     'id': value.id,
-                  //   });
-                  // });
-                  /////
                   final time = DateTime.now().millisecondsSinceEpoch.toString();
                   final String id = uuid.v4();
                   final CommunityUser community = CommunityUser(
@@ -159,10 +143,7 @@ class AddCommunityScreen {
                       noOfUsers: '1',
                       domain: domain,
                       admin: APIs.me.name);
-
-                  final ref =
-                      FirebaseFirestore.instance.collection('communities');
-                  await ref.doc(id).set(community.toJson());
+                  APIs.addCommunities(community, File(image!.path));
 
                   Navigator.pop(context);
                 }
