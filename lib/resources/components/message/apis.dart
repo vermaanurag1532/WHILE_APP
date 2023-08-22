@@ -470,7 +470,9 @@ class APIs {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getLastCommunityMessage(
       CommunityUser user) {
     return firestore
-        .collection('communities/${getConversationID(user.id)}/chat/')
+        .collection('communities')
+        .doc(user.id)
+        .collection('chat')
         .orderBy('sent', descending: true)
         .limit(1)
         .snapshots();
