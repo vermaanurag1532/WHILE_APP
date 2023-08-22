@@ -77,7 +77,7 @@ class _CommunityScreenFinalState extends State<CommunityScreenFinal> {
         padding: const EdgeInsets.only(bottom: 10),
         child: FloatingActionButton(
             onPressed: () {
-              _addChatUserDialog();
+              _addCommunityDialog();
             },
             child: const Icon(Icons.add_comment_rounded)),
       ),
@@ -151,8 +151,8 @@ class _CommunityScreenFinalState extends State<CommunityScreenFinal> {
   }
 
   // for adding new chat user
-  void _addChatUserDialog() {
-    String email = '';
+  void _addCommunityDialog() {
+    String name = '';
 
     showDialog(
       context: context,
@@ -167,20 +167,21 @@ class _CommunityScreenFinalState extends State<CommunityScreenFinal> {
           children: [
             Icon(
               Icons.person_add,
-              color: Colors.blue,
+              color: Colors.deepPurpleAccent,
               size: 28,
             ),
-            Text('  Add User')
+            Text('Add Community')
           ],
         ),
 
         //content
         content: TextFormField(
           maxLines: null,
-          onChanged: (value) => email = value,
+          onChanged: (value) => name = value,
           decoration: InputDecoration(
-              hintText: 'Email Id',
-              prefixIcon: const Icon(Icons.email, color: Colors.blue),
+              hintText: 'Community Name',
+              prefixIcon:
+                  const Icon(Icons.email, color: Colors.deepPurpleAccent),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
         ),
@@ -194,24 +195,26 @@ class _CommunityScreenFinalState extends State<CommunityScreenFinal> {
                 Navigator.pop(context);
               },
               child: const Text('Cancel',
-                  style: TextStyle(color: Colors.blue, fontSize: 16))),
+                  style:
+                      TextStyle(color: Colors.deepPurpleAccent, fontSize: 16))),
 
           //add button
           MaterialButton(
               onPressed: () async {
                 //hide alert dialog
                 Navigator.pop(context);
-                if (email.isNotEmpty) {
-                  await APIs.addChatUser(email).then((value) {
+                if (name.isNotEmpty) {
+                  await APIs.addCommunity(name).then((value) {
                     if (!value) {
-                      Dialogs.showSnackbar(context, 'User does not Exists!');
+                      Dialogs.showSnackbar(
+                          context, 'Community does not Exists!');
                     }
                   });
                 }
               },
               child: const Text(
                 'Add',
-                style: TextStyle(color: Colors.blue, fontSize: 16),
+                style: TextStyle(color: Colors.deepPurpleAccent, fontSize: 16),
               ))
         ],
       ),
