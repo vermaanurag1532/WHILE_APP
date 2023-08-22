@@ -76,6 +76,7 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
                     ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: CachedNetworkImage(
+                          width: mq.width * 0.7,
                           imageUrl: widget.message.msg,
                           placeholder: (context, url) => const Padding(
                             padding: EdgeInsets.all(8.0),
@@ -161,6 +162,7 @@ class _CommunityMessageCardState extends State<CommunityMessageCard> {
                     ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: CachedNetworkImage(
+                          width: mq.width * 0.7,
                           imageUrl: widget.message.msg,
                           placeholder: (context, url) => const Padding(
                             padding: EdgeInsets.all(8.0),
