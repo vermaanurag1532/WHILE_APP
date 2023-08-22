@@ -52,11 +52,11 @@ class _CCommunityDetailScreenState extends State<CCommunityDetailScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // CircleAvatar(
-            //   maxRadius: 20,
-            //   minRadius: 2,
-            //   backgroundImage: NetworkImage(widget.userImage, scale: 0.5),
-            // ),
+            CircleAvatar(
+              maxRadius: 20,
+              minRadius: 2,
+              backgroundImage: NetworkImage(widget.user.image, scale: 0.5),
+            ),
             const SizedBox(
               width: 15,
             ),
