@@ -221,7 +221,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             _image = image.path;
                           });
 
-                          APIs.updateProfilePicture(File(_image!));
+                          APIs.updateProfilePictureCommunity(
+                              File(_image!), widget.user.id);
                           // for hiding bottom sheet
                           Navigator.pop(context);
                         }

@@ -570,4 +570,26 @@ class APIs {
     final imageUrl = await ref.getDownloadURL();
     await sendCommunityMessage(chatUser, imageUrl, Types.image);
   }
+
+  // update profile picture of community
+  static Future<void> updateProfilePictureCommunity(
+      File file, String id) async {
+    //getting image file extension
+    final ext = file.path.split('.').last;
+    log('Extension: $ext');
+
+    //storage file ref with path
+    final ref = storage.ref().child('profile_pictures/$id.$ext');
+
+    //uploading image
+    await ref
+        .putFile(file, SettableMetadata(contentType: 'image/$ext'))
+        .then((p0) {
+      log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
+    });
+
+    //updating image in firestore database
+    var image = await ref.getDownloadURL();
+    await firestore.collection('communities').doc(id).update({'image': image});
+  }
 }
