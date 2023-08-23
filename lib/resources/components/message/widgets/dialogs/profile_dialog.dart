@@ -55,14 +55,14 @@ class ProfileDialog extends StatelessWidget {
                   top: 6,
                   child: MaterialButton(
                     onPressed: () {
-                      //for hiding image dialog
-                      // Navigator.pop(context);
+                      // for hiding image dialog
+                      Navigator.pop(context);
 
-                      // //move to view profile screen
+                      //move to view profile screen
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
-                      //         builder: (_) => ViewProfileScreen(user: user)));
+                      //         builder: (_) => ProfileScreen(user: user)));
                     },
                     minWidth: 0,
                     padding: const EdgeInsets.all(0),

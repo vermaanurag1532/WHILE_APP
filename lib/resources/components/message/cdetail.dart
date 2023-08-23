@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/community_detail_opportunities_widget.dart';
 import 'package:while_app/resources/components/community_detail_quiz_widget.dart';
 import 'package:while_app/resources/components/community_detail_resources_widget%20.dart';
+import 'package:while_app/resources/components/message/apis.dart';
+import 'package:while_app/resources/components/message/profile_screen.dart';
 
 import 'cchat.dart';
 import 'models/community_user.dart';
@@ -49,19 +51,29 @@ class _CCommunityDetailScreenState extends State<CCommunityDetailScreen> {
       /// APPBAR
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              maxRadius: 20,
-              minRadius: 2,
-              backgroundImage: NetworkImage(widget.user.image, scale: 0.5),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            Text(widget.user.name),
-          ],
+        title: GestureDetector(
+          onTap: () {
+            if (widget.user.email == APIs.me.email) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => ProfileScreen(user: widget.user)));
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                maxRadius: 20,
+                minRadius: 2,
+                backgroundImage: NetworkImage(widget.user.image, scale: 0.5),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Text(widget.user.name),
+            ],
+          ),
         ),
       ),
       body: Column(
