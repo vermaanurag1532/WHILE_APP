@@ -37,41 +37,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
           //app bar
-          appBar: AppBar(title: const Text('Profile Screen')),
-
-          //floating button to log out
-          // floatingActionButton: Padding(
-          //   padding: const EdgeInsets.only(bottom: 10),
-          //   child: FloatingActionButton.extended(
-          //       backgroundColor: Colors.redAccent,
-          //       onPressed: () async {
-          //         //for showing progress dialog
-          //         Dialogs.showProgressBar(context);
-
-          //         await APIs.updateActiveStatus(false);
-
-          //         //sign out from app
-          //         await APIs.auth.signOut().then((value) async {
-          //           await GoogleSignIn().signOut().then((value) {
-          //             //for hiding progress dialog
-          //             Navigator.pop(context);
-
-          //             //for moving to home screen
-          //             Navigator.pop(context);
-
-          //             APIs.auth = FirebaseAuth.instance;
-
-          //             //replacing home screen with login screen
-          //             Navigator.pushReplacement(
-          //                 context,
-          //                 MaterialPageRoute(
-          //                     builder: (_) => const LoginScreen()));
-          //           });
-          //         });
-          //       },
-          //       icon: const Icon(Icons.logout),
-          //       label: const Text('Logout')),
-          // ),
+          appBar: AppBar(
+              title: Text(
+            widget.user.name,
+            style: const TextStyle(color: Colors.amber),
+          )),
 
           //body
           body: Form(
@@ -251,12 +221,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             _image = image.path;
                           });
 
-                          APIs.updateProfilePicture(File(_image!));
+                          APIs.updateProfilePictureCommunity(
+                              File(_image!), widget.user.id);
                           // for hiding bottom sheet
                           Navigator.pop(context);
                         }
                       },
-                      child: Image.asset('images/add_image.png')),
+                      child: Icon(
+                        Icons.image,
+                        color: Colors.black,
+                        size: mq.width * .2,
+                      )),
 
                   //take picture from camera button
                   ElevatedButton(
