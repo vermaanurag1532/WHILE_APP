@@ -148,6 +148,12 @@ class APIs {
           .set({
         'id': data.docs.first.id,
       });
+      firestore
+          .collection('communities')
+          .doc(data.docs.first.id)
+          .collection('participants')
+          .doc(user.uid)
+          .set(me.toJson());
 
       return true;
     } else {
@@ -489,15 +495,6 @@ class APIs {
         .snapshots();
   }
 
-  //comunity info
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getCommunityInfo(
-      CommunityUser community) {
-    return firestore
-        .collection('communities')
-        .where('id', isEqualTo: community.id)
-        .snapshots();
-  }
-
   // for sending message
   static Future<void> sendCommunityMessage(
       CommunityUser chatUser, String msg, Types type) async {
@@ -601,5 +598,24 @@ class APIs {
       'email': community.email,
       'domain': community.domain,
     });
+  }
+
+  //comunity participants info
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getCommunityInfo(
+      CommunityUser community) {
+    return firestore
+        .collection('communities')
+        .where('id', isEqualTo: community.id)
+        .snapshots();
+  }
+
+  //comunity participants info
+  static Stream<QuerySnapshot<Map<String, dynamic>>>
+      getCommunityParticipantsInfo(String id) {
+    return firestore
+        .collection('communities')
+        .doc(id)
+        .collection('participants')
+        .snapshots();
   }
 }
