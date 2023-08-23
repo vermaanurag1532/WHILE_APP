@@ -1,21 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../models/chat_user.dart';
+import '../../models/community_user.dart';
 
 late Size mq;
 
-class ProfileDialog extends StatelessWidget {
-  const ProfileDialog({super.key, required this.user});
+class CommunityProfileDialog extends StatelessWidget {
+  const CommunityProfileDialog({super.key, required this.user});
 
-  final ChatUser user;
+  final CommunityUser user;
 
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     return AlertDialog(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.only(bottom: 20),
       backgroundColor: Colors.white.withOpacity(.9),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       content: SizedBox(
@@ -28,10 +27,10 @@ class ProfileDialog extends StatelessWidget {
                 top: mq.height * .075,
                 left: mq.width * .06,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(mq.height * .25),
+                  // borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
                   child: CachedNetworkImage(
                     width: mq.width * .6,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     imageUrl: user.image,
                     errorWidget: (context, url, error) =>
                         const CircleAvatar(child: Icon(CupertinoIcons.person)),
@@ -46,7 +45,7 @@ class ProfileDialog extends StatelessWidget {
                 width: mq.width * .55,
                 child: Text(user.name,
                     style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w500)),
+                        fontSize: 18, fontWeight: FontWeight.w600)),
               ),
 
               //info button
@@ -55,6 +54,7 @@ class ProfileDialog extends StatelessWidget {
                   top: 6,
                   child: MaterialButton(
                     onPressed: () {
+                      print('pressed///////////////');
                       //for hiding image dialog
                       // Navigator.pop(context);
 
