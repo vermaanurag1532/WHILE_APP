@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../message/apis.dart';
 import '../message/models/community_user.dart';
 
-var uuid = Uuid();
+const uuid = Uuid();
 
 class AddCommunityScreen {
   void addCommunityDialog(BuildContext context) {
