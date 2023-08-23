@@ -32,6 +32,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
+    final CommunityUser community = CommunityUser(
+        image: '',
+        about: '',
+        name: '',
+        createdAt: '',
+        id: widget.user.id,
+        email: '',
+        type: 'type',
+        noOfUsers: 'noOfUsers',
+        domain: 'domain',
+        admin: 'admin');
     return GestureDetector(
       // for hiding keyboard
       onTap: () => FocusScope.of(context).unfocus(),
@@ -117,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // name input field
                     TextFormField(
                       initialValue: widget.user.name,
-                      onSaved: (val) => APIs.me.name = val ?? '',
+                      onSaved: (val) => community.name = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',
@@ -136,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // about input field
                     TextFormField(
                       initialValue: widget.user.about,
-                      onSaved: (val) => APIs.me.about = val ?? '',
+                      onSaved: (val) => community.about = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',
@@ -147,6 +158,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               borderRadius: BorderRadius.circular(12)),
                           hintText: 'eg. Feeling Happy',
                           label: const Text('About')),
+                    ),
+                    SizedBox(height: mq.height * .02),
+
+                    // domain input field
+                    TextFormField(
+                      initialValue: widget.user.domain,
+                      onSaved: (val) => community.domain = val ?? '',
+                      validator: (val) => val != null && val.isNotEmpty
+                          ? null
+                          : 'Required Field',
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.info_outline,
+                              color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          hintText: 'eg. Feeling Happy',
+                          label: const Text('Domain')),
+                    ),
+                    SizedBox(height: mq.height * .02),
+
+                    // email input field
+                    TextFormField(
+                      initialValue: widget.user.email,
+                      onSaved: (val) => community.email = val ?? '',
+                      validator: (val) => val != null && val.isNotEmpty
+                          ? null
+                          : 'Required Field',
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.info_outline,
+                              color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          hintText: 'eg. Feeling Happy',
+                          label: const Text('Email')),
                     ),
 
                     // for adding some space
@@ -160,7 +205,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          APIs.updateUserInfo().then((value) {
+                          log(community.toJson().toString());
+                          APIs.updateCommunityInfo(community).then((value) {
                             Dialogs.showSnackbar(
                                 context, 'Profile Updated Successfully!');
                           });
@@ -251,7 +297,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             _image = image.path;
                           });
 
-                          APIs.updateProfilePicture(File(_image!));
+                          APIs.updateProfilePictureCommunity(
+                              File(_image!), widget.user.id);
                           // for hiding bottom sheet
                           Navigator.pop(context);
                         }

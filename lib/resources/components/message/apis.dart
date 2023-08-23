@@ -592,4 +592,14 @@ class APIs {
     var image = await ref.getDownloadURL();
     await firestore.collection('communities').doc(id).update({'image': image});
   }
+
+  ///// update community info
+  static Future<void> updateCommunityInfo(CommunityUser community) async {
+    await firestore.collection('communities').doc(community.id).update({
+      'name': community.name,
+      'about': community.about,
+      'email': community.email,
+      'domain': community.domain,
+    });
+  }
 }
