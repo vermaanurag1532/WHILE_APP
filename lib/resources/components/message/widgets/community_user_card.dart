@@ -8,6 +8,7 @@ import '../cdetail.dart';
 import '../helper/my_date_util.dart';
 import '../models/community_message.dart';
 import '../models/community_user.dart';
+import 'dialogs/community_profile_dialog.dart';
 
 late Size mq;
 
@@ -59,15 +60,17 @@ class _ChatCommunityCardState extends State<ChatCommunityCard> {
                 //user profile picture
                 leading: InkWell(
                   onTap: () {
-                    // showDialog(
-                    //     context: context,
-                    //     builder: (_) => ProfileDialog(user: widget.user));
+                    showDialog(
+                        context: context,
+                        builder: (_) =>
+                            CommunityProfileDialog(user: widget.user));
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(mq.height * .03),
                     child: CachedNetworkImage(
                       width: mq.height * .055,
                       height: mq.height * .055,
+                      fit: BoxFit.fill,
                       imageUrl: widget.user.image,
                       errorWidget: (context, url, error) => const CircleAvatar(
                           child: Icon(CupertinoIcons.person)),
