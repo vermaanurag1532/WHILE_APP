@@ -6,8 +6,6 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:image_picker/image_picker.dart';
 import 'package:while_app/resources/components/message/models/chat_user.dart';
 
 import '../apis.dart';
@@ -33,17 +31,6 @@ class _ProfileScreenState extends State<ProfileScreenParticipant> {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     List<ChatUser> list = [];
-    final CommunityUser community = CommunityUser(
-        image: '',
-        about: '',
-        name: '',
-        createdAt: '',
-        id: widget.user.id,
-        email: '',
-        type: 'type',
-        noOfUsers: 'noOfUsers',
-        domain: 'domain',
-        admin: 'admin');
     return GestureDetector(
       // for hiding keyboard
       onTap: () => FocusScope.of(context).unfocus(),
@@ -237,13 +224,10 @@ class _ProfileScreenState extends State<ProfileScreenParticipant> {
                                             ),
                                           ),
                                           title: Text(list[index].name),
-                                          trailing: IconButton(
-                                            icon: const Icon(
-                                              Icons.remove_circle,
-                                              color: Colors.red,
-                                            ),
-                                            onPressed: () {},
-                                          ),
+                                          trailing: Text(widget.user.email ==
+                                                  list[index].email
+                                              ? 'Admin'
+                                              : ''),
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10)),
@@ -270,89 +254,4 @@ class _ProfileScreenState extends State<ProfileScreenParticipant> {
   }
 
   // bottom sheet for picking a profile picture for user
-  void _showBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-        builder: (_) {
-          return ListView(
-            shrinkWrap: true,
-            padding:
-                EdgeInsets.only(top: mq.height * .03, bottom: mq.height * .05),
-            children: [
-              //pick profile picture label
-              const Text('Pick Profile Picture',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-
-              //for adding some space
-              SizedBox(height: mq.height * .02),
-
-              //buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  //pick from gallery button
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: const CircleBorder(),
-                          fixedSize: Size(mq.width * .3, mq.height * .15)),
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-
-                        // Pick an image
-                        final XFile? image = await picker.pickImage(
-                            source: ImageSource.gallery, imageQuality: 80);
-                        if (image != null) {
-                          log('Image Path: ${image.path}');
-                          setState(() {
-                            _image = image.path;
-                          });
-
-                          APIs.updateProfilePictureCommunity(
-                              File(_image!), widget.user.id);
-                          // for hiding bottom sheet
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: Icon(
-                        Icons.image,
-                        color: Colors.black,
-                        size: mq.width * .2,
-                      )),
-
-                  //take picture from camera button
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: const CircleBorder(),
-                          fixedSize: Size(mq.width * .3, mq.height * .15)),
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-
-                        // Pick an image
-                        final XFile? image = await picker.pickImage(
-                            source: ImageSource.camera, imageQuality: 80);
-                        if (image != null) {
-                          log('Image Path: ${image.path}');
-                          setState(() {
-                            _image = image.path;
-                          });
-
-                          APIs.updateProfilePictureCommunity(
-                              File(_image!), widget.user.id);
-                          // for hiding bottom sheet
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: Image.asset('images/camera.png')),
-                ],
-              )
-            ],
-          );
-        });
-  }
 }
