@@ -193,45 +193,48 @@ class _ProfileScreenState extends State<ProfileScreenParticipant> {
                                   itemCount: snapshot.data!.docs.length,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
-                                    return Card(
-                                        margin: const EdgeInsets.only(
-                                            left: 0, right: 0),
-                                        color: Colors.white,
-                                        elevation: 2,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        child: ListTile(
-                                          leading: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: CachedNetworkImage(
-                                              width: 42,
-                                              height: 42,
-                                              imageUrl: list[index].image,
-                                              fit: BoxFit.fill,
-                                              placeholder: (context, url) =>
-                                                  const Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child:
-                                                    CircularProgressIndicator(
-                                                        strokeWidth: 2),
-                                              ),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      const Icon(Icons.image,
-                                                          size: 70),
-                                            ),
-                                          ),
-                                          title: Text(list[index].name),
-                                          trailing: Text(widget.user.email ==
-                                                  list[index].email
-                                              ? 'Admin'
-                                              : ''),
+                                    return Padding(
+                                      padding: const EdgeInsets.only(top: 8),
+                                      child: Card(
+                                          margin: const EdgeInsets.only(
+                                              left: 0, right: 0),
+                                          color: Colors.white,
+                                          elevation: 2,
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(10)),
-                                        ));
+                                                  BorderRadius.circular(15)),
+                                          child: ListTile(
+                                            leading: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: CachedNetworkImage(
+                                                width: 42,
+                                                height: 42,
+                                                imageUrl: list[index].image,
+                                                fit: BoxFit.fill,
+                                                placeholder: (context, url) =>
+                                                    const Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          strokeWidth: 2),
+                                                ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.image,
+                                                            size: 70),
+                                              ),
+                                            ),
+                                            title: Text(list[index].name),
+                                            trailing: Text(widget.user.email ==
+                                                    list[index].email
+                                                ? 'Admin'
+                                                : ''),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                          )),
+                                    );
                                   },
                                 );
                               } else {

@@ -63,6 +63,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                     borderRadius: BorderRadius.circular(mq.height * .03),
                     child: CachedNetworkImage(
                       width: mq.height * .055,
+                      fit: BoxFit.fill,
                       height: mq.height * .055,
                       imageUrl: widget.user.image,
                       errorWidget: (context, url, error) => const CircleAvatar(
