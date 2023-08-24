@@ -170,6 +170,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: CachedNetworkImage(
                         width: mq.height * .05,
                         height: mq.height * .05,
+                        fit: BoxFit.fill,
                         imageUrl:
                             list.isNotEmpty ? list[0].image : widget.user.image,
                         errorWidget: (context, url, error) =>
