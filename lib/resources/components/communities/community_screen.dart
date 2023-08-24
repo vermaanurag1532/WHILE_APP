@@ -204,7 +204,7 @@ class _CommunityScreenFinalState extends State<CommunityScreenFinal> {
                 //hide alert dialog
                 Navigator.pop(context);
                 if (name.isNotEmpty) {
-                  await APIs.addCommunity(name).then((value) {
+                  await APIs.addUserToCommunity(name).then((value) {
                     if (!value) {
                       Dialogs.showSnackbar(
                           context, 'Community does not Exists!');

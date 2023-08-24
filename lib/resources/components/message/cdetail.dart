@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:while_app/resources/components/community_detail_opportunities_widget.dart';
 import 'package:while_app/resources/components/community_detail_quiz_widget.dart';
@@ -63,10 +64,20 @@ class _CCommunityDetailScreenState extends State<CCommunityDetailScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CircleAvatar(
-                maxRadius: 20,
-                minRadius: 2,
-                backgroundImage: NetworkImage(widget.user.image, scale: 0.5),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: CachedNetworkImage(
+                  width: 42,
+                  height: 42,
+                  imageUrl: widget.user.image,
+                  fit: BoxFit.fill,
+                  placeholder: (context, url) => const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  errorWidget: (context, url, error) =>
+                      const Icon(Icons.image, size: 70),
+                ),
               ),
               const SizedBox(
                 width: 15,
