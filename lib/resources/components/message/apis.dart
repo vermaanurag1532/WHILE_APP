@@ -127,7 +127,7 @@ class APIs {
     }
   }
 
-  static Future<bool> addCommunity(String name) async {
+  static Future<bool> addUserToCommunity(String name) async {
     final data = await firestore
         .collection('communities')
         .where('name', isEqualTo: name)
@@ -544,7 +544,9 @@ class APIs {
     final imageUrl = await ref.getDownloadURL();
     chatUser.image = imageUrl;
     final refe = FirebaseFirestore.instance.collection('communities');
-    await refe.doc(chatUser.id).set(chatUser.toJson());
+    await refe.doc(chatUser.id).set(chatUser.toJson()).then((value) {
+      addUserToCommunity(chatUser.name);
+    });
   }
 
   static Future<void> communitySendChatImage(

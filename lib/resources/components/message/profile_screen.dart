@@ -91,6 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: CachedNetworkImage(
                                   width: mq.height * .2,
                                   height: mq.height * .2,
+                                  filterQuality: FilterQuality.low,
                                   fit: BoxFit.cover,
                                   imageUrl: widget.user.image,
                                   errorWidget: (context, url, error) =>
