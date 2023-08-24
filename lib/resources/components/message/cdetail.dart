@@ -7,6 +7,7 @@ import 'package:while_app/resources/components/community_detail_quiz_widget.dart
 import 'package:while_app/resources/components/community_detail_resources_widget%20.dart';
 import 'package:while_app/resources/components/message/apis.dart';
 import 'package:while_app/resources/components/message/profile_screen.dart';
+import 'package:while_app/resources/components/message/widgets/profileCommunity.dart';
 
 import 'cchat.dart';
 import 'models/community_user.dart';
@@ -59,6 +60,12 @@ class _CCommunityDetailScreenState extends State<CCommunityDetailScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (_) => ProfileScreen(user: widget.user)));
+            } else {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) =>
+                          ProfileScreenParticipant(user: widget.user)));
             }
           },
           child: Row(
