@@ -289,13 +289,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ),
                                           ),
                                           title: Text(list[index].name),
-                                          trailing: IconButton(
-                                            icon: const Icon(
-                                              Icons.remove_circle,
-                                              color: Colors.red,
-                                            ),
-                                            onPressed: () {},
-                                          ),
+                                          trailing: widget.user.email ==
+                                                  list[index].email
+                                              ? const Text('Admin')
+                                              : IconButton(
+                                                  icon: const Icon(
+                                                    Icons.remove_circle,
+                                                    color: Colors.red,
+                                                  ),
+                                                  onPressed: () {},
+                                                ),
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10)),
