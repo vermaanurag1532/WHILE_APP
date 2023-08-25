@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:while_app/resources/components/message/apis.dart';
 import 'package:while_app/utils/utils.dart';
 import 'package:while_app/view_model/session_controller.dart';
 
@@ -36,6 +36,7 @@ class ProfileController with ChangeNotifier {
 
     if (pickedFile != null) {
       if (check == "Profile Picture") {
+        print('//////////////profile updated ////////////');
         _profileimage = File(pickedFile.path);
         uploadProfileImage(context);
         notifyListeners();
@@ -73,16 +74,10 @@ class ProfileController with ChangeNotifier {
         storageRef.putFile(File(profileimage!.path).absolute);
     await Future.value(uploadTask);
     final newUrl = await storageRef.getDownloadURL();
-    final user = FirebaseAuth.instance.currentUser!;
-    final userData = await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(user.uid)
-        .get();
-    FirebaseFirestore.instance.collection('Users').doc(user.uid).set({
-      'email': userData.data()!['email'],
-      'name': userData.data()!['name'],
-      'profile': newUrl
-    });
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(APIs.me.id)
+        .update({'profile': newUrl});
     ref
         .child(FirebaseSessionController().uid.toString())
         .update({'profileImage': newUrl.toString()}).then((value) {
