@@ -64,6 +64,8 @@ dependencies:
   video_compress_plus:
   percent_indicator: ^4.0.1
   get:
+  image_cropper: ^4.0.1
+  google_fonts: ^4.0.4
   
   # gradient_text:
   
