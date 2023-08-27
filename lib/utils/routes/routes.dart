@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
 import 'package:while_app/view/auth/forgot_password_screen.dart';
 import 'package:while_app/view/create/add_reel.dart';
 import 'package:while_app/view/home_screen.dart';
+import 'package:while_app/view/post_preview.dart';
 import 'package:while_app/view/social/create_menu_screen.dart';
 import 'package:while_app/view/splash_view.dart';
 import 'package:while_app/view_model/wrapper/wrapper.dart';
@@ -43,6 +46,19 @@ class Routes {
       case RoutesName.createMenu:
         return MaterialPageRoute(
             builder: (BuildContext context) => const CreateMenuScreen());
+       case RoutesName.postPreview:
+        if (arguments is File) {
+          return MaterialPageRoute(
+              builder: (BuildContext context) => PostPreview(file: arguments));
+        } else {
+          return MaterialPageRoute(builder: (_) {
+            return const Scaffold(
+              body: Center(
+                child: Text('No route defined'),
+              ),
+            );
+          });
+        }
       case RoutesName.addReel:
         if (arguments is String) {
           return MaterialPageRoute(

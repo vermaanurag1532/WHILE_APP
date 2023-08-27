@@ -9,6 +9,7 @@ import 'package:while_app/theme/pallete.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
 import 'package:while_app/view_model/current_user_provider.dart';
 import 'package:while_app/view_model/firebasedata.dart';
+import 'package:while_app/view_model/post_provider.dart';
 import 'package:while_app/view_model/profile_controller.dart';
 import 'utils/routes/routes.dart';
 import 'view_model/reel_controller.dart';
@@ -50,6 +51,8 @@ class MyApp extends river.ConsumerWidget {
 
     return MultiProvider(
       providers: [
+        Provider(
+            create: (_) => PostProvider()),
         Provider<FirebaseAuthMethods>(
             create: (_) => FirebaseAuthMethods(FirebaseAuth.instance)),
         Provider<ReelController>(create: (_) => ReelController()),

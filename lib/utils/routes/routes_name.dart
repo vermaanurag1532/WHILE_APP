@@ -9,4 +9,5 @@ class RoutesName{
   static const String settings='settings';
   static const String createMenu='create_menu';
   static const String addReel='add_reel';
+  static const String postPreview='post-preview';
 }

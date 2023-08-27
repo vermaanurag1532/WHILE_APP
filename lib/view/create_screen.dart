@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:while_app/resources/colors.dart';
 import 'package:while_app/resources/components/create_container.dart';
 import 'package:while_app/theme/pallete.dart';
+import 'package:while_app/view_model/post_provider.dart';
 import 'package:while_app/view_model/reel_controller.dart';
 
 class CreateScreen extends river.ConsumerStatefulWidget {
@@ -18,6 +19,7 @@ class _CreateScreenState extends river.ConsumerState<CreateScreen> {
   Widget build(BuildContext context) {
     final currentTheme = ref.watch(themeNotifierProvider);
     final provider = Provider.of<ReelController>(context, listen: false);
+    final postProvider=Provider.of<PostProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(top: 28.0),
       child: Container(
@@ -58,6 +60,11 @@ class _CreateScreenState extends river.ConsumerState<CreateScreen> {
                 text: "Reels",
                 function: () {
                   provider.selectVideo(context);
+                }),
+            CreateContainer(
+                text: "Post",
+                function: () {
+                  postProvider.selectPost(context);
                 }),
           ],
         ),
