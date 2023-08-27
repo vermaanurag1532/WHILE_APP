@@ -13,6 +13,8 @@ import 'models/community_message.dart';
 import 'models/community_user.dart';
 import 'models/message.dart';
 
+String userImage = '';
+
 class APIs {
   // for authentication
   static FirebaseAuth auth = FirebaseAuth.instance;
@@ -28,8 +30,8 @@ class APIs {
       id: user.uid,
       name: user.displayName.toString(),
       email: user.email.toString(),
-      about: "Hey, I'm using We Chat!",
-      image: user.photoURL.toString(),
+      about: "Hey, I'm using While",
+      image: userImage,
       createdAt: '',
       isOnline: false,
       lastActive: '',
@@ -273,13 +275,14 @@ class APIs {
         .then((p0) {
       log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
     });
-
     //updating image in firestore database
-    me.image = await ref.getDownloadURL();
+    userImage = await ref.getDownloadURL();
+    me.image = userImage;
+
     await firestore
         .collection('users')
         .doc(user.uid)
-        .update({'image': me.image});
+        .update({'image': userImage});
   }
 
   // for getting specific user info
@@ -288,6 +291,14 @@ class APIs {
     return firestore
         .collection('users')
         .where('id', isEqualTo: chatUser.id)
+        .snapshots();
+  }
+
+  // for getting specific user info
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getSelfData() {
+    return firestore
+        .collection('users')
+        .where('id', isEqualTo: user.uid)
         .snapshots();
   }
 
