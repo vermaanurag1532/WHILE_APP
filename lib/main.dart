@@ -3,12 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as river;
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:while_app/repository/firebase_repository.dart';
 import 'package:while_app/theme/pallete.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
 import 'package:while_app/view_model/current_user_provider.dart';
 import 'package:while_app/view_model/firebasedata.dart';
+import 'package:while_app/view_model/post_controller.dart';
 import 'package:while_app/view_model/post_provider.dart';
 import 'package:while_app/view_model/profile_controller.dart';
 import 'utils/routes/routes.dart';
@@ -51,6 +53,7 @@ class MyApp extends river.ConsumerWidget {
 
     return MultiProvider(
       providers: [
+        StreamProvider<List<Map<String, dynamic>>>(create: (context)=> PostController().getPost(), initialData: const []),
         Provider(
             create: (_) => PostProvider()),
         Provider<FirebaseAuthMethods>(

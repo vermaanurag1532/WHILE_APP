@@ -37,7 +37,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const FeedScreen(),
-    ReelsScreen(),
+    const ReelsScreen(),
     const CreateScreen(),
     const ProfileScreen()
   ];

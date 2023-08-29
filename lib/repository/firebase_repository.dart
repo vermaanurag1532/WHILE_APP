@@ -25,6 +25,7 @@ class FirebaseAuthMethods {
           "name": name,
         });
       });
+     await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
     } on FirebaseAuthException catch (e) {
       Utils.snackBar(e.message!, context);
     }

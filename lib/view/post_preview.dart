@@ -5,11 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 import 'package:while_app/resources/components/round_button.dart';
 import 'package:while_app/resources/components/text_container_widget.dart';
 import 'package:while_app/utils/utils.dart';
 import 'package:while_app/view_model/post_provider.dart';
-
 import '../view_model/session_controller.dart';
 
 class PostPreview extends StatefulWidget {
@@ -23,6 +23,7 @@ class PostPreview extends StatefulWidget {
 
 class _PostPreviewState extends State<PostPreview> {
   TextEditingController caption = TextEditingController();
+  var uuid=const Uuid();
   bool isLoading = false;
   String? cateogry;
   List<String> cateogries=['App Development', 'Web Development', 'Space', 'Science', 'Maths', 'Physics'];
@@ -135,9 +136,11 @@ class _PostPreviewState extends State<PostPreview> {
                   }
                   else{
                     try {
+
                     setState(() {
                       isLoading = true;
                     });
+                    var docid=uuid.v4();
                     final datetime = DateTime.now();
                     firebase_storage.Reference storageRef =
                         firebase_storage.FirebaseStorage.instance.ref(
@@ -146,11 +149,12 @@ class _PostPreviewState extends State<PostPreview> {
                         storageRef.putFile(File(provider.post!.path).absolute);
                     await Future.value(uploadTask);
                     final newUrl = await storageRef.getDownloadURL();
-                    FirebaseFirestore.instance
-                        .collection('Posts')
-                        .doc(FirebaseAuth.instance.currentUser!.uid)
-                        .collection(FirebaseAuth.instance.currentUser!.email!)
-                        .add({
+                   await FirebaseFirestore.instance
+                        .collection('Posts').doc(docid)
+                        .set({
+                      "docid": docid,
+                      "name": FirebaseAuth.instance.currentUser!.uid,
+                      "time": DateTime.now(),
                       "caption": caption.text.trim(),
                       "postUrl": newUrl
                     }).then((value) {
