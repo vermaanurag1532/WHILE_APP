@@ -30,12 +30,13 @@ class _ProfileScreenState extends State<EditUserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log('///user profile ${widget.user.image}');
     mq = MediaQuery.of(context).size;
     List<ChatUser> list = [];
-    final ChatUser community = ChatUser(
-      image: '',
+    final ChatUser user = ChatUser(
+      image: widget.user.image,
       about: '',
-      name: '',
+      name: widget.user.name,
       createdAt: '',
       id: widget.user.id,
       email: '',
@@ -129,7 +130,7 @@ class _ProfileScreenState extends State<EditUserProfileScreen> {
                     // name input field
                     TextFormField(
                       initialValue: widget.user.name,
-                      onSaved: (val) => community.name = val ?? '',
+                      onSaved: (val) => user.name = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',
@@ -148,7 +149,7 @@ class _ProfileScreenState extends State<EditUserProfileScreen> {
                     // about input field
                     TextFormField(
                       initialValue: widget.user.about,
-                      onSaved: (val) => community.about = val ?? '',
+                      onSaved: (val) => user.about = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',
@@ -165,7 +166,7 @@ class _ProfileScreenState extends State<EditUserProfileScreen> {
                     // domain input field
                     TextFormField(
                       initialValue: widget.user.createdAt,
-                      onSaved: (val) => community.createdAt = val ?? '',
+                      onSaved: (val) => user.createdAt = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',
@@ -182,7 +183,7 @@ class _ProfileScreenState extends State<EditUserProfileScreen> {
                     // email input field
                     TextFormField(
                       initialValue: widget.user.email,
-                      onSaved: (val) => community.email = val ?? '',
+                      onSaved: (val) => user.email = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',

@@ -58,6 +58,8 @@ class MoreOptions extends StatelessWidget {
             ),
             ListTile(
               onTap: () {
+                Navigator.of(context).pop();
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(

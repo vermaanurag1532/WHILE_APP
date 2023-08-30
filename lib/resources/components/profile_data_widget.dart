@@ -41,6 +41,7 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
             case ConnectionState.active:
             case ConnectionState.done:
               final data = snapshot.data?.docs;
+              // ChatUser user = data![0];
 
               return SizedBox(
                 width: double.infinity,

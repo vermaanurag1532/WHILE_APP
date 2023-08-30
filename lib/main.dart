@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as river;
 import 'package:provider/provider.dart';
 import 'package:while_app/repository/firebase_repository.dart';
+
 import 'package:while_app/theme/pallete.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
 import 'package:while_app/view_model/current_user_provider.dart';
@@ -13,6 +14,13 @@ import 'package:while_app/view_model/post_provider.dart';
 import 'package:while_app/view_model/profile_controller.dart';
 import 'utils/routes/routes.dart';
 import 'view_model/reel_controller.dart';
+
+// final userProvider = river.StreamProvider((ref) {
+//   final data =
+//       FirebaseFirestore.instance.collection('users').doc(APIs.me.id).snapshots();
+//       final d = ;
+//       ChatUser us = data?.map
+// });
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +32,10 @@ void main() async {
   // );
   await Firebase.initializeApp();
   Provider.debugCheckInvalidValueType = null;
-  runApp(const river.ProviderScope(child: MyApp()));
+  runApp(const river.ProviderScope(
+    child: MyApp(
+
+  )));
 }
 
 class MyApp extends river.ConsumerWidget {
@@ -32,7 +43,6 @@ class MyApp extends river.ConsumerWidget {
 
   @override
   Widget build(BuildContext context, river.WidgetRef ref) {
-
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
@@ -51,8 +61,7 @@ class MyApp extends river.ConsumerWidget {
 
     return MultiProvider(
       providers: [
-        Provider(
-            create: (_) => PostProvider()),
+        Provider(create: (_) => PostProvider()),
         Provider<FirebaseAuthMethods>(
             create: (_) => FirebaseAuthMethods(FirebaseAuth.instance)),
         Provider<ReelController>(create: (_) => ReelController()),
