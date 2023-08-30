@@ -18,148 +18,170 @@ class ProfileDataWidget extends StatefulWidget {
 
 class _ProfileDataWidgetState extends State<ProfileDataWidget> {
   String? _image;
+
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
+    log('//////');
+    log(APIs.me.image);
 
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     var nh = MediaQuery.of(context).viewPadding.top;
-    return SizedBox(
-      width: double.infinity,
-      child: Stack(
-        children: [
-          Container(
-            height: h / 2.5,
-          ),
-          Positioned(
-            top: nh,
-            child: InkWell(
-                child: ClipRRect(
-              // borderRadius: BorderRadius.circular(h * .13),
-              child: CachedNetworkImage(
-                width: h,
-                fit: BoxFit.cover,
-                height: h * .13,
-                imageUrl: APIs.me.image,
-                errorWidget: (context, url, error) =>
-                    const CircleAvatar(child: Icon(CupertinoIcons.person)),
-              ),
-            )),
-          ),
-          Positioned(
-            top: nh + h / 7 - w / 8,
-            left: w / 12,
-            child: Stack(
-              children: [
-                //profile picture
-                _image != null
-                    ?
+    return StreamBuilder(
+        stream: APIs.getSelfData(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            //if data is loading
+            case ConnectionState.waiting:
+            case ConnectionState.none:
+              return const SizedBox();
 
-                    //local image
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(h * .1),
-                        child: Image.file(File(_image!),
-                            width: h * .1, height: h * .1, fit: BoxFit.cover))
-                    :
+            //if some or all data is loaded then show it
+            case ConnectionState.active:
+            case ConnectionState.done:
+              final data = snapshot.data?.docs;
+              // ChatUser user = data![0];
 
-                    //image from server
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(h * .1),
+              return SizedBox(
+                width: double.infinity,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: h / 2.5,
+                    ),
+                    Positioned(
+                      top: nh,
+                      child: InkWell(
+                          child: ClipRRect(
+                        // borderRadius: BorderRadius.circular(h * .13),
                         child: CachedNetworkImage(
-                          width: h * .15,
-                          height: h * .15,
-                          filterQuality: FilterQuality.low,
-                          fit: BoxFit.fill,
-                          imageUrl: APIs.me.image,
+                          width: h,
+                          fit: BoxFit.cover,
+                          height: h * .13,
+                          imageUrl: data![0]['image'],
                           errorWidget: (context, url, error) =>
                               const CircleAvatar(
                                   child: Icon(CupertinoIcons.person)),
                         ),
-                      ),
+                      )),
+                    ),
+                    Positioned(
+                      top: nh + h / 7 - w / 8,
+                      left: w / 12,
+                      child: Stack(
+                        children: [
+                          //profile picture
+                          _image != null
+                              ?
+                              //local image
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(h * .1),
+                                  child: Image.file(File(_image!),
+                                      width: h * .1,
+                                      height: h * .1,
+                                      fit: BoxFit.cover))
+                              :
 
-                //edit image button
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: MaterialButton(
-                    elevation: 1,
-                    onPressed: () {
-                      _showBottomSheet();
-                    },
-                    shape: const CircleBorder(),
-                    color: Colors.white,
-                    child: const Icon(Icons.edit, color: Colors.blue),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Positioned(
-              top: nh + h / 7 + 5,
-              left: w / 2.5,
-              child: const Text(
-                "Followers",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              )),
-          Positioned(
-              top: nh + h / 7 + 5,
-              left: w / 1.5,
-              child: const Text(
-                "Following",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              )),
-          Positioned(
-              top: nh + h / 7.5,
-              left: w / 1.15,
-              child: IconButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return const MoreOptions();
-                        });
-                  },
-                  icon: const Icon(
-                    Icons.more_vert,
-                    color: Colors.black,
-                  ))),
-          Positioned(
-              top: nh + h / 7 + 24,
-              left: w / 2.5,
-              child: const Text(
-                "300",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              )),
-          Positioned(
-              top: nh + h / 7 + 24,
-              left: w / 1.5,
-              child: const Text(
-                "320",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              )),
-          Positioned(
-            top: nh + h / 7 + w / 8 + 30,
-            child: Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    APIs.me.id,
-                    style: const TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.w500),
-                  ),
-                  Text(APIs.me.about,
-                      style: const TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.w500))
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+                              //image from server
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(h * .75),
+                                  child: CachedNetworkImage(
+                                    width: h * .15,
+                                    height: h * .15,
+                                    filterQuality: FilterQuality.low,
+                                    fit: BoxFit.fill,
+                                    imageUrl: data[0]['image'],
+                                    errorWidget: (context, url, error) =>
+                                        const CircleAvatar(
+                                            child: Icon(CupertinoIcons.person)),
+                                  ),
+                                ),
+
+                          //edit image button
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: MaterialButton(
+                              elevation: 4,
+                              onPressed: () {
+                                _showBottomSheet();
+                              },
+                              shape: const CircleBorder(),
+                              color: Colors.white,
+                              child: const Icon(Icons.edit, color: Colors.blue),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                        top: nh + h / 7 + 5,
+                        left: w / 2.5,
+                        child: const Text(
+                          "Followers",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        )),
+                    Positioned(
+                        top: nh + h / 7 + 5,
+                        left: w / 1.5,
+                        child: const Text(
+                          "Following",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        )),
+                    Positioned(
+                        top: nh + h / 7.5,
+                        left: w / 1.15,
+                        child: IconButton(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return const MoreOptions();
+                                  });
+                            },
+                            icon: const Icon(
+                              Icons.more_vert,
+                              color: Colors.black,
+                            ))),
+                    Positioned(
+                        top: nh + h / 7 + 24,
+                        left: w / 2.5,
+                        child: const Text(
+                          "300",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        )),
+                    Positioned(
+                        top: nh + h / 7 + 24,
+                        left: w / 1.5,
+                        child: const Text(
+                          "320",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        )),
+                    Positioned(
+                      top: nh + h / 7 + w / 8 + 30,
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              data[0]['name'],
+                              style: const TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.w500),
+                            ),
+                            Text(APIs.me.about,
+                                style: const TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w500))
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+          }
+        });
   }
 
   void _showBottomSheet() {
@@ -206,7 +228,7 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
 
                           APIs.updateProfilePicture(File(_image!));
                           // for hiding bottom sheet
-                          Navigator.pop(context);
+                          if (context.mounted) Navigator.of(context).pop();
                         }
                       },
                       child: Icon(
@@ -235,7 +257,8 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
 
                           APIs.updateProfilePicture(File(_image!));
                           // for hiding bottom sheet
-                          Navigator.pop(context);
+
+                          if (context.mounted) Navigator.of(context).pop();
                         }
                       },
                       child: Image.asset('images/camera.png')),

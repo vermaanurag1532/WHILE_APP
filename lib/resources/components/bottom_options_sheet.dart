@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:while_app/resources/components/message/apis.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
+
+import '../edit_profile_user.dart';
 
 class MoreOptions extends StatelessWidget {
   const MoreOptions({super.key});
@@ -53,13 +56,21 @@ class MoreOptions extends StatelessWidget {
               ),
               title: Text("Activity"),
             ),
-            const ListTile(
-              leading: Icon(
-                Icons.report,
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pop();
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => EditUserProfileScreen(user: APIs.me)));
+              },
+              leading: const Icon(
+                Icons.edit,
                 color: Colors.black,
                 size: 30,
               ),
-              title: Text("Report an issue"),
+              title: Text("Edit Profile"),
             ),
             const ListTile(
               leading: Icon(

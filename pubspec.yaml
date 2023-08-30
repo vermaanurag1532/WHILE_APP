@@ -60,7 +60,7 @@ dependencies:
   gallery_saver: ^2.3.2
 
   fijkplayer: ^0.10.0
-  flutter_riverpod: ^2.3.6
+  flutter_riverpod: ^2.3.7
   video_compress_plus:
   percent_indicator: ^4.0.1
   get:
