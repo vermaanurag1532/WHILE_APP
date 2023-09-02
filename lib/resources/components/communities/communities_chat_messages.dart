@@ -7,6 +7,7 @@ import 'package:while_app/resources/components/communities/shape.dart';
 class ChatMessages extends StatelessWidget {
   ChatMessages({super.key, required this.id});
   String id = '';
+
   @override
   Widget build(BuildContext context) {
     //stream builder to automatically show new message

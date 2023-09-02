@@ -8,7 +8,6 @@ import 'package:while_app/view/create_screen.dart';
 import 'package:while_app/view/feed_screen.dart';
 import 'package:while_app/view/profile_screen.dart';
 import 'package:while_app/view/reels_screen.dart';
-import 'package:while_app/resources/components/message/home_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:while_app/view/social/social_home_screen.dart';
 
@@ -38,7 +37,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const FeedScreen(),
-    ReelsScreen(),
+    const ReelsScreen(),
     const CreateScreen(),
     const ProfileScreen()
   ];
@@ -60,7 +59,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               IconButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => SocialScreen(),
+                      builder: (context) => const SocialScreen(),
                     ));
                   },
                   icon: const Icon(Icons.message)),

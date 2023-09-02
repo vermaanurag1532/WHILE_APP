@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 import 'package:while_app/controller/feed_item.dart';
 import 'package:while_app/controller/videos_lists.dart';
+import 'package:while_app/data/model/video_model.dart';
 
 class ReelsScreen extends ConsumerStatefulWidget {
   const ReelsScreen({super.key});
@@ -14,7 +15,7 @@ class ReelsScreen extends ConsumerStatefulWidget {
 
 class _ReelsScreenState extends ConsumerState<ReelsScreen> {
   int _currentPage = 0;
-  PageController _pageController = PageController(viewportFraction: 1.0);
+  final PageController _pageController = PageController(viewportFraction: 1.0);
 
   @override
   void dispose() {
@@ -50,7 +51,7 @@ class _ReelsScreenState extends ConsumerState<ReelsScreen> {
             );
           }
 
-          final videoList = VideoList.getVideoList(snapshot.data!);
+          final List<Video> videoList = VideoList.getVideoList(snapshot.data!);
           // print(videoList);
 
           return Scaffold(
@@ -66,7 +67,7 @@ class _ReelsScreenState extends ConsumerState<ReelsScreen> {
               },
               itemBuilder: (context, index) {
                 final videoData = videoList[index];
-                return FeedItem(videoUrl: videoData);
+                return FeedItem(video: videoData);
               },
             ),
           );

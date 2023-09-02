@@ -22,7 +22,7 @@ class _MyAppState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notification'),
+        title: const Text('Notification'),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

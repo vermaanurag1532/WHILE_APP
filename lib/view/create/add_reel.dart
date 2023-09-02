@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +39,7 @@ class _AddReelState extends State<AddReel> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   void uploadVideo(
-      BuildContext context, String title, String des, String path) async {
+      BuildContext context, String title, String des, String path,int likes,int shares) async {
     setState(() {
       isloading = true;
     });
@@ -60,7 +58,7 @@ class _AddReelState extends State<AddReel> {
     final snapshot = await docRef.get();
 
     if (snapshot.exists) {
-      final List<dynamic> dynamicUrls = snapshot.data()?['urls'] ?? [];
+      final List<dynamic> dynamicUrls = snapshot.data()?['urls'];
       List<Map<String, String>> existingUrls = dynamicUrls
           .map((dynamicMap) => Map<String, String>.from(dynamicMap))
           .toList();
@@ -152,7 +150,7 @@ class _AddReelState extends State<AddReel> {
                           context,
                           _titleController.text.toString(),
                           _descriptionController.text.toString(),
-                          widget.video.toString());
+                          widget.video.toString(),0,0);
                     }
                   })
             ],

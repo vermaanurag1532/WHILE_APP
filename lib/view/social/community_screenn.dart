@@ -1,9 +1,7 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:while_app/resources/components/message/widgets/chat_user_card.dart';
 import 'package:while_app/view/social/community_detail.dart';
 import '../../resources/components/message/apis.dart';
 import '../../resources/components/message/helper/dialogs.dart';
@@ -27,7 +25,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
   // for storing searched items
 
   // for storing search status
-  List<ChatUser> _list = [];
+  final List<ChatUser> _list = [];
   final List<ChatUser> _searchList = [];
   @override
   void initState() {
@@ -55,6 +53,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     bool isSearching = widget.isSearching;
     if (widget.value != '') {
       log(widget.value);
