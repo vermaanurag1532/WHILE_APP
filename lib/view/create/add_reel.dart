@@ -21,6 +21,9 @@ class AddReel extends StatefulWidget {
 class _AddReelState extends State<AddReel> {
   late Subscription _subscription;
   bool isloading = false;
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -36,64 +39,49 @@ class _AddReelState extends State<AddReel> {
     _subscription.unsubscribe();
   }
 
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  void uploadVideo(
-      BuildContext context, String title, String des, String path,int likes,int shares) async {
+  _compressVideo(String videoPath) async {
+    final compressedVideo = await VideoCompress.compressVideo(videoPath,
+        quality: VideoQuality.MediumQuality, deleteOrigin: false);
+    return compressedVideo!.file;
+  }
+
+  void uploadVideo(BuildContext context, String title, String des, String path,
+      int likes, int shares) async {
     setState(() {
       isloading = true;
     });
+
     DateTime now = DateTime.now();
     firebase_storage.Reference storageRef = firebase_storage
         .FirebaseStorage.instance
         .ref('content/${FirebaseSessionController().uid!}/video/$now');
     firebase_storage.UploadTask uploadTask =
         storageRef.putFile(await _compressVideo(path));
+
     await Future.value(uploadTask);
+
     final newUrl = await storageRef.getDownloadURL();
     final user = FirebaseAuth.instance.currentUser!;
-    final docRef =
-        FirebaseFirestore.instance.collection('videos').doc(user.uid);
+    final CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection('videos');
 
-    final snapshot = await docRef.get();
-
-    if (snapshot.exists) {
-      final List<dynamic> dynamicUrls = snapshot.data()?['urls'];
-      List<Map<String, String>> existingUrls = dynamicUrls
-          .map((dynamicMap) => Map<String, String>.from(dynamicMap))
-          .toList();
-      existingUrls.add({'video': newUrl, 'title': title, 'description': des});
-      await docRef.update({'urls': existingUrls}).then((value) {
-        Utils.toastMessage('Your video is uploaded!');
-        setState(() {
-          isloading = false;
-        });
-        Navigator.pop(context);
-      }).onError((error, stackTrace) {
-        Utils.toastMessage(error.toString());
+    final Map<String, dynamic> vid = {
+      "uploadedBy": user.uid,
+      'videoUrl': newUrl,
+      'title': title,
+      'description': des,
+      'likes': 0,
+      'shares': 0
+    };
+    collectionReference.add(vid).then((value) {
+      Utils.toastMessage('Your video is uploaded!');
+      setState(() {
+        isloading = false;
       });
-    } else {
-      await docRef.set({
-        'urls': [
-          {'video': newUrl, 'title': title, 'description': des}
-        ]
-      }).then((value) {
-        Utils.toastMessage('Your video is uploaded!');
-        setState(() {
-          isloading = false;
-        });
-        Navigator.pop(context);
-      }).onError((error, stackTrace) {
-        Utils.toastMessage(error.toString());
-      });
-    }
-  }
-
-  _compressVideo(String videoPath) async {
-    final compressedVideo = await VideoCompress.compressVideo(videoPath,
-        quality: VideoQuality.MediumQuality, deleteOrigin: false);
-    // print(compressedVideo!.filesize);
-    return compressedVideo!.file;
+      Navigator.pop(context);
+    }).onError((error, stackTrace) {
+      Utils.toastMessage(error.toString());
+    });
   }
 
   @override
@@ -150,7 +138,9 @@ class _AddReelState extends State<AddReel> {
                           context,
                           _titleController.text.toString(),
                           _descriptionController.text.toString(),
-                          widget.video.toString(),0,0);
+                          widget.video.toString(),
+                          0,
+                          0);
                     }
                   })
             ],

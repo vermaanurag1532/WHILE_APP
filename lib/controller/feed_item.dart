@@ -57,11 +57,13 @@ class _FeedItemState extends State<FeedItem> {
                         children: [
                           Text(
                             widget.video.title,
-                            style: const TextStyle(color: Colors.white, fontSize: 20),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
                           ),
                           Text(
                             widget.video.description,
-                            style: const TextStyle(color: Colors.white, fontSize: 15),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 15),
                           ),
                           const Row(
                             children: [
@@ -101,8 +103,8 @@ class _FeedItemState extends State<FeedItem> {
                             ),
                             Text(
                               widget.video.likes.toString(),
-                              style:
-                                  const TextStyle(fontSize: 20, color: Colors.white),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.white),
                             ),
                           ],
                         ),
