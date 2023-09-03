@@ -623,6 +623,28 @@ class APIs {
   }
 
   //comunity participants info
+  static getCommunityInfos(CommunityUser community) async {
+    CommunityUser ds;
+    firestore
+        .collection('communities')
+        .doc(community.id)
+        .snapshots()
+        .map((event) {
+      return ds = CommunityUser(
+          image: event.data()!['image'],
+          about: event.data()!['about'],
+          name: event.data()!['name'],
+          createdAt: event.data()!['createdAt'],
+          id: event.data()!['id'],
+          email: event.data()!['email'],
+          type: event.data()!['type'],
+          noOfUsers: event.data()!['noOfUsers'],
+          domain: event.data()!['domain'],
+          admin: event.data()!['admin']);
+    });
+  }
+
+  //comunity participants info
   static Stream<QuerySnapshot<Map<String, dynamic>>>
       getCommunityParticipantsInfo(String id) {
     return firestore

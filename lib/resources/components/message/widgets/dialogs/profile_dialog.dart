@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:while_app/resources/components/message/models/community_user.dart';
+import 'package:while_app/view_model/providers/community_provider.dart';
 
 import '../../models/chat_user.dart';
 
@@ -53,25 +56,33 @@ class ProfileDialog extends StatelessWidget {
 
                 //info button
                 Positioned(
-                    right: 8,
-                    top: 6,
-                    child: MaterialButton(
-                      onPressed: () {
-                        // for hiding image dialog
-                        Navigator.pop(context);
+                  right: 8,
+                  top: 6,
+                  child: Consumer(
+                    builder: (context, ref, child) {
+                      final CommunityUser data = ref.watch(communityProvider);
+                      return MaterialButton(
+                        onPressed: () {
+                          ref.watch(communityProvider.notifier);
+                          // for hiding image dialog
+                          // Navigator.pop(context);
 
-                        //move to view profile screen
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (_) => ProfileScreen(user: user)));
-                      },
-                      minWidth: 0,
-                      padding: const EdgeInsets.all(0),
-                      shape: const CircleBorder(),
-                      child: const Icon(Icons.info_outline,
-                          color: Colors.blue, size: 30),
-                    ))
+                          //move to view profile screen
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (_) => ProfileScreen(user: user)));
+                        },
+                        minWidth: 0,
+                        padding: const EdgeInsets.all(0),
+                        shape: const CircleBorder(),
+                        // child: const Icon(Icons.info_outline,
+                        //     color: Colors.blue, size: 30),
+                        child: Text(data.name),
+                      );
+                    },
+                  ),
+                )
               ],
             ),
           )),
