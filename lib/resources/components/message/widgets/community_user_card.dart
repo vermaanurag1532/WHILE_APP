@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:while_app/view_model/providers/community_provider.dart';
 import '../apis.dart';
 import '../cdetail.dart';
 import '../helper/my_date_util.dart';
@@ -13,16 +15,16 @@ import 'dialogs/community_profile_dialog.dart';
 late Size mq;
 
 //card to represent a single user in home screen
-class ChatCommunityCard extends StatefulWidget {
+class ChatCommunityCard extends ConsumerStatefulWidget {
   final CommunityUser user;
 
   const ChatCommunityCard({super.key, required this.user});
 
   @override
-  State<ChatCommunityCard> createState() => _ChatCommunityCardState();
+  ConsumerState<ChatCommunityCard> createState() => _ChatCommunityCardState();
 }
 
-class _ChatCommunityCardState extends State<ChatCommunityCard> {
+class _ChatCommunityCardState extends ConsumerState<ChatCommunityCard> {
   //last message info (if null --> no message)
   CommunityMessage? _message;
 
@@ -38,6 +40,7 @@ class _ChatCommunityCardState extends State<ChatCommunityCard> {
       child: InkWell(
           onTap: () {
             // for navigating to chat screen
+            ref.watch(communityProvider.notifier).changeName(widget.user);
             Navigator.push(
                 context,
                 MaterialPageRoute(
