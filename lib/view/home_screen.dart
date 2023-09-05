@@ -21,9 +21,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   // ignore: non_constant_identifier_names
   int CurrentIndex = 0;
-  final List<String> _popupMenuList = [
-    "Sign Out",
-  ];
+  
 
   void onTapChange(int index) {
     setState(() {
@@ -31,9 +29,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
-  void themeToggler(WidgetRef ref) {
-    ref.read(themeNotifierProvider.notifier).toggleTheme();
-  }
+
 
   static final List<Widget> _widgetOptions = <Widget>[
     const FeedScreen(),
@@ -47,38 +43,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       body: Stack(children: [
         Scaffold(
-          appBar: AppBar(
-            backgroundColor: currentTheme.scaffoldBackgroundColor,
-            elevation: 0.0,
-            actions: [
-              Switch.adaptive(
-                value: ref.watch(themeNotifierProvider.notifier).mode ==
-                    ThemeMode.dark,
-                onChanged: (value) => themeToggler(ref),
-              ),
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => SocialScreen(),
-                    ));
-                  },
-                  icon: const Icon(Icons.message)),
-              PopupMenuButton(
-                  icon: const Icon(
-                    Icons.more_vert,
-                    // color: Colors.white,
-                  ),
-                  itemBuilder: (_) => _popupMenuList.map((menuItem) {
-                        return PopupMenuItem(
-                          child: Text(menuItem),
-                          onTap: () async {
-                            FirebaseAuthMethods(FirebaseAuth.instance)
-                                .signOut(context);
-                          },
-                        );
-                      }).toList())
-            ],
-          ),
           extendBody: true,
           backgroundColor: AppColors.theme1Color,
           bottomNavigationBar: Container(
