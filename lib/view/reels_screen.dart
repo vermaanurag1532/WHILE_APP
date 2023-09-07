@@ -53,6 +53,8 @@ class _ReelsScreenState extends ConsumerState<ReelsScreen> {
 
           final List<Video> videoList = VideoList.getVideoList(snapshot.data!);
           print(videoList);
+          print(videoList);
+          print(videoList);
           return Scaffold(
             body: PageView.builder(
               controller: _pageController,
