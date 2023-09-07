@@ -27,15 +27,21 @@ class APIs {
 
   // for storing self information
   static ChatUser me = ChatUser(
-      id: user.uid,
-      name: user.displayName.toString(),
-      email: user.email.toString(),
-      about: "Hey, I'm using While",
-      image: userImage,
-      createdAt: '',
-      isOnline: false,
-      lastActive: '',
-      pushToken: '');
+    id: user.uid,
+    name: user.displayName.toString(),
+    email: user.email.toString(),
+    about: "Hey, I'm using While",
+    image: userImage,
+    createdAt: '',
+    isOnline: false,
+    lastActive: '',
+    pushToken: '',
+    dateOfBirth: '',
+    gender: '',
+    phoneNumber: '',
+    place: '',
+    profession: '',
+  );
 
   // to return current user
   static User get user => auth.currentUser!;
@@ -186,16 +192,22 @@ class APIs {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
 
     final chatUser = ChatUser(
-        id: user.uid,
-        name: newUser.name.toString(),
-        email: newUser.email.toString(),
-        about: newUser.about,
-        image:
-            'https://firebasestorage.googleapis.com/v0/b/while-2.appspot.com/o/profile_pictures%2FKIHEXrUQrzcWT7aw15E2ho6BNhc2.jpg?alt=media&token=1316edc6-b215-4655-ae0d-20df15555e34',
-        createdAt: time,
-        isOnline: false,
-        lastActive: time,
-        pushToken: '');
+      id: user.uid,
+      name: newUser.name.toString(),
+      email: newUser.email.toString(),
+      about: newUser.about,
+      image:
+          'https://firebasestorage.googleapis.com/v0/b/while-2.appspot.com/o/profile_pictures%2FKIHEXrUQrzcWT7aw15E2ho6BNhc2.jpg?alt=media&token=1316edc6-b215-4655-ae0d-20df15555e34',
+      createdAt: time,
+      isOnline: false,
+      lastActive: time,
+      pushToken: '',
+      dateOfBirth: '',
+      gender: '',
+      phoneNumber: '',
+      place: '',
+      profession: '',
+    );
     log(' users given id is ///// : ${newUser.name}');
     await firestore.collection('users').doc(user.uid).set(chatUser.toJson());
   }
@@ -205,15 +217,21 @@ class APIs {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
 
     final chatUser = ChatUser(
-        id: user.uid,
-        name: user.displayName.toString(),
-        email: user.email.toString(),
-        about: "Hey, I'm using We Chat!",
-        image: user.photoURL.toString(),
-        createdAt: time,
-        isOnline: false,
-        lastActive: time,
-        pushToken: '');
+      id: user.uid,
+      name: user.displayName.toString(),
+      email: user.email.toString(),
+      about: "Hey, I'm using We Chat!",
+      image: user.photoURL.toString(),
+      createdAt: time,
+      isOnline: false,
+      lastActive: time,
+      pushToken: '',
+      dateOfBirth: '',
+      gender: '',
+      phoneNumber: '',
+      place: '',
+      profession: '',
+    );
 
     return await firestore
         .collection('users')
