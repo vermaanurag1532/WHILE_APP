@@ -43,6 +43,11 @@ class _ProfileScreenState extends State<EditUserProfileScreen> {
       isOnline: true,
       lastActive: '',
       pushToken: '',
+      dateOfBirth: '',
+      gender: '',
+      phoneNumber: '',
+      place: '',
+      profession: '',
     );
     return GestureDetector(
       // for hiding keyboard

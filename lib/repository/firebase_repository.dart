@@ -12,15 +12,21 @@ class FirebaseAuthMethods {
 
   User get user => _auth.currentUser!;
   ChatUser newUser = ChatUser(
-      image: 'image',
-      about: 'about',
-      name: 'name',
-      createdAt: 'createdAt',
-      isOnline: false,
-      id: 'id',
-      lastActive: 'lastActive',
-      email: 'email',
-      pushToken: 'pushToken');
+    image: 'image',
+    about: 'about',
+    name: 'name',
+    createdAt: 'createdAt',
+    isOnline: false,
+    id: 'id',
+    lastActive: 'lastActive',
+    email: 'email',
+    pushToken: 'pushToken',
+    dateOfBirth: '',
+    gender: '',
+    phoneNumber: '',
+    place: '',
+    profession: '',
+  );
 
   Stream<User?> get authState => FirebaseAuth.instance.authStateChanges();
 
