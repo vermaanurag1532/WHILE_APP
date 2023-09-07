@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:while_app/resources/components/message/apis.dart';
+import 'package:while_app/resources/components/message/models/chat_user.dart';
 import 'bottom_options_sheet.dart';
 
 late Size mq;
@@ -41,7 +41,7 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
             case ConnectionState.active:
             case ConnectionState.done:
               final data = snapshot.data?.docs;
-              // ChatUser user = data![0];
+              ChatUser user = ChatUser.fromJson(data![0].data());
 
               return SizedBox(
                 width: double.infinity,
@@ -59,7 +59,7 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
                           width: h,
                           fit: BoxFit.cover,
                           height: h * .13,
-                          imageUrl: data![0]['image'],
+                          imageUrl: data[0]['image'],
                           errorWidget: (context, url, error) =>
                               const CircleAvatar(
                                   child: Icon(CupertinoIcons.person)),
@@ -69,51 +69,32 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
                     Positioned(
                       top: nh + h / 7 - w / 8,
                       left: w / 12,
-                      child: Stack(
-                        children: [
-                          //profile picture
-                          _image != null
-                              ?
-                              //local image
-                              ClipRRect(
-                                  borderRadius: BorderRadius.circular(h * .1),
-                                  child: Image.file(File(_image!),
-                                      width: h * .1,
-                                      height: h * .1,
-                                      fit: BoxFit.cover))
-                              :
 
-                              //image from server
-                              ClipRRect(
-                                  borderRadius: BorderRadius.circular(h * .75),
-                                  child: CachedNetworkImage(
-                                    width: h * .15,
-                                    height: h * .15,
-                                    filterQuality: FilterQuality.low,
-                                    fit: BoxFit.fill,
-                                    imageUrl: data[0]['image'],
-                                    errorWidget: (context, url, error) =>
-                                        const CircleAvatar(
-                                            child: Icon(CupertinoIcons.person)),
-                                  ),
-                                ),
-
-                          //edit image button
-                          // Positioned(
-                          //   bottom: 0,
-                          //   right: 0,
-                          //   child: MaterialButton(
-                          //     elevation: 4,
-                          //     onPressed: () {
-                          //       _showBottomSheet();
-                          //     },
-                          //     shape: const CircleBorder(),
-                          //     color: Colors.white,
-                          //     child: const Icon(Icons.edit, color: Colors.blue),
-                          //   ),
-                          // )
-                        ],
-                      ),
+                      //profile picture
+                      child: _image != null
+                          ?
+                          //local image
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(h * .1),
+                              child: Image.file(File(_image!),
+                                  width: h * .1,
+                                  height: h * .1,
+                                  fit: BoxFit.cover))
+                          :
+                          //image from server
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(h * .75),
+                              child: CachedNetworkImage(
+                                width: h * .15,
+                                height: h * .15,
+                                filterQuality: FilterQuality.low,
+                                fit: BoxFit.fill,
+                                imageUrl: data[0]['image'],
+                                errorWidget: (context, url, error) =>
+                                    const CircleAvatar(
+                                        child: Icon(CupertinoIcons.person)),
+                              ),
+                            ),
                     ),
                     Positioned(
                         top: nh + h / 7 + 5,
@@ -137,7 +118,9 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
                               showModalBottomSheet(
                                   context: context,
                                   builder: (context) {
-                                    return const MoreOptions();
+                                    return MoreOptions(
+                                      user: user,
+                                    );
                                   });
                             },
                             icon: const Icon(
@@ -181,91 +164,6 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
                 ),
               );
           }
-        });
-  }
-
-  void _showBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-        builder: (_) {
-          return ListView(
-            shrinkWrap: true,
-            padding:
-                EdgeInsets.only(top: mq.height * .03, bottom: mq.height * .05),
-            children: [
-              //pick profile picture label
-              const Text('Pick Profile Picture',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-
-              //for adding some space
-              SizedBox(height: mq.height * .02),
-
-              //buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  //pick from gallery button
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: const CircleBorder(),
-                          fixedSize: Size(mq.width * .3, mq.height * .15)),
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-
-                        // Pick an image
-                        final XFile? image = await picker.pickImage(
-                            source: ImageSource.gallery, imageQuality: 80);
-                        if (image != null) {
-                          log('Image Path: ${image.path}');
-                          setState(() {
-                            _image = image.path;
-                          });
-
-                          APIs.updateProfilePicture(File(_image!));
-                          // for hiding bottom sheet
-                          if (context.mounted) Navigator.of(context).pop();
-                        }
-                      },
-                      child: Icon(
-                        Icons.image,
-                        color: Colors.black,
-                        size: mq.width * .2,
-                      )),
-
-                  //take picture from camera button
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: const CircleBorder(),
-                          fixedSize: Size(mq.width * .3, mq.height * .15)),
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-
-                        // Pick an image
-                        final XFile? image = await picker.pickImage(
-                            source: ImageSource.camera, imageQuality: 80);
-                        if (image != null) {
-                          log('Image Path: ${image.path}');
-                          setState(() {
-                            _image = image.path;
-                          });
-
-                          APIs.updateProfilePicture(File(_image!));
-                          // for hiding bottom sheet
-
-                          if (context.mounted) Navigator.of(context).pop();
-                        }
-                      },
-                      child: Image.asset('images/camera.png')),
-                ],
-              )
-            ],
-          );
         });
   }
 }
