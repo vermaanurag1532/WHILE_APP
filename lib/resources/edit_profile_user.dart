@@ -150,7 +150,38 @@ class _ProfileScreenState extends State<EditUserProfileScreen> {
 
                     // for adding some space
                     SizedBox(height: mq.height * .02),
-
+                    // email input field
+                    TextFormField(
+                      initialValue: widget.user.email,
+                      onSaved: (val) => user.email = val ?? '',
+                      validator: (val) => val != null && val.isNotEmpty
+                          ? null
+                          : 'Required Field',
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.info_outline,
+                              color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          hintText: 'eg. Feeling Happy',
+                          label: const Text('Email')),
+                    ),
+                    SizedBox(height: mq.height * .02),
+                    // phone number input field
+                    TextFormField(
+                      initialValue: widget.user.phoneNumber,
+                      onSaved: (val) => user.phoneNumber = val ?? '',
+                      validator: (val) => val != null && val.isNotEmpty
+                          ? null
+                          : 'Required Field',
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.info_outline,
+                              color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          hintText: '+91766836XXXX',
+                          label: const Text('Phone Number')),
+                    ),
+                    SizedBox(height: mq.height * .02),
                     // about input field
                     TextFormField(
                       initialValue: widget.user.about,
@@ -168,28 +199,10 @@ class _ProfileScreenState extends State<EditUserProfileScreen> {
                     ),
                     SizedBox(height: mq.height * .02),
 
-                    // domain input field
+                    // gender input field
                     TextFormField(
-                      readOnly: true,
-                      initialValue: widget.user.createdAt,
-                      // onSaved: (val) => user.createdAt = val ?? '',
-                      // validator: (val) => val != null && val.isNotEmpty
-                      //     ? null
-                      //     : 'Required Field',
-                      decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.info_outline,
-                              color: Colors.blue),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          hintText: 'eg. Feeling Happy',
-                          label: const Text('Domain')),
-                    ),
-                    SizedBox(height: mq.height * .02),
-
-                    // email input field
-                    TextFormField(
-                      initialValue: widget.user.email,
-                      onSaved: (val) => user.email = val ?? '',
+                      initialValue: widget.user.gender,
+                      onSaved: (val) => user.gender = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',
@@ -198,9 +211,59 @@ class _ProfileScreenState extends State<EditUserProfileScreen> {
                               color: Colors.blue),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'eg. Feeling Happy',
-                          label: const Text('Email')),
+                          hintText: 'Male/ Female/ Not to disclose',
+                          label: const Text('Gender')),
                     ),
+                    SizedBox(height: mq.height * .02),
+
+                    // PLACE  input field
+                    TextFormField(
+                      initialValue: widget.user.place,
+                      onSaved: (val) => user.place = val ?? '',
+                      validator: (val) => val != null && val.isNotEmpty
+                          ? null
+                          : 'Required Field',
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.info_outline,
+                              color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          hintText: 'India',
+                          label: const Text('Place')),
+                    ),
+                    SizedBox(height: mq.height * .02),
+                    // profession input field
+                    TextFormField(
+                      initialValue: widget.user.profession,
+                      onSaved: (val) => user.profession = val ?? '',
+                      validator: (val) => val != null && val.isNotEmpty
+                          ? null
+                          : 'Required Field',
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.info_outline,
+                              color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          hintText: 'Student/ Engineer/ etc..',
+                          label: const Text('Profession')),
+                    ),
+                    SizedBox(height: mq.height * .02),
+                    // DOB input field
+                    TextFormField(
+                      initialValue: widget.user.dateOfBirth,
+                      onSaved: (val) => user.dateOfBirth = val ?? '',
+                      validator: (val) => val != null && val.isNotEmpty
+                          ? null
+                          : 'Required Field',
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.info_outline,
+                              color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          hintText: 'DD/MM/YYYY',
+                          label: const Text('Date Of Birth')),
+                    ),
+                    SizedBox(height: mq.height * .02),
 
                     // for adding some space
                     SizedBox(height: mq.height * .05),

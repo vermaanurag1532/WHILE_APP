@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:while_app/resources/components/message/apis.dart';
+import 'package:while_app/resources/components/message/models/chat_user.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
 
 import '../edit_profile_user.dart';
 
 class MoreOptions extends StatelessWidget {
-  const MoreOptions({super.key});
+  const MoreOptions({super.key, required this.user});
+  final ChatUser user;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,22 @@ class MoreOptions extends StatelessWidget {
                 Navigator.pushNamed(context, RoutesName.settings);
               },
             ),
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pop();
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => EditUserProfileScreen(user: user)));
+              },
+              leading: const Icon(
+                Icons.edit,
+                color: Colors.black,
+                size: 30,
+              ),
+              title: const Text("Edit Profile"),
+            ),
             const ListTile(
               leading: Icon(
                 Icons.download_outlined,
@@ -55,22 +72,6 @@ class MoreOptions extends StatelessWidget {
                 size: 30,
               ),
               title: Text("Activity"),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.of(context).pop();
-
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => EditUserProfileScreen(user: APIs.me)));
-              },
-              leading: const Icon(
-                Icons.edit,
-                color: Colors.black,
-                size: 30,
-              ),
-              title: Text("Edit Profile"),
             ),
             const ListTile(
               leading: Icon(
