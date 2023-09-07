@@ -21,3 +21,18 @@ class UserNotifier extends StateNotifier<ChatUser> {
         pushToken: user.pushToken);
   }
 }
+
+final communityProvider = StateNotifierProvider<UserNotifier, ChatUser>(
+  (ref) {
+    return UserNotifier(ChatUser(
+        image: 'image',
+        about: 'about',
+        name: 'name',
+        createdAt: 'createdAt',
+        isOnline: false,
+        id: 'id',
+        lastActive: 'lastActive',
+        email: 'email',
+        pushToken: 'pushToken'));
+  },
+);

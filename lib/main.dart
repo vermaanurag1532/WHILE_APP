@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as river;
 import 'package:provider/provider.dart';
 import 'package:while_app/repository/firebase_repository.dart';
-
+import 'package:while_app/resources/components/message/apis.dart';
 import 'package:while_app/theme/pallete.dart';
 import 'package:while_app/utils/routes/routes_name.dart';
 import 'package:while_app/view_model/current_user_provider.dart';
@@ -15,12 +16,12 @@ import 'package:while_app/view_model/profile_controller.dart';
 import 'utils/routes/routes.dart';
 import 'view_model/reel_controller.dart';
 
-// final userProvider = river.StreamProvider((ref) {
-//   final data =
-//       FirebaseFirestore.instance.collection('users').doc(APIs.me.id).snapshots();
-//       final d = ;
-//       ChatUser us = data?.map
-// });
+final userProvider = river.StreamProvider((ref) {
+  return FirebaseFirestore.instance
+      .collection('users')
+      .doc(APIs.me.id)
+      .snapshots();
+});
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,10 +33,7 @@ void main() async {
   // );
   await Firebase.initializeApp();
   Provider.debugCheckInvalidValueType = null;
-  runApp(const river.ProviderScope(
-    child: MyApp(
-
-  )));
+  runApp(const river.ProviderScope(child: MyApp()));
 }
 
 class MyApp extends river.ConsumerWidget {

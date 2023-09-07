@@ -181,6 +181,24 @@ class APIs {
     });
   }
 
+  // for creating a new user through new method
+  static Future<void> createNewUser(ChatUser newUser) async {
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
+
+    final chatUser = ChatUser(
+        id: user.uid,
+        name: newUser.name.toString(),
+        email: newUser.email.toString(),
+        about: newUser.about,
+        image: newUser.image,
+        createdAt: time,
+        isOnline: false,
+        lastActive: time,
+        pushToken: '');
+    log(' users given id is ///// : ${newUser.name}');
+    await firestore.collection('users').doc(user.uid).set(chatUser.toJson());
+  }
+
   // for creating a new user
   static Future<void> createUser() async {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
@@ -253,10 +271,11 @@ class APIs {
   }
 
   // for updating user information
-  static Future<void> updateUserInfo() async {
+  static Future<void> updateUserInfo(ChatUser usersDetail) async {
     await firestore.collection('users').doc(user.uid).update({
-      'name': me.name,
-      'about': me.about,
+      'name': usersDetail.name,
+      'about': usersDetail.about,
+      'email': usersDetail.email,
     });
   }
 

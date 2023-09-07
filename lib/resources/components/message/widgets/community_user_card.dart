@@ -40,7 +40,7 @@ class _ChatCommunityCardState extends ConsumerState<ChatCommunityCard> {
       child: InkWell(
           onTap: () {
             // for navigating to chat screen
-            ref.watch(communityProvider.notifier).changeName(widget.user);
+
             Navigator.push(
                 context,
                 MaterialPageRoute(

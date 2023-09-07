@@ -66,6 +66,7 @@ dependencies:
   get:
   image_cropper: ^4.0.1
   google_fonts: ^4.0.4
+  uuid: ^4.0.0
   
   # gradient_text:
   
