@@ -99,19 +99,19 @@ class _ProfileDataWidgetState extends State<ProfileDataWidget> {
                                 ),
 
                           //edit image button
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: MaterialButton(
-                              elevation: 4,
-                              onPressed: () {
-                                _showBottomSheet();
-                              },
-                              shape: const CircleBorder(),
-                              color: Colors.white,
-                              child: const Icon(Icons.edit, color: Colors.blue),
-                            ),
-                          )
+                          // Positioned(
+                          //   bottom: 0,
+                          //   right: 0,
+                          //   child: MaterialButton(
+                          //     elevation: 4,
+                          //     onPressed: () {
+                          //       _showBottomSheet();
+                          //     },
+                          //     shape: const CircleBorder(),
+                          //     color: Colors.white,
+                          //     child: const Icon(Icons.edit, color: Colors.blue),
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
