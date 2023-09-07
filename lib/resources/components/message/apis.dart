@@ -190,7 +190,8 @@ class APIs {
         name: newUser.name.toString(),
         email: newUser.email.toString(),
         about: newUser.about,
-        image: newUser.image,
+        image:
+            'https://firebasestorage.googleapis.com/v0/b/while-2.appspot.com/o/profile_pictures%2FKIHEXrUQrzcWT7aw15E2ho6BNhc2.jpg?alt=media&token=1316edc6-b215-4655-ae0d-20df15555e34',
         createdAt: time,
         isOnline: false,
         lastActive: time,
