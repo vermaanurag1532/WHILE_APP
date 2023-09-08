@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:while_app/data/model/video_model.dart';
@@ -11,7 +13,9 @@ class FeedItem extends StatefulWidget {
 }
 
 class _FeedItemState extends State<FeedItem> {
+  User? user = FirebaseAuth.instance.currentUser;
   late VideoPlayerController _controller;
+  bool likeTapped = false;
   @override
   void dispose() {
     _controller.dispose();
@@ -25,7 +29,32 @@ class _FeedItemState extends State<FeedItem> {
         _controller.play();
         _controller.setVolume(1);
       });
+    likeTapped = false;
     super.initState();
+  }
+
+  void addlikes(bool likeTapped) async {
+    // DocumentReference ref = widget.video.videoRef as DocumentReference<Object?>;
+    DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection('videos')
+        .doc(widget.video.videoRef)
+        .get();
+    print(doc);
+    if ((doc.data()! as dynamic)['likes'].contains(user!.uid)) {
+      await FirebaseFirestore.instance
+          .collection('videos')
+          .doc(widget.video.videoRef)
+          .update({
+        'likes': FieldValue.arrayRemove([user!.uid])
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection('videos')
+          .doc(widget.video.videoRef)
+          .update({
+        'likes': FieldValue.arrayUnion([user!.uid])
+      });
+    }
   }
 
   @override
@@ -39,9 +68,9 @@ class _FeedItemState extends State<FeedItem> {
         VideoPlayer(_controller),
         Column(
           children: [
-            const SizedBox(
-              height: 100,
-            ),
+            // const SizedBox(
+            //   height: 100,
+            // ),
             Expanded(
               child: Row(
                 mainAxisSize: MainAxisSize.max,
@@ -92,17 +121,22 @@ class _FeedItemState extends State<FeedItem> {
                         buildProfile('profilePhoto'),
                         Column(
                           children: [
-                            const InkWell(
+                            InkWell(
+                                onTap: () {
+                                  addlikes(likeTapped);
+                                },
                                 child: Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                              size: 30,
-                            )),
+                                  Icons.favorite,
+                                  color: widget.video.likes.contains(user!.uid)
+                                      ? Colors.red
+                                      : Colors.white,
+                                  size: 30,
+                                )),
                             const SizedBox(
                               height: 7,
                             ),
                             Text(
-                              widget.video.likes.toString(),
+                              widget.video.likes.length.toString(),
                               style: const TextStyle(
                                   fontSize: 20, color: Colors.white),
                             ),
@@ -181,7 +215,7 @@ class _FeedItemState extends State<FeedItem> {
                     borderRadius: BorderRadius.circular(25.0),
                     child: Image(
                       image: NetworkImage(
-                        profilePhoto,
+                        "https://images.unsplash.com/photo-1682685797498-3bad2c6e161a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
                       ),
                       fit: BoxFit.cover,
                     )),
@@ -206,7 +240,8 @@ class _FeedItemState extends State<FeedItem> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(25.0),
           child: Image(
-            image: NetworkImage(profilePhoto),
+            image: NetworkImage(
+                "https://images.unsplash.com/photo-1682685797498-3bad2c6e161a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"),
             fit: BoxFit.cover,
           ),
         ),

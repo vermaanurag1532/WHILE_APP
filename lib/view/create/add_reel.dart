@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:video_compress_plus/video_compress_plus.dart';
+import 'package:video_compress/video_compress.dart';
 import 'package:while_app/resources/components/round_button.dart';
 import 'package:while_app/resources/components/text_container_widget.dart';
 import 'package:while_app/resources/components/video_player.dart';
@@ -21,6 +21,7 @@ class AddReel extends StatefulWidget {
 class _AddReelState extends State<AddReel> {
   late Subscription _subscription;
   bool isloading = false;
+  
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
@@ -30,6 +31,7 @@ class _AddReelState extends State<AddReel> {
     _subscription = VideoCompress.compressProgress$.subscribe((progress) {
       debugPrint('progress: $progress');
       isloading = false;
+      
     });
   }
 
@@ -46,7 +48,7 @@ class _AddReelState extends State<AddReel> {
   }
 
   void uploadVideo(BuildContext context, String title, String des, String path,
-      int likes, int shares) async {
+      List likes, int shares) async {
     setState(() {
       isloading = true;
     });
@@ -70,7 +72,7 @@ class _AddReelState extends State<AddReel> {
       'videoUrl': newUrl,
       'title': title,
       'description': des,
-      'likes': 0,
+      'likes': [],
       'shares': 0
     };
     collectionReference.add(vid).then((value) {
@@ -83,6 +85,8 @@ class _AddReelState extends State<AddReel> {
       Utils.toastMessage(error.toString());
     });
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +143,7 @@ class _AddReelState extends State<AddReel> {
                           _titleController.text.toString(),
                           _descriptionController.text.toString(),
                           widget.video.toString(),
-                          0,
+                          [], // initally the likes list shall be holding an empty list to be precise
                           0);
                     }
                   })

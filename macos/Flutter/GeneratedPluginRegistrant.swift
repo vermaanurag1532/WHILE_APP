@@ -16,7 +16,7 @@ import firebase_storage
 import path_provider_foundation
 import shared_preferences_foundation
 import sqflite
-import video_compress_plus
+import video_compress
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FLTFirebaseFirestorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseFirestorePlugin"))

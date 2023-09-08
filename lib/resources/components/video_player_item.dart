@@ -12,6 +12,7 @@ class VideoPlayerItem extends StatefulWidget {
 
 class _VideoPlayerItemState extends State<VideoPlayerItem> {
   late VideoPlayerController videoPlayerController;
+ 
 
   @override
   void initState() {
@@ -20,6 +21,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
         videoPlayerController.play();
         videoPlayerController.setVolume(1);
       });
+      
     super.initState();
   }
 
