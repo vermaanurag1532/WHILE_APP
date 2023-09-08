@@ -64,11 +64,11 @@ class _FriendProfileDataWidgetState extends State<FriendProfileDataWidget> {
               left: w / 1.15,
               child: IconButton(
                   onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return const MoreOptions();
-                        });
+                    // showModalBottomSheet(
+                    //     context: context,
+                    //     builder: (context) {
+                    //       return const MoreOptions();
+                    //     });
                   },
                   icon: const Icon(Icons.more_vert))),
           Positioned(
