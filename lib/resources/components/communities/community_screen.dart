@@ -53,7 +53,7 @@ class _CommunityScreenFinalState extends State<CommunityScreenFinal> {
   @override
   Widget build(BuildContext context) {
     bool isSearching = widget.isSearching;
-    isSearching = false;
+
     if (widget.value != '') {
       log(widget.value);
       _searchList.clear();

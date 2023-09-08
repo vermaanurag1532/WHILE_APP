@@ -22,6 +22,7 @@ class _SocialScreenState extends State<SocialScreen>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
   bool isSearching = false;
+  bool isSearchingHasValue = false;
   var value = '';
 
   @override
@@ -65,6 +66,7 @@ class _SocialScreenState extends State<SocialScreen>
                         //search logic
                         setState(() {
                           value = val;
+                          isSearchingHasValue = isSearching;
                         });
                       },
                     )
@@ -139,12 +141,12 @@ class _SocialScreenState extends State<SocialScreen>
               children: [
                 const StoryScreen(),
                 HomeScreenFinal(
-                  isSearching: isSearching,
+                  isSearching: isSearchingHasValue,
                   value: value,
                 ),
-                const CommunityScreenFinal(
-                  isSearching: true,
-                  value: '',
+                CommunityScreenFinal(
+                  isSearching: isSearchingHasValue,
+                  value: value,
                 ),
                 const Text('Callsss'),
               ],
