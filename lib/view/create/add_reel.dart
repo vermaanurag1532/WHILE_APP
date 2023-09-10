@@ -5,7 +5,6 @@ import 'package:video_compress_plus/video_compress_plus.dart';
 import 'package:while_app/resources/components/round_button.dart';
 import 'package:while_app/resources/components/text_container_widget.dart';
 import 'package:while_app/resources/components/video_player.dart';
-
 import 'package:while_app/utils/utils.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:while_app/view_model/session_controller.dart';
